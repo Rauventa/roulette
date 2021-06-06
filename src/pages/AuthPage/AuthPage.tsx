@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import './AuthPage.scss'
 import {Input} from "../../components/Input/Input";
 import { $t } from '../../lib/i18n';
@@ -7,8 +7,14 @@ import {Button} from "../../components/Button/Button";
 import {ReactComponent as InstagramIcon} from "./img/igram.svg";
 import {ReactComponent as VkIcon} from "./img/vk.svg";
 import {ReactComponent as FacebookIcon} from "./img/fbook.svg";
+import { axiosClient } from '../../utils/axiosClient';
+import { useHistory } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 
 export const AuthPage = () => {
+
+  const history = useHistory()
+  const {login} = useContext(AuthContext)
 
   const defaultLoginFormState = {
     email: '',
@@ -47,7 +53,19 @@ export const AuthPage = () => {
     }
   }
 
-  console.log(loginFormState)
+  const loginHandler = async () => {
+    try {
+      const response = await axiosClient.post('/Auth/Login', loginFormState)
+
+      console.log(response.data)
+
+      login(response.data.jwtToken, response.data.refreshToken)
+
+      history.push('/dice')
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   return (
     <div className={'auth-page'}>
@@ -77,7 +95,7 @@ export const AuthPage = () => {
               </div>
 
               <div className="auth-page__buttons">
-                <Button primary>
+                <Button primary onClick={loginHandler}>
                   {$t('Log In')}
                 </Button>
                 <div className="auth-page__buttons_socials">

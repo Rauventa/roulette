@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { $t } from '../../lib/i18n';
 import './Header.scss';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import {ReactComponent as RouletteIcon} from "./img/roulette.svg";
 import {ReactComponent as RuIcon} from "./img/russia.svg";
 import {ReactComponent as USIcon} from "./img/united-states.svg";
@@ -9,11 +9,16 @@ import {ReactComponent as DiceIcon} from "./img/dice.svg";
 import {ReactComponent as FreeBtcIcon} from "./img/freebtc.svg";
 import { Button } from '../Button/Button';
 import {LogoWheel} from "../Optional/LogoWheel/LogoWheel";
+import { AuthContext } from '../../context/AuthContext';
 
 export const Header = () => {
 
   const currentCurrency = localStorage.getItem('currency')
   const currentLang = localStorage.getItem('lang')
+
+  const {logout, isAuth} = useContext(AuthContext);
+
+  const history = useHistory();
 
   const [currency, setCurrency] = useState<string>(currentCurrency || 'btc');
   const [lang, setLang] = useState<string>(currentLang || 'ru');
@@ -61,6 +66,11 @@ export const Header = () => {
     }
 
     setShowLangs(false)
+  }
+
+  const logoutHandler = () => {
+    logout()
+    history.push('/auth')
   }
 
   return (
@@ -119,9 +129,14 @@ export const Header = () => {
             </div> : null
           }
         </div>
-        <Button primary href={'/auth'}>
-          {$t('Sign In')}
-        </Button>
+        {!isAuth ?
+            <Button primary href={'/auth'}>
+              {$t('Sign In')}
+            </Button> :
+            <Button primary onClick={logoutHandler}>
+              {$t('Log Out')}
+            </Button>
+        }
       </div>
     </header>
   )

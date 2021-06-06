@@ -10,9 +10,9 @@ export const LogoWheel = () => {
       <div className={'btcLogoWheel'}/>
       <div className={'plate'}>
         <ul className={'inner'}>
-          {slots.map(n => {
+          {slots.map(index => {
             return (
-              <li className={'number'}/>
+              <li key={index} className={'number'}/>
             )
           })}
         </ul>

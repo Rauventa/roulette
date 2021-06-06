@@ -36,7 +36,8 @@ i18n
           'Forgot your password?': 'Forgot your password?',
           'I confirm that I agree to the': 'I confirm that I agree to the',
           'Email': 'Email',
-          'Email of Phone': 'Email or Phone'
+          'Email of Phone': 'Email or Phone',
+          'Log Out': 'Log Out'
 
         }
       },
@@ -57,7 +58,8 @@ i18n
           'Confirm Password': 'Подтверждение пароля',
           'Forgot your password?': 'Забили пароль?',
           'I confirm that I agree to the': 'Я подтверждаю, что согласен с',
-          'Email or Phone': 'Email или Телефон'
+          'Email or Phone': 'Email или Телефон',
+          'Log Out': 'Выйти'
         }
       },
     },

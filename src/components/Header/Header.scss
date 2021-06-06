@@ -1,0 +1,91 @@
+.header {
+  width: 100%;
+  background-color: #202036;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__nav {
+    display: flex;
+    align-items: center;
+
+    &_logo {
+
+    }
+
+    &_item {
+      display: flex;
+      align-items: center;
+      background-color: transparent;
+      padding: 10px 20px;
+      border-radius: 10px;
+
+      &:hover {
+        background-color: rgba(224, 224, 255, 0.04);
+      }
+
+      &:not(:last-child) {
+        margin-right: 20px;
+      }
+
+      &-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        svg {
+          width: 25px;
+          height: 25px;
+        }
+      }
+      &-name {
+        margin-left: 10px;
+        font-weight: 500;
+      }
+    }
+  }
+
+  &__additional {
+    display: flex;
+    align-items: center;
+
+    .currency {
+      font-weight: bold;
+      margin-right: 20px;
+      cursor: pointer;
+    }
+    
+    .language-select {
+      position: relative;
+      
+      &__current {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        margin-right: 20px;
+      }
+
+      &__all {
+        padding: 10px;
+        background-color: #2a2a41;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        top: 40px;
+        left: -10px;
+
+        svg {
+          cursor: pointer;
+
+          &:not(:last-child) {
+            margin-bottom: 10px;
+          }
+        }
+      }
+    }
+  }
+}

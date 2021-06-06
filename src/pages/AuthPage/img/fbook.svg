@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <desc>Created with Lunacy</desc>
+  <g id="Group">
+    <path d="M0 0L24 0L24 24L0 24L0 0Z" id="Rectangle" fill="none" stroke="none" />
+    <path d="M20 10C20 4.47715 15.5229 0 10 0C4.47715 0 0 4.47715 0 10C0 14.9913 3.65686 19.1283 8.4375 19.8785L8.4375 12.8906L5.89844 12.8906L5.89844 10L8.4375 10L8.4375 7.79688C8.4375 5.29062 9.93043 3.90625 12.2146 3.90625C13.3087 3.90625 14.4531 4.10156 14.4531 4.10156L14.4531 6.5625L13.1921 6.5625C11.9499 6.5625 11.5625 7.33334 11.5625 8.12416L11.5625 10L14.3359 10L13.8926 12.8906L11.5625 12.8906L11.5625 19.8785C16.3431 19.1283 20 14.9913 20 10" transform="translate(2 2)" id="Fill-1" fill="#FFFFFF" stroke="none" />
+  </g>
+</svg>

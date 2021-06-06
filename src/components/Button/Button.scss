@@ -1,0 +1,22 @@
+.btn {
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  transition: ease-in-out .3s;
+
+  &-primary {
+    padding: 15px 40px;
+    border: none;
+    box-shadow: 0 8px 8px -4px rgba(245, 92, 69, 0.12), 0 16px 24px 0 rgba(245, 92, 69, 0.24), 0 2px 4px -1px rgba(27, 10, 82, 0.12), 0 0 1px 0 rgba(245, 92, 69, 0.24);
+    background-image: linear-gradient(to right, #ff8800, #f55c45 51%, #e12d81);
+    color: #ffffff;
+
+    &:hover {
+      transform: translate(0px, -5px);
+    }
+  }
+}

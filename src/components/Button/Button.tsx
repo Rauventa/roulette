@@ -5,6 +5,8 @@ import { NavLink } from 'react-router-dom';
 interface ButtonProps {
   primary?: boolean,
   secondary?: boolean,
+  light?: boolean,
+  dark?: boolean,
   disabled?: boolean,
 
   onClick?: () => void,
@@ -17,6 +19,8 @@ interface ButtonProps {
 export const Button = ({
   primary,
   secondary,
+  light,
+  dark,
   disabled,
   onClick,
   href,
@@ -37,6 +41,14 @@ export const Button = ({
 
   if (secondary) {
     className+= ' btn-secondary'
+  }
+
+  if (light) {
+    className+= ' btn-light'
+  }
+
+  if (dark) {
+    className+= ' btn-dark'
   }
 
   if (disabled) {

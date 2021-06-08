@@ -104,11 +104,22 @@ a {
   }
 }
 
-.input-group {
+.form-group {
   display: flex;
   flex-direction: column;
+}
 
-  .input {
-    margin-bottom: 20px;
+.danger-link {
+  color: #ff8800;
+
+  &:hover {
+    color: #fff;
   }
+}
+
+.errors-shower {
+  color: #ff00aa;
+  font-size: 12px;
+  margin: 10px 0 20px 0;
+  max-width: 350px;
 }

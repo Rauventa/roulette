@@ -7,16 +7,43 @@
   align-items: center;
   font-weight: 600;
   transition: ease-in-out .3s;
+  padding: 15px 40px;
+  border: none;
+
+  &:hover {
+    transform: translate(0px, -5px);
+  }
 
   &-primary {
-    padding: 15px 40px;
-    border: none;
     box-shadow: 0 8px 8px -4px rgba(245, 92, 69, 0.12), 0 16px 24px 0 rgba(245, 92, 69, 0.24), 0 2px 4px -1px rgba(27, 10, 82, 0.12), 0 0 1px 0 rgba(245, 92, 69, 0.24);
     background-image: linear-gradient(to right, #ff8800, #f55c45 51%, #e12d81);
     color: #ffffff;
+  }
+
+  &-secondary {
+    background-color: rgba(225, 45, 129, 0.03);
+    color: #e12d81;
 
     &:hover {
-      transform: translate(0px, -5px);
+      background-color: rgba(225, 45, 129, 0.1);
+    }
+  }
+
+  &-light {
+    background: rgba(255,136,0,0.03);
+    color: #ff8800;
+
+    &:hover {
+      background: rgba(255,136,0,0.1);
+    }
+  }
+
+  &-dark {
+    background: rgba(255,255,255,0.02);
+    color: rgba(255, 255, 255, 0.6);
+
+    &:hover {
+      background: rgba(255,255,255,0.1);
     }
   }
 }

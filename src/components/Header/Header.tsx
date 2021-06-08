@@ -10,15 +10,16 @@ import {ReactComponent as FreeBtcIcon} from "./img/freebtc.svg";
 import { Button } from '../Button/Button';
 import {LogoWheel} from "../Optional/LogoWheel/LogoWheel";
 import { AuthContext } from '../../context/AuthContext';
+import {ReactComponent as LogoutIcon} from "./img/logout.svg";
 
 export const Header = () => {
-
-  const currentCurrency = localStorage.getItem('currency')
-  const currentLang = localStorage.getItem('lang')
 
   const {logout, isAuth} = useContext(AuthContext);
 
   const history = useHistory();
+
+  const currentCurrency = localStorage.getItem('currency')
+  const currentLang = localStorage.getItem('lang')
 
   const [currency, setCurrency] = useState<string>(currentCurrency || 'btc');
   const [lang, setLang] = useState<string>(currentLang || 'ru');
@@ -26,7 +27,7 @@ export const Header = () => {
 
   useEffect(() => {
     if (!localStorage.currency) {
-      if (currency) {
+      if (currency === 'btc') {
         localStorage.setItem('currency', 'btc')
       } else {
         localStorage.setItem('currency', 'usd')
@@ -60,9 +61,11 @@ export const Header = () => {
     if (lang === 'ru') {
       setLang('ru')
       localStorage.setItem('lang', 'ru')
+      // i18n.changeLanguage('ru')
     } else {
       setLang('en')
       localStorage.setItem('lang', 'en')
+      // i18n.changeLanguage('en')
     }
 
     setShowLangs(false)
@@ -133,8 +136,8 @@ export const Header = () => {
             <Button primary href={'/auth'}>
               {$t('Sign In')}
             </Button> :
-            <Button primary onClick={logoutHandler}>
-              {$t('Log Out')}
+            <Button dark onClick={logoutHandler}>
+              <LogoutIcon />
             </Button>
         }
       </div>

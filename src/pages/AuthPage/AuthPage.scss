@@ -1,4 +1,11 @@
 .auth-page {
+  display: flex;
+  align-items: center;
+
+  &__another {
+    margin-left: 20px;
+    cursor: pointer;
+  }
 
   .card {
     padding: 20px;

@@ -3,19 +3,20 @@ import './styles/main.scss'
 import {AppLayout} from "./layouts/AppLayout/AppLayout";
 import { AuthContext } from './context/AuthContext';
 import { useAuth } from './hooks/auth.hook';
+import {RootRouter} from "./routers/RootRouter/RootRouter";
 
 export const App = () => {
 
-    const {token, login, logout, refreshToken} = useAuth()
+    const {login, logout, token} = useAuth()
     const isAuth = !!token
-
-    console.log(isAuth)
 
     return (
         <AuthContext.Provider value={{
-            token, login, logout, refreshToken, isAuth
+            token, login, logout, isAuth
         }}>
-            <AppLayout />
+            <AppLayout>
+                <RootRouter />
+            </AppLayout>
         </AuthContext.Provider>
     )
 }

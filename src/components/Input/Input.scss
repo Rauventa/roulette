@@ -1,14 +1,34 @@
-.input {
-  border: 1px none transparent;
-  background-color: rgba(255, 255, 255, 0.02);
-  outline: none;
-  border-radius: 12px;
-  padding: 15px 20px;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 500;
+.input-group {
 
-  &::placeholder {
-    color: #747474;
+  &__title {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  &__errors {
+    color: #ff00aa;
+    font-size: 12px;
+    margin: 10px 0 20px 0;
+  }
+
+  .input {
+    background-color: rgba(255, 255, 255, 0.02);
+    outline: none;
+    border-radius: 12px;
+    padding: 15px 20px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    border: 2px solid transparent;
+
+    &::placeholder {
+      color: #747474;
+    }
+  }
+
+  .input-error {
+    border: solid 2px #ff00aa;
   }
 }

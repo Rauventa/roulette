@@ -2,16 +2,19 @@ import React from 'react';
 import './AppLayout.scss';
 import { Header } from '../../components/Header/Header';
 import { Footer } from '../../components/Footer/Footer';
-import {RootRouter} from "../../routers/RootRouter/RootRouter";
+
+interface AppLayoutProps {
+  children: React.ReactNode
+}
 
 export const AppLayout = ({
-
-}) => {
+  children,
+}: AppLayoutProps) => {
   return (
    <div className={'layout'}>
      <Header />
      <div className="layout__container">
-       <RootRouter />
+       {children}
      </div>
      <Footer />
    </div>

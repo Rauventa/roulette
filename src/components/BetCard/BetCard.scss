@@ -1,5 +1,68 @@
 .bet-card {
 
+  &__counter {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+
+    &_minus, &_plus {
+      background-color: rgba(255, 255, 255, 0.02);
+      height: 40px;
+      width: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 600;
+      font-size: 24px;
+      cursor: pointer;
+      transition: all .3s;
+
+      &:hover {
+        background-color: rgba(224, 224, 255, 0.04);
+      }
+    }
+
+    &_minus {
+      border-radius: 12px 0 0 12px;
+    }
+
+    &_plus {
+      border-radius: 0 12px 12px 0;
+    }
+
+    &_value {
+      background-color: rgba(255, 255, 255, 0.02);
+      border: none;
+      outline: none;
+      color: #fff;
+      height: 40px;
+      width: calc(100% - 80px);
+      font-weight: 500;
+      padding: 0 20px;
+    }
+  }
+
+  &__data {
+
+    &_info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+
+      &-text {
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      &-percent {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 14px;
+        font-weight: 600;
+      }
+    }
+  }
+
   &__buttons {
     display: flex;
     align-items: center;

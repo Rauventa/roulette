@@ -45,51 +45,28 @@ export const SignIn = () => {
     }
   }
 
-  console.log(formState)
 
   const handleSubmit = async () => {
 
-    // try {
-    //   const response = await axiosClient.post('/Auth/Login', formState)
-    //
-    //   login(response.data.jwtToken)
-    //
-    //   history.push('/dice')
-    // } catch (e) {
-    //   console.log(e)
-    // }
+    const {errors} = inputValidator(formState)
 
-    // const {errors} = inputValidator(formState)
-    //
-    // if (!Object.keys(errors).length) {
-    //   try {
-    //     const response = await axiosClient.post('/Auth/Login', formState)
-    //
-    //     if (!response.data.jwtToken || response.data.errors.length) {
-    //       setErrors((prev: any) => {
-    //         return {
-    //           ...prev,
-    //           login: 'Authorization failed'
-    //         }
-    //       })
-    //     } else {
-    //       login(response.data.jwtToken)
-    //
-    //       history.push('/dice')
-    //     }
-    //
-    //   } catch (e) {
-    //     console.log('error')
-    //     // setErrors((prev: any) => {
-    //     //   return {
-    //     //     ...prev,
-    //     //     login: 'Authorization failed'
-    //     //   }
-    //     // })
-    //   }
-    // } else {
-    //   setErrors(errors)
-    // }
+    if (!Object.keys(errors).length) {
+      try {
+        const response = await axiosClient.post('/Auth/Login', formState)
+
+        if (response.data.jwtToken) {
+          login(response.data.jwtToken)
+          history.push('/dice')
+        } else {
+          setErrors({login: 'Authorization failed'})
+        }
+
+      } catch (e) {
+        setErrors({login: 'Authorization failed'})
+      }
+    } else {
+      setErrors(errors)
+    }
   }
 
   return (

@@ -66,48 +66,30 @@ export const SignUp = () => {
   }
 
   const handleSubmit = async () => {
-    //
-    // const {errors} = inputValidator(formState)
-    //
-    // //TODO - on success - throw catch block, need to throw try block
-    //
-    // if (!Object.keys(errors).length) {
-    //   try {
-    //     const response = await axiosClient.post('/Auth/SignUp', formState)
-    //
-    //     if (!response.data.jwtToken || response.data.errors.length) {
-    //       if (response.data.errors[0] === "Email Already Taken Error") {
-    //         setErrors((prev: any) => {
-    //           return {
-    //             ...prev,
-    //             registration: 'This email is already taken'
-    //           }
-    //         })
-    //       } else {
-    //         setErrors((prev: any) => {
-    //           return {
-    //             ...prev,
-    //             registration: 'Registration failed,  password must have at least one non alphanumeric character, one lowercase (\'a\'-\'z\'), one uppercase (\'A\'-\'Z\')'
-    //           }
-    //         })
-    //       }
-    //     } else {
-    //       login(response.data.jwtToken)
-    //
-    //       history.push('/dice')
-    //     }
-    //
-    //   } catch (e) {
-    //     // setErrors((prev: any) => {
-    //     //   return {
-    //     //     ...prev,
-    //     //     registration: 'Registration failed'
-    //     //   }
-    //     // })
-    //   }
-    // } else {
-    //   setErrors(errors)
-    // }
+
+    const {errors} = inputValidator(formState)
+
+    if (!Object.keys(errors).length) {
+      try {
+        const response = await axiosClient.post('/Auth/SignUp', formState)
+
+        if (response.data.jwtToken) {
+          login(response.data.jwtToken)
+          history.push('/dice')
+        } else {
+          if (response.data.errors[0] === 'Email Already Taken Error') {
+            setErrors({registration: 'This email is already taken'})
+          } else {
+            setErrors({registration: 'Registration failed,  password must have at least one non alphanumeric character, one lowercase (\'a\'-\'z\'), one uppercase (\'A\'-\'Z\')'})
+          }
+        }
+
+      } catch (e) {
+        setErrors({registration: 'Registration failed'})
+      }
+    } else {
+      setErrors(errors)
+    }
   }
 
   return (

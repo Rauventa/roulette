@@ -3,6 +3,14 @@
   &__content {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    flex-basis: 100%;
+
+    .card {
+      flex-grow: 1;
+
+      &:not(:last-child) {
+        margin-right: 40px;
+      }
+    }
   }
 }

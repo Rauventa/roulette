@@ -1,4 +1,5 @@
 import React from 'react';
+import { $t } from '../../lib/i18n';
 import './Card.scss'
 
 interface CardProps {
@@ -16,7 +17,7 @@ export const Card = ({
     <div className={`card ${className ? className : ''}`}>
       {title ?
         <div className="card__title">
-          {title}
+          {$t(title)}
         </div> : null
       }
 

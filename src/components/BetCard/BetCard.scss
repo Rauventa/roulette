@@ -1,0 +1,14 @@
+.bet-card {
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+
+    &_currency {
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 600;
+      font-size: 14px;
+      margin-left: 20px;
+    }
+  }
+}

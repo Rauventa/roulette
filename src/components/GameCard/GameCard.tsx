@@ -4,12 +4,15 @@ import './GameCard.scss'
 import {$t} from "../../lib/i18n";
 
 interface GameCardProps {
-
+  formState: any
 }
 
 export const GameCard = ({
-
+  formState
 }: GameCardProps) => {
+
+  const possibleProfit = parseFloat((formState.betValue * Number((100 / formState.range * (1 - 2 / 100)).toFixed(4))).toFixed(8));
+
   return (
     <Card className={'game-card'} title={'Game'}>
       <div className={'game-card__subtitle'}>
@@ -19,7 +22,7 @@ export const GameCard = ({
         <div className="game-card__counter_value">
           <div className="game-card__counter_value-number">
             <div className="game-card__counter_value-number--count">
-              {$t('000.16')}
+              {$t(`${possibleProfit}`)}
             </div>
             <div className="game-card__counter_value-number--currency">
               {$t('BTC')}
@@ -31,7 +34,7 @@ export const GameCard = ({
         </div>
         <div className="game-card__counter_percent">
           <div className="game-card__counter_percent-value">
-            {$t('50 %')}
+            {$t(`${formState.range} %`)}
           </div>
           <div className="game-card__counter_percent-info">
             {$t('Chance')}

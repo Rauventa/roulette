@@ -8,32 +8,66 @@ import {ReactComponent as MinusIcon} from "./img/minus.svg";
 import {ReactComponent as PlusIcon} from "./img/plus.svg";
 
 interface BetCardProps {
-
+  formState: any;
+  handleChange: (value: any, iterator: string) => void;
 }
 
 export const BetCard = ({
-
+  formState,
+  handleChange
 }: BetCardProps) => {
 
   const [range, setRange] = useState<number>(50)
+  const [bet, setBet] = useState<number>(0.0001)
 
   const changeRangeHandler = (value: number) => {
     setRange(value)
+
+    handleChange(value, 'range')
+  }
+
+  const changeBetHandler = (iterator: string) => {
+
+    const defaultStepValue = 0.0001;
+
+    switch (iterator) {
+      case 'minus':
+        setBet(bet - defaultStepValue)
+
+        handleChange(bet - defaultStepValue, 'bet')
+        break;
+      case 'plus':
+        setBet(bet + defaultStepValue)
+
+        handleChange(bet + defaultStepValue, 'bet')
+        break;
+    }
+  }
+
+  const changeInputBetValue = (e: any) => {
+    setBet(Number(e.target.value))
+
+    handleChange(Number(e.target.value), 'bet')
   }
 
   return (
     <Card className={'bet-card'}>
       <div className="bet-card__counter">
         <div className="bet-card__counter_minus">
-          <MinusIcon />
+          <MinusIcon
+            onClick={() => changeBetHandler('minus')}
+          />
         </div>
         <input
           className={'bet-card__counter_value'}
           type="text"
-          value={0.001}
+          value={bet?.toFixed(4)}
+          onChange={changeInputBetValue}
         />
         <div className="bet-card__counter_plus">
-          <PlusIcon />
+          <PlusIcon
+            onClick={() => changeBetHandler('plus')}
+          />
         </div>
       </div>
       <div className="bet-card__data">

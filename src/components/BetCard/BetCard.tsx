@@ -32,9 +32,11 @@ export const BetCard = ({
 
     switch (iterator) {
       case 'minus':
-        setBet(bet - defaultStepValue)
+        if (bet > 0.0001) {
+          setBet(bet - defaultStepValue)
 
-        handleChange(bet - defaultStepValue, 'bet')
+          handleChange(bet - defaultStepValue, 'bet')
+        }
         break;
       case 'plus':
         setBet(bet + defaultStepValue)

@@ -54,8 +54,13 @@ export const SignIn = () => {
       try {
         const response = await axiosClient.post('/Auth/Login', formState)
 
-        if (response.data.jwtToken) {
-          login(response.data.jwtToken)
+        if (response.data.payload.jwtToken) {
+          login(
+              response.data.payload.jwtToken,
+              response.data.payload.refreshToken,
+              response.data.payload.userId,
+              response.data.payload.nickname
+          )
           history.push('/dice')
         } else {
           setErrors({login: 'Authorization failed'})

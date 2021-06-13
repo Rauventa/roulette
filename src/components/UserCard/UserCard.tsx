@@ -7,16 +7,27 @@ import {$t} from "../../lib/i18n";
 import {ReactComponent as UserIcon} from "./img/user.svg";
 import {ReactComponent as LogoutIcon} from "./img/logout.svg";
 import {AuthContext} from "../../context/AuthContext";
+import {axiosClient} from "../../utils/axiosClient";
 
 export const UserCard = () => {
 
-  const {logout, isAuth} = useContext(AuthContext);
+  const {logout, isAuth, nickname} = useContext(AuthContext);
 
   const history = useHistory()
 
   const logoutHandler = () => {
     logout()
     history.push('/auth')
+  }
+
+  const getDiceEndpoint = async () => {
+    try {
+      const response = await axiosClient.get('/Dice/GetDiceHash');
+
+      console.log(response)
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   return (
@@ -27,7 +38,7 @@ export const UserCard = () => {
             <UserIcon />
             <div className={'user-card__title_text'}>
               <div className="user-card__title_text-name">
-                {$t('Alex Alecto')}
+                {$t(`${nickname}`)}
               </div>
               <div className="user-card__title_text-balance">
                 {$t('5000$')}
@@ -43,6 +54,9 @@ export const UserCard = () => {
             </Button>
             <Button dark onClick={logoutHandler}>
               <LogoutIcon />
+            </Button>
+            <Button dark onClick={getDiceEndpoint}>
+              {$t('Dice endpoint')}
             </Button>
           </div>
         </div> :

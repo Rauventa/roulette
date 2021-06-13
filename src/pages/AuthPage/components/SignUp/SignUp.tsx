@@ -74,7 +74,12 @@ export const SignUp = () => {
         const response = await axiosClient.post('/Auth/SignUp', formState)
 
         if (response.data.jwtToken) {
-          login(response.data.jwtToken)
+          login(
+              response.data.payload.jwtToken,
+              response.data.payload.refreshToken,
+              response.data.payload.userId,
+              response.data.payload.nickname
+          )
           history.push('/dice')
         } else {
           if (response.data.errors[0] === 'Email Already Taken Error') {

@@ -7,12 +7,12 @@ import {RootRouter} from "./routers/RootRouter/RootRouter";
 
 export const App = () => {
 
-    const {login, logout, token} = useAuth()
+    const {login, logout, token, refreshToken, userId, nickname} = useAuth()
     const isAuth = !!token
 
     return (
         <AuthContext.Provider value={{
-            token, login, logout, isAuth
+            token, refreshToken, userId, nickname, login, logout, isAuth
         }}>
             <AppLayout>
                 <RootRouter />

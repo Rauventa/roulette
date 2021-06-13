@@ -55,10 +55,8 @@ export const BetCard = ({
   return (
     <Card className={'bet-card'}>
       <div className="bet-card__counter">
-        <div className="bet-card__counter_minus">
-          <MinusIcon
-            onClick={() => changeBetHandler('minus')}
-          />
+        <div className="bet-card__counter_minus" onClick={() => changeBetHandler('minus')}>
+          <MinusIcon />
         </div>
         <input
           className={'bet-card__counter_value'}
@@ -66,10 +64,8 @@ export const BetCard = ({
           value={bet?.toFixed(4)}
           onChange={changeInputBetValue}
         />
-        <div className="bet-card__counter_plus">
-          <PlusIcon
-            onClick={() => changeBetHandler('plus')}
-          />
+        <div className="bet-card__counter_plus" onClick={() => changeBetHandler('plus')}>
+          <PlusIcon />
         </div>
       </div>
       <div className="bet-card__data">

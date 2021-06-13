@@ -3,10 +3,14 @@
   &__content {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
     flex-basis: 100%;
 
     .card {
       flex-grow: 1;
+
+      //width: 33.3%;
 
       &:not(:last-child) {
         margin-right: 40px;

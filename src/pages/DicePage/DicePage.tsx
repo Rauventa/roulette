@@ -1,8 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import './DicePage.scss'
 import {UserCard} from "../../components/UserCard/UserCard";
 import {BetCard} from "../../components/BetCard/BetCard";
 import {GameCard} from "../../components/GameCard/GameCard";
+import {useDispatch, useSelector} from "react-redux";
+import {getDiceHash} from "../../store/actions/Dice/diceaActions";
+import {AuthContext} from "../../context/AuthContext";
 
 export const DicePage = () => {
 
@@ -12,6 +15,16 @@ export const DicePage = () => {
   }
 
   const [formState, setFormState] = useState<any>(defaultFormState)
+
+  const dispatch = useDispatch()
+
+  const {token} = useContext(AuthContext)
+
+  const hash = useSelector((state: any) => state.diceReducer.hash)
+
+  useEffect(() => {
+    dispatch(getDiceHash(token))
+  }, [token]);
 
   const handleChange = (value: any, iterator: string) => {
 
@@ -47,6 +60,7 @@ export const DicePage = () => {
 
         <GameCard
           formState={formState}
+          hash={hash}
         />
       </div>
     </div>

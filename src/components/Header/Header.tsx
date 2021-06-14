@@ -11,6 +11,8 @@ import { Button } from '../Button/Button';
 import {LogoWheel} from "../Optional/LogoWheel/LogoWheel";
 import { AuthContext } from '../../context/AuthContext';
 import {ReactComponent as LogoutIcon} from "./img/logout.svg";
+import {useDispatch, useSelector} from "react-redux";
+import {changeCurrency} from "../../store/actions/Balance/balanceActions";
 
 export const Header = () => {
 
@@ -18,21 +20,25 @@ export const Header = () => {
 
   const history = useHistory();
 
-  const currentCurrency = localStorage.getItem('currency')
+  const dispatch = useDispatch()
+
+  const currency = useSelector((state: any) => state.balanceReducer.currency)
+
+  // const currentCurrency = localStorage.getItem('currency')
   const currentLang = localStorage.getItem('lang')
 
-  const [currency, setCurrency] = useState<string>(currentCurrency || 'btc');
+  // const [currency, setCurrency] = useState<string>(currentCurrency || 'btc');
   const [lang, setLang] = useState<string>(currentLang || 'ru');
   const [showLangs, setShowLangs] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!localStorage.currency) {
-      if (currency === 'btc') {
-        localStorage.setItem('currency', 'btc')
-      } else {
-        localStorage.setItem('currency', 'usd')
-      }
-    }
+    // if (!localStorage.currency) {
+    //   if (currency === 'btc') {
+    //     localStorage.setItem('currency', 'btc')
+    //   } else {
+    //     localStorage.setItem('currency', 'usd')
+    //   }
+    // }
 
     if (!localStorage.lang) {
       if (lang === 'ru') {
@@ -43,14 +49,18 @@ export const Header = () => {
     }
   }, []);
 
+  // const handleChangeCurrency = () => {
+  //   if (currency === 'btc') {
+  //     setCurrency('usd')
+  //     localStorage.setItem('currency', 'usd')
+  //   } else {
+  //     setCurrency('btc')
+  //     localStorage.setItem('currency', 'btc')
+  //   }
+  // }
+
   const handleChangeCurrency = () => {
-    if (currency === 'btc') {
-      setCurrency('usd')
-      localStorage.setItem('currency', 'usd')
-    } else {
-      setCurrency('btc')
-      localStorage.setItem('currency', 'btc')
-    }
+    dispatch(changeCurrency(currency))
   }
 
   const showAllLangsHandler = () => {

@@ -1,0 +1,6 @@
+export const GET_BTC_BALANCE = 'GET_BTC_BALANCE';
+export const GET_USD_BALANCE = 'GET_USD_BALANCE';
+export const CHANGE_CURRENCY = 'CHANGE_CURRENCY'
+
+//DICE
+export const GET_DICE_HASH = 'GET_DICE_HASH'

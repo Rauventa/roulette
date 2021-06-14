@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useEffect, useContext} from 'react';
 import {useHistory} from "react-router-dom";
 import './UserCard.scss';
 import {Card} from "../Card/Card";
@@ -7,27 +7,28 @@ import {$t} from "../../lib/i18n";
 import {ReactComponent as UserIcon} from "./img/user.svg";
 import {ReactComponent as LogoutIcon} from "./img/logout.svg";
 import {AuthContext} from "../../context/AuthContext";
-import {axiosClient} from "../../utils/axiosClient";
+import {useDispatch, useSelector} from "react-redux";
+import {getBalance} from "../../store/actions/Balance/balanceActions";
 
 export const UserCard = () => {
 
-  const {logout, isAuth, nickname} = useContext(AuthContext);
+  const {logout, isAuth, token, nickname} = useContext(AuthContext);
 
   const history = useHistory()
+
+  const dispatch = useDispatch()
+
+  const btc = useSelector((state: any) => state.balanceReducer.balanceBtc)
+  const usd = useSelector((state: any) => state.balanceReducer.balanceUsd)
+  const currency = useSelector((state: any) => state.balanceReducer.currency)
+
+  useEffect(() => {
+    dispatch(getBalance(token))
+  }, [token]);
 
   const logoutHandler = () => {
     logout()
     history.push('/auth')
-  }
-
-  const getDiceEndpoint = async () => {
-    try {
-      const response = await axiosClient.get('/Dice/GetDiceHash');
-
-      console.log(response)
-    } catch (e) {
-      console.log(e)
-    }
   }
 
   return (
@@ -41,7 +42,7 @@ export const UserCard = () => {
                 {$t(`${nickname}`)}
               </div>
               <div className="user-card__title_text-balance">
-                {$t('5000$')}
+                {$t(`${currency === 'btc' ? btc : usd} ${currency === 'btc' ? 'BTC' : '$'}`)}
               </div>
             </div>
           </div>
@@ -54,9 +55,6 @@ export const UserCard = () => {
             </Button>
             <Button dark onClick={logoutHandler}>
               <LogoutIcon />
-            </Button>
-            <Button dark onClick={getDiceEndpoint}>
-              {$t('Dice endpoint')}
             </Button>
           </div>
         </div> :

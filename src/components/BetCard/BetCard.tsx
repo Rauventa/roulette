@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import { $t } from '../../lib/i18n';
 import { Button } from '../Button/Button';
 import { Card } from '../Card/Card';
@@ -6,6 +6,11 @@ import './BetCard.scss'
 import {Range} from "../Range/Range";
 import {ReactComponent as MinusIcon} from "./img/minus.svg";
 import {ReactComponent as PlusIcon} from "./img/plus.svg";
+import {useDispatch, useSelector} from "react-redux";
+import {startDice} from "../../store/actions/Dice/diceActions";
+import {AuthContext} from "../../context/AuthContext";
+import {getBalance} from "../../store/actions/Balance/balanceActions";
+import { Modal } from '../Modal/Modal';
 
 interface BetCardProps {
   formState: any;
@@ -19,6 +24,14 @@ export const BetCard = ({
 
   const [range, setRange] = useState<number>(50)
   const [bet, setBet] = useState<number>(0.0001)
+
+  const [modal, setModal] = useState<boolean>(false)
+
+  const {token} = useContext(AuthContext)
+
+  const dispatch = useDispatch()
+
+  const result = useSelector((state: any) => state.diceReducer.result)
 
   const changeRangeHandler = (value: number) => {
     setRange(value)
@@ -52,8 +65,24 @@ export const BetCard = ({
     handleChange(Number(e.target.value), 'bet')
   }
 
+  const makeBetHandler = async () => {
+    await dispatch(startDice(token, {
+      bet,
+      chance: range - 1
+    }, range))
+
+    setModal(true)
+  }
+
   return (
     <Card className={'bet-card'}>
+      {modal ?
+        <Modal
+          title={'Dice result'}
+          formState={result}
+          onClose={() => setModal(false)}
+        /> : null
+      }
       <div className="bet-card__counter">
         <div className="bet-card__counter_minus" onClick={() => changeBetHandler('minus')}>
           <MinusIcon />
@@ -87,7 +116,7 @@ export const BetCard = ({
         </div>
       </div>
       <div className="bet-card__buttons">
-        <Button primary>
+        <Button primary onClick={makeBetHandler}>
           {$t('Make a Bet')}
         </Button>
         <div className={'bet-card__buttons_currency'}>

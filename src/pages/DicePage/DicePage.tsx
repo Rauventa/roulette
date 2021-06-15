@@ -4,7 +4,7 @@ import {UserCard} from "../../components/UserCard/UserCard";
 import {BetCard} from "../../components/BetCard/BetCard";
 import {GameCard} from "../../components/GameCard/GameCard";
 import {useDispatch, useSelector} from "react-redux";
-import {getDiceHash} from "../../store/actions/Dice/diceaActions";
+import {getDiceHash} from "../../store/actions/Dice/diceActions";
 import {AuthContext} from "../../context/AuthContext";
 
 export const DicePage = () => {

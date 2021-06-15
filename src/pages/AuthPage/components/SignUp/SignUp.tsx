@@ -73,7 +73,7 @@ export const SignUp = () => {
       try {
         const response = await axiosClient.post('/Auth/SignUp', formState)
 
-        if (response.data.jwtToken) {
+        if (response.data.payload.jwtToken) {
           login(
               response.data.payload.jwtToken,
               response.data.payload.refreshToken,
@@ -90,6 +90,7 @@ export const SignUp = () => {
         }
 
       } catch (e) {
+        console.log(e)
         setErrors({registration: 'Registration failed'})
       }
     } else {
@@ -123,7 +124,7 @@ export const SignUp = () => {
 
           <Input
             className={errors?.confirmPassword ? 'input-error' : ''}
-            placeholder={'Change Password'}
+            placeholder={'Confirm Password'}
             type={'password'}
             value={formState.confirmPassword}
             errors={errors?.confirmPassword}

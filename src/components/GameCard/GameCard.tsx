@@ -41,10 +41,10 @@ export const GameCard = ({
         </div>
         <div className="game-card__counter_percent">
           <div className="game-card__counter_percent-value">
-            {$t(`${formState.range - 1} %`)}
+            {$t(`${formState.range - 1}`)}
           </div>
           <div className="game-card__counter_percent-info">
-            {$t('Chance')}
+            {$t('Roll under')}
           </div>
         </div>
       </div>

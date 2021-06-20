@@ -11,6 +11,7 @@ import {Card} from "../../../../components/Card/Card";
 import {axiosClient} from "../../../../utils/axiosClient";
 import {inputValidator} from "../../../../lib/validator";
 import {AuthContext} from "../../../../context/AuthContext";
+import '../../AuthPage.scss'
 
 export const SignUp = () => {
 
@@ -99,72 +100,74 @@ export const SignUp = () => {
   }
 
   return (
-    <Card className={'fit-card'}>
-      <div className="auth-page__signup">
-        <div className="auth-page__title">
-          {$t('Sign Up')}
-        </div>
-        <div className="form-group">
-          <Input
-            className={errors?.email ? 'input-error' : ''}
-            placeholder={'Email or Phone'}
-            type={'text'}
-            value={formState.email}
-            errors={errors?.email}
-            onChange={(value) => handleStateUpdate(value, 'email')}
-          />
-          <Input
-            className={errors?.password ? 'input-error' : ''}
-            placeholder={'Password'}
-            type={'password'}
-            value={formState.password}
-            errors={errors?.password}
-            onChange={(value) => handleStateUpdate(value, 'password')}
-          />
-
-          <Input
-            className={errors?.confirmPassword ? 'input-error' : ''}
-            placeholder={'Confirm Password'}
-            type={'password'}
-            value={formState.confirmPassword}
-            errors={errors?.confirmPassword}
-            onChange={(value) => handleStateUpdate(value, 'repeat')}
-          />
-
-          <Checkbox
-            checked={formState.license}
-            onChange={(value) => handleStateUpdate(value, 'license')}
-          >
-            <div>
-              {$t('I confirm that I agree to the')}
-              <NavLink to={'/'} className={'danger-link'}>
-                {$t('License agreement')}
-              </NavLink>
-            </div>
-          </Checkbox>
-
-          <div className={'errors-shower'}>
-            {$t(errors?.registration)}
-          </div>
-
-          <div className="auth-page__buttons">
-            <Button primary onClick={handleSubmit}>
+      <div className={'auth-page'}>
+        <Card className={'fit-card'}>
+          <div className="auth-page__signup">
+            <div className="auth-page__title">
               {$t('Sign Up')}
-            </Button>
-            <div className="auth-page__buttons_socials">
-              <div className="auth-page__buttons_socials-item">
-                <InstagramIcon />
+            </div>
+            <div className="form-group">
+              <Input
+                  className={errors?.email ? 'input-error' : ''}
+                  placeholder={'Email or Phone'}
+                  type={'text'}
+                  value={formState.email}
+                  errors={errors?.email}
+                  onChange={(value) => handleStateUpdate(value, 'email')}
+              />
+              <Input
+                  className={errors?.password ? 'input-error' : ''}
+                  placeholder={'Password'}
+                  type={'password'}
+                  value={formState.password}
+                  errors={errors?.password}
+                  onChange={(value) => handleStateUpdate(value, 'password')}
+              />
+
+              <Input
+                  className={errors?.confirmPassword ? 'input-error' : ''}
+                  placeholder={'Confirm Password'}
+                  type={'password'}
+                  value={formState.confirmPassword}
+                  errors={errors?.confirmPassword}
+                  onChange={(value) => handleStateUpdate(value, 'repeat')}
+              />
+
+              <Checkbox
+                  checked={formState.license}
+                  onChange={(value) => handleStateUpdate(value, 'license')}
+              >
+                <div>
+                  {$t('I confirm that I agree to the')}
+                  <NavLink to={'/'} className={'danger-link'}>
+                    {$t('License agreement')}
+                  </NavLink>
+                </div>
+              </Checkbox>
+
+              <div className={'errors-shower'}>
+                {$t(errors?.registration)}
               </div>
-              <div className="auth-page__buttons_socials-item">
-                <FacebookIcon />
-              </div>
-              <div className="auth-page__buttons_socials-item">
-                <VkIcon />
+
+              <div className="auth-page__buttons">
+                <Button primary onClick={handleSubmit}>
+                  {$t('Sign Up')}
+                </Button>
+                <div className="auth-page__buttons_socials">
+                  <div className="auth-page__buttons_socials-item">
+                    <InstagramIcon />
+                  </div>
+                  <div className="auth-page__buttons_socials-item">
+                    <FacebookIcon />
+                  </div>
+                  <div className="auth-page__buttons_socials-item">
+                    <VkIcon />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </Card>
       </div>
-    </Card>
   )
 }

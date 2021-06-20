@@ -2,9 +2,10 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import {RoulettePage} from "../../pages/RoulettePage/RoulettePage";
 import {DicePage} from "../../pages/DicePage/DicePage";
-import {AuthPage} from "../../pages/AuthPage/AuthPage";
 import {WithdrawPage} from "../../pages/WithdrawPage/WithdrawPage";
 import {DepositPage} from "../../pages/DepositPage/DepositPage";
+import { SignIn } from '../../pages/AuthPage/components/SignIn/SignIn';
+import {SignUp} from "../../pages/AuthPage/components/SignUp/SignUp";
 
 export const RootRouter = () => {
   return (
@@ -12,9 +13,12 @@ export const RootRouter = () => {
       <Route path={'/'} exact>
         <RoulettePage />
       </Route>
-      <Route path={'/auth'}>
-        <AuthPage />
-      </Route>
+        <Route path={'/login'}>
+            <SignIn />
+        </Route>
+        <Route path={'/registration'}>
+            <SignUp />
+        </Route>
       <Route path={'/dice'}>
         <DicePage />
       </Route>

@@ -1,8 +1,17 @@
 .layout {
   background-color: #202036;
   min-height: 100vh;
+  display: flex;
+  justify-content: center;
 
   &__container {
+    width: 1400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__content {
     padding: 30px;
   }
 }

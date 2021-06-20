@@ -12,11 +12,13 @@ export const AppLayout = ({
 }: AppLayoutProps) => {
   return (
    <div className={'layout'}>
-     <Header />
-     <div className="layout__container">
-       {children}
-     </div>
-     <Footer />
+       <div className="layout__container">
+           <Header />
+           <div className="layout__content">
+               {children}
+           </div>
+           <Footer />
+       </div>
    </div>
   )
 }

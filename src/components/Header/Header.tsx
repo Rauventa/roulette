@@ -143,9 +143,14 @@ export const Header = () => {
           }
         </div>
         {!isAuth ?
-            <Button primary href={'/auth'}>
-              {$t('Sign In')}
-            </Button> :
+            <div className="header__additional_auth">
+              <Button primary href={'/login'}>
+                {$t('Sign In')}
+              </Button>
+              <Button primary href={'/registration'}>
+                {$t('Sign Up')}
+              </Button>
+            </div> :
             <Button dark onClick={logoutHandler}>
               <LogoutIcon />
             </Button>

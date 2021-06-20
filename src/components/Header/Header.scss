@@ -50,6 +50,17 @@
     display: flex;
     align-items: center;
 
+    &_auth {
+      display: flex;
+      align-items: center;
+
+      button, a {
+        &:not(:last-child) {
+          margin-right: 20px;
+        }
+      }
+    }
+
     .currency {
       font-weight: bold;
       margin-right: 20px;

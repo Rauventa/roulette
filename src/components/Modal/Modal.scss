@@ -17,7 +17,7 @@
   //box-shadow: 0 8px 8px -4px #202036, 0 2px 4px -1px #202036, 0 0 1px 0 #202036;
   background-color: #2a2a41;
 
-  &__message {
+  &__title {
     font-size: 36px;
     font-weight: 500;
   }
@@ -28,5 +28,32 @@
 
   .danger {
     color: #e12d81;
+  }
+
+  &__content {
+    padding: 20px 10px;
+  }
+
+  &__buttons {
+
+  }
+
+  .status-modal {
+
+    &__item {
+      display: flex;
+
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+
+      &_title {
+        margin-right: 20px;
+      }
+
+      &_value {
+
+      }
+    }
   }
 }

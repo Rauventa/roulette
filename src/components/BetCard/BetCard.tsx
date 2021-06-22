@@ -9,8 +9,8 @@ import {ReactComponent as PlusIcon} from "./img/plus.svg";
 import {useDispatch, useSelector} from "react-redux";
 import {startDice} from "../../store/actions/Dice/diceActions";
 import {AuthContext} from "../../context/AuthContext";
-import {getBalance} from "../../store/actions/Balance/balanceActions";
 import { Modal } from '../Modal/Modal';
+import { CSSTransition } from 'react-transition-group';
 
 interface BetCardProps {
   formState: any;
@@ -76,13 +76,13 @@ export const BetCard = ({
 
   return (
     <Card className={'bet-card'}>
-      {modal ?
+      <CSSTransition in={modal} timeout={300} unmountOnExit classNames="my-node">
         <Modal
-          title={'Dice result'}
-          formState={result}
-          onClose={() => setModal(false)}
-        /> : null
-      }
+            title={'Dice result'}
+            formState={result}
+            onClose={() => setModal(false)}
+        />
+      </CSSTransition>
       <div className="bet-card__counter">
         <div className="bet-card__counter_minus" onClick={() => changeBetHandler('minus')}>
           <MinusIcon />
@@ -109,7 +109,7 @@ export const BetCard = ({
         <div className="bet-card__data_spinner">
           <Range
             min={1}
-            max={75}
+            max={99}
             value={range}
             onChange={changeRangeHandler}
           />

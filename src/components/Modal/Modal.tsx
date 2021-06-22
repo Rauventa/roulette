@@ -23,8 +23,27 @@ export const Modal = ({
         {/*  {$t(title)}*/}
         {/*</div>*/}
 
-        <div className={`modal__message ${formState.userWin ? 'success' : 'danger'}`}>
+        <div className={`modal__title ${formState.userWin ? 'success' : 'danger'}`}>
           {formState.userWin ? $t('You won!') : $t('You lose')}
+        </div>
+
+        <div className="modal__content status-modal">
+          <div className="status-modal__item">
+            <div className="status-modal__item_title">
+              {$t('Your number')}
+            </div>
+            <div className="status-modal__item_value">
+              {$t('54')}
+            </div>
+          </div>
+          <div className="status-modal__item">
+            <div className="status-modal__item_title">
+              {$t('Gained number')}
+            </div>
+            <div className="status-modal__item_value">
+              {$t('17')}
+            </div>
+          </div>
         </div>
 
         {/*<p>Your bet - {formState.bet}</p>*/}
@@ -36,9 +55,11 @@ export const Modal = ({
 
         {/*<h1>STATUS - {formState.userWin ? 'WIN' : 'LOSE'}</h1>*/}
 
-        <Button primary onClick={onClose}>
-          {$t('Start new game')}
-        </Button>
+        <div className="modal__buttons">
+          <Button primary onClick={onClose}>
+            {$t('Start new game')}
+          </Button>
+        </div>
 
       </div>
     </div>

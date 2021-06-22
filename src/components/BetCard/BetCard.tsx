@@ -74,13 +74,23 @@ export const BetCard = ({
     setModal(true)
   }
 
+  const closeModalHandler = async () => {
+    try {
+      await dispatch(getBalance(token))
+
+      setModal(false)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   return (
     <Card className={'bet-card'}>
       {modal ?
         <Modal
           title={'Dice result'}
           formState={result}
-          onClose={() => setModal(false)}
+          onClose={closeModalHandler}
         /> : null
       }
       <div className="bet-card__counter">

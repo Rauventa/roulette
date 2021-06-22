@@ -6,6 +6,7 @@ import {WithdrawPage} from "../../pages/WithdrawPage/WithdrawPage";
 import {DepositPage} from "../../pages/DepositPage/DepositPage";
 import { SignIn } from '../../pages/AuthPage/components/SignIn/SignIn';
 import {SignUp} from "../../pages/AuthPage/components/SignUp/SignUp";
+import {HiloPage} from "../../pages/HiloPage/HiloPage";
 
 export const RootRouter = () => {
   return (
@@ -13,14 +14,17 @@ export const RootRouter = () => {
       <Route path={'/'} exact>
         <RoulettePage />
       </Route>
-        <Route path={'/login'}>
-            <SignIn />
-        </Route>
-        <Route path={'/registration'}>
-            <SignUp />
-        </Route>
+      <Route path={'/login'}>
+        <SignIn />
+      </Route>
+      <Route path={'/registration'}>
+        <SignUp />
+      </Route>
       <Route path={'/dice'}>
         <DicePage />
+      </Route>
+      <Route path={'/hilo'}>
+        <HiloPage />
       </Route>
       <Route path={'/deposit'}>
         <DepositPage />

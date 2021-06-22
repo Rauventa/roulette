@@ -83,7 +83,7 @@ export const Header = () => {
 
   const logoutHandler = () => {
     logout()
-    history.push('/auth')
+    history.push('/login')
   }
 
   return (
@@ -108,12 +108,12 @@ export const Header = () => {
             {$t('Dice')}
           </div>
         </NavLink>
-        <NavLink className="header__nav_item" to={'/'} >
+        <NavLink className="header__nav_item" to={'/hilo'} >
           <div className="header__nav_item-icon">
             <RouletteIcon />
           </div>
           <div className="header__nav_item-name">
-            {$t('Free BTC')}
+            {$t('HiLo')}
           </div>
         </NavLink>
       </div>
@@ -144,10 +144,10 @@ export const Header = () => {
         </div>
         {!isAuth ?
             <div className="header__additional_auth">
-              <Button primary href={'/login'}>
+              <Button dark href={'/login'}>
                 {$t('Sign In')}
               </Button>
-              <Button primary href={'/registration'}>
+              <Button dark href={'/registration'}>
                 {$t('Sign Up')}
               </Button>
             </div> :

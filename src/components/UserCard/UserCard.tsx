@@ -66,7 +66,7 @@ export const UserCard = () => {
             </div>
           </div>
           <div className="user-card__buttons">
-            <Button primary href={'/auth'}>
+            <Button dark href={'/login'}>
               {$t('Sign In')}
             </Button>
           </div>

@@ -93,6 +93,14 @@ a {
   transition: ease-in-out .3s;
 }
 
+input {
+  transition: all .3s;
+
+  &:hover {
+    background-color: rgba(224, 224, 255, 0.04);
+  }
+}
+
 .text-secondary {
   font-size: 14px;
   font-weight: 500;

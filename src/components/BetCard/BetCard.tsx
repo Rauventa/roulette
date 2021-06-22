@@ -11,6 +11,7 @@ import {startDice} from "../../store/actions/Dice/diceActions";
 import {AuthContext} from "../../context/AuthContext";
 import { Modal } from '../Modal/Modal';
 import { CSSTransition } from 'react-transition-group';
+import { getBalance } from '../../store/actions/Balance/balanceActions';
 
 interface BetCardProps {
   formState: any;
@@ -74,13 +75,23 @@ export const BetCard = ({
     setModal(true)
   }
 
+  const closeModalHandler = async () => {
+    try {
+      await dispatch(getBalance(token))
+
+      setModal(false)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   return (
     <Card className={'bet-card'}>
       <CSSTransition in={modal} timeout={300} unmountOnExit classNames="my-node">
         <Modal
             title={'Dice result'}
             formState={result}
-            onClose={() => setModal(false)}
+            onClose={closeModalHandler}
         />
       </CSSTransition>
       <div className="bet-card__counter">

@@ -6,6 +6,7 @@ import {GameCard} from "../../components/GameCard/GameCard";
 import {useDispatch, useSelector} from "react-redux";
 import {getDiceHash} from "../../store/actions/Dice/diceActions";
 import {AuthContext} from "../../context/AuthContext";
+import {DiceResults} from "./components/DiceResults/DiceResults";
 
 export const DicePage = () => {
 
@@ -62,6 +63,8 @@ export const DicePage = () => {
           formState={formState}
           hash={hash}
         />
+
+        <DiceResults />
       </div>
     </div>
   )

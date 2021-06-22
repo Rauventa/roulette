@@ -55,6 +55,9 @@
       align-items: center;
 
       button, a {
+        font-weight: 500;
+        font-size: 15px;
+
         &:not(:last-child) {
           margin-right: 20px;
         }

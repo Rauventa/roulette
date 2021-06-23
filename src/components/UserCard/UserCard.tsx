@@ -21,9 +21,10 @@ export const UserCard = () => {
   const btc = useSelector((state: any) => state.balanceReducer.balanceBtc)
   const usd = useSelector((state: any) => state.balanceReducer.balanceUsd)
   const currency = useSelector((state: any) => state.balanceReducer.currency)
+  const rate = useSelector((state: any) => state.balanceReducer.rate)
 
   useEffect(() => {
-    dispatch(getBalance(token))
+    dispatch(getBalance(token, rate))
   }, [token]);
 
   const logoutHandler = () => {

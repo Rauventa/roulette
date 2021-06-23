@@ -50,6 +50,13 @@
     display: flex;
     align-items: center;
 
+    &_rate {
+      margin-right: 20px;
+      color: #1db37c;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
     &_auth {
       display: flex;
       align-items: center;

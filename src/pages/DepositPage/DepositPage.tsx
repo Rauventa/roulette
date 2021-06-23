@@ -22,7 +22,7 @@ export const DepositPage = () => {
           placeholder={''}
           type={'text'}
           value={promocode}
-          title={'Use promocode to refill your balance'}
+          title={'Use promo code to refill your balance'}
         />
 
         <Button primary>

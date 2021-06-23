@@ -16,6 +16,8 @@ export const Modal = ({
   onClose
 }: ModalProps) => {
 
+  console.log(formState)
+
   return (
     <div className={'modal-overflow'}>
       <div className={'modal'}>
@@ -33,7 +35,7 @@ export const Modal = ({
               {$t('Your number')}
             </div>
             <div className="status-modal__item_value">
-              {$t('54')}
+              {$t(formState.chance)}
             </div>
           </div>
           <div className="status-modal__item">
@@ -41,7 +43,18 @@ export const Modal = ({
               {$t('Gained number')}
             </div>
             <div className="status-modal__item_value">
-              {$t('17')}
+              {$t(formState.hiddenNumber)}
+            </div>
+          </div>
+          <div className="status-modal__item">
+            <div className="status-modal__item_title">
+              {formState.userWin ?
+                  $t('Total win') :
+                  $t('Total loss')
+              }
+            </div>
+            <div className="status-modal__item_value">
+              {$t(`${Math.abs(formState.gain)} BTC`)}
             </div>
           </div>
         </div>

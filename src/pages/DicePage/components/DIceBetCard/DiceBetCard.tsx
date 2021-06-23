@@ -8,6 +8,7 @@ import {Modal} from "../../../../components/Modal/Modal";
 import {getBalance} from "../../../../store/actions/Balance/balanceActions";
 import {AuthContext} from "../../../../context/AuthContext";
 import {useDispatch, useSelector} from "react-redux";
+import {Spinner} from "../../../../components/Spinner/Spinner";
 
 interface DiceBetCardProps {
   bet: number;
@@ -21,12 +22,14 @@ export const DiceBetCard = ({
 
   const [range, setRange] = useState<number>(50)
   const [modal, setModal] = useState<boolean>(false)
+  const [loader, setLoader] = useState<boolean>(false)
 
   const {token} = useContext(AuthContext)
 
   const dispatch = useDispatch()
 
   const result = useSelector((state: any) => state.diceReducer.result)
+  const rate = useSelector((state: any) => state.diceReducer.rate)
 
   const rangeUpdate = (value: number) => {
     setRange(value)
@@ -35,32 +38,42 @@ export const DiceBetCard = ({
   }
 
   const makeBetHandler = async () => {
+
+    setLoader(true)
+
     await dispatch(startDice(token, {
       bet,
-      chance: range + 1
+      chance: Number(range) + 1
     }, range))
 
+    setLoader(false)
     setModal(true)
   }
 
   const closeModalHandler = async () => {
-    try {
-      await dispatch(getBalance(token))
+    setModal(false)
+    setLoader(true)
 
-      setModal(false)
+    try {
+      await dispatch(getBalance(token, rate))
     } catch (e) {
       console.log(e)
     }
+    setLoader(false)
   }
 
   return (
     <>
-      <CSSTransition in={modal} timeout={300} unmountOnExit classNames="my-node">
+      <CSSTransition in={modal} timeout={500} unmountOnExit classNames="my-node">
         <Modal
           title={'Dice result'}
           formState={result}
           onClose={closeModalHandler}
         />
+      </CSSTransition>
+
+      <CSSTransition in={loader} timeout={500} unmountOnExit classNames="my-node">
+        <Spinner />
       </CSSTransition>
 
       <div className="bet-card__data">

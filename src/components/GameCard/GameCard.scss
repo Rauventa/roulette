@@ -4,6 +4,12 @@
 
   &__subtitle {
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+
+    .card__subtitle_left {
+      margin-right: 20px;
+    }
   }
 
   &__counter {

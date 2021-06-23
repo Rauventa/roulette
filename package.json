@@ -56,7 +56,7 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.1.7",
-    "@types/react-select": "^4.0.15",
+    "@types/react-select": "^4.0.16",
     "@types/react-transition-group": "^4.4.1"
   }
 }

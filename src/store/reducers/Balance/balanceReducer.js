@@ -3,7 +3,8 @@ import {CHANGE_CURRENCY, GET_BTC_BALANCE, GET_USD_BALANCE} from "../../actions/a
 const initialState = {
     currency: 'btc',
     balanceBtc: null,
-    balanceUsd: null
+    balanceUsd: null,
+    rate: 31555.5
 };
 
 export default function balanceReducer(state = initialState, action) {

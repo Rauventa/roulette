@@ -4,6 +4,7 @@ import './GameCard.scss'
 import {$t} from "../../lib/i18n";
 import {DiceGameCard} from "../../pages/DicePage/components/DIceGameCard/DiceGameCard";
 import {HiloGameCard} from "../../pages/HiloPage/components/HiloGameCard/HiloGameCard";
+import {useSelector} from "react-redux";
 
 interface GameCardProps {
   formState: any,
@@ -19,6 +20,9 @@ export const GameCard = ({
 
   const possibleProfit = parseFloat((formState.betValue * Number((100 / formState.range * (1 - 2 / 100)).toFixed(4))).toFixed(8));
 
+  const currency = useSelector((state: any) => state.balanceReducer.currency)
+  const rate = useSelector((state: any) => state.balanceReducer.rate)
+
   return (
     <Card className={'game-card'} title={'Game'}>
       <div className={'game-card__subtitle'}>
@@ -31,13 +35,16 @@ export const GameCard = ({
       </div>
       {type === 'dice' ?
         <DiceGameCard
-          possibleProfit={possibleProfit}
+          possibleProfit={currency === 'btc' ? possibleProfit : (possibleProfit * rate).toFixed(1)}
+          currency={currency}
           formState={formState}
         /> : null
       }
       {type === 'hilo' ?
         <HiloGameCard
           formState={formState}
+          jackpot={currency === 'btc' ? formState.jackpot : (formState.jackpot * rate).toFixed(1)}
+          currency={currency}
         /> : null
       }
     </Card>

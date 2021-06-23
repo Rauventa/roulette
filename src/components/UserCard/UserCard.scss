@@ -13,6 +13,15 @@
       width: 80px;
       height: 100%;
       margin-right: 20px;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 12px;
+      background-color: #2a2a41;
+      transition: all .5s;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
     }
 
     &_text {

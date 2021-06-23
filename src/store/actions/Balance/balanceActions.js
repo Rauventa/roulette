@@ -15,7 +15,7 @@ export function changeCurrency(ticker) {
     }
 }
 
-export function getBalance(token) {
+export function getBalance(token, rate) {
     return async dispatch => {
         try {
             const response = await axiosClient.get('/Profile/GetBalanceInBTC', {
@@ -25,8 +25,6 @@ export function getBalance(token) {
             });
 
             dispatch(getBtcBalance(response.data.payload))
-
-            const rate = 38919.5
 
             const usdValue = response.data.payload * rate
 

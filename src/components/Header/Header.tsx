@@ -23,6 +23,7 @@ export const Header = () => {
   const dispatch = useDispatch()
 
   const currency = useSelector((state: any) => state.balanceReducer.currency)
+  const rate = useSelector((state: any) => state.balanceReducer.rate)
 
   // const currentCurrency = localStorage.getItem('currency')
   const currentLang = localStorage.getItem('lang')
@@ -118,6 +119,11 @@ export const Header = () => {
         </NavLink>
       </div>
       <div className="header__additional">
+
+        <div className="header__additional_rate">
+          {$t(`1 BTC = ${rate}$`)}
+        </div>
+
         <div className="currency text-secondary" onClick={handleChangeCurrency}>
           {currency === 'btc' ?
             $t('BTC') :

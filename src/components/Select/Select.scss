@@ -1,0 +1,76 @@
+.select-container {
+
+}
+
+.select {
+
+  &__control {
+    color: #fff !important;
+    font-size: 15px !important;
+    font-weight: 500;
+    padding: 10px;
+    border: 2px solid transparent !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+    background-color: rgba(255, 255, 255, 0.02) !important;
+    transition: none !important;
+    cursor: pointer !important;
+
+    &--menu-is-open {
+      border-radius: 12px 12px 0 0 !important;
+    }
+  }
+
+  //&__value-container {
+  //  padding: 20px 16px !important;
+  //}
+
+  &__single-value {
+    color: #fff !important;
+  }
+
+  &__indicator {
+    padding: 5px 8px !important;
+
+    transition: transform .2s ease !important;
+
+    &-separator {
+      display: none !important;
+    }
+  }
+
+  &__control--menu-is-open &__indicator {
+    transform: rotate(180deg);
+  }
+
+  &__menu {
+    margin: 0 !important;
+
+    border-top: none !important;
+    border-radius: 0 0 12px 12px !important;
+    background-color: rgba(255, 255, 255, 0.02) !important;
+    font-weight: 500 !important;
+
+    box-shadow: none !important;
+
+    overflow: hidden;
+
+  }
+
+  &__option {
+    cursor: pointer !important;
+    font-size: 15px !important;
+    padding: 20px !important;
+  }
+
+  &__option--is-selected,
+  &__option--is-focused {
+    color: #fff !important;
+    background-color: rgba(224, 224, 255, 0.08) !important;
+    cursor: pointer !important;
+  }
+
+  &__option--is-selected {
+    background-color: rgba(224, 224, 255, 0.04) !important;
+  }
+}

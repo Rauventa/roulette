@@ -1,0 +1,21 @@
+.withdraw-page {
+
+  &__content {
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    &_amount, &_wallet {
+      width: calc(50% - 10px);
+
+      input {
+        width: 100%;
+      }
+    }
+  }
+
+  .input-group__errors {
+    margin: 5px;
+  }
+}

@@ -3,4 +3,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  .text-secondary {
+    &:hover {
+      color: #fff;
+    }
+  }
 }

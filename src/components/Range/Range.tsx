@@ -21,7 +21,7 @@ export const Range = ({
 
   return (
     <div className={'slider'}>
-      <div className={'slide'} style={{width: `calc((100% - 110px) * ${Number(value) / 100 * 4 / 3})`}} />
+      <div className={'slide'} style={{width: `calc((100% - 20px) * ${Number(value) / 100})`}} />
       <input
         className={'range'}
         type="range"

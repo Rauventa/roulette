@@ -2,15 +2,19 @@ import React from 'react';
 import { Card } from '../Card/Card';
 import './GameCard.scss'
 import {$t} from "../../lib/i18n";
+import {DiceGameCard} from "../../pages/DicePage/components/DIceGameCard/DiceGameCard";
+import {HiloGameCard} from "../../pages/HiloPage/components/HiloGameCard/HiloGameCard";
 
 interface GameCardProps {
   formState: any,
-  hash: string
+  hash: string,
+  type: string
 }
 
 export const GameCard = ({
   formState,
-  hash
+  hash,
+  type
 }: GameCardProps) => {
 
   const possibleProfit = parseFloat((formState.betValue * Number((100 / formState.range * (1 - 2 / 100)).toFixed(4))).toFixed(8));
@@ -25,29 +29,17 @@ export const GameCard = ({
           {$t(`${hash}`)}
         </div>
       </div>
-      <div className="game-card__counter">
-        <div className="game-card__counter_value">
-          <div className="game-card__counter_value-number">
-            <div className="game-card__counter_value-number--count">
-              {$t(`${possibleProfit}`)}
-            </div>
-            <div className="game-card__counter_value-number--currency">
-              {$t('BTC')}
-            </div>
-          </div>
-          <div className="game-card__counter_value-info">
-            {$t('Possible win')}
-          </div>
-        </div>
-        <div className="game-card__counter_percent">
-          <div className="game-card__counter_percent-value">
-            {$t(`${formState.range - 1}`)}
-          </div>
-          <div className="game-card__counter_percent-info">
-            {$t('Roll under')}
-          </div>
-        </div>
-      </div>
+      {type === 'dice' ?
+        <DiceGameCard
+          possibleProfit={possibleProfit}
+          formState={formState}
+        /> : null
+      }
+      {type === 'hilo' ?
+        <HiloGameCard
+          formState={formState}
+        /> : null
+      }
     </Card>
   )
 }

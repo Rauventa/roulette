@@ -56,12 +56,14 @@ export const DicePage = () => {
 
         <BetCard
           formState={formState}
+          type={'dice'}
           handleChange={handleChange}
         />
 
         <GameCard
           formState={formState}
           hash={hash}
+          type={'dice'}
         />
 
         <DiceResults />

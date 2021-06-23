@@ -1,42 +1,26 @@
-import React, {useContext, useState} from 'react';
-import { $t } from '../../lib/i18n';
-import { Button } from '../Button/Button';
+import React, {useState} from 'react';
 import { Card } from '../Card/Card';
 import './BetCard.scss'
-import {Range} from "../Range/Range";
 import {ReactComponent as MinusIcon} from "./img/minus.svg";
 import {ReactComponent as PlusIcon} from "./img/plus.svg";
-import {useDispatch, useSelector} from "react-redux";
-import {startDice} from "../../store/actions/Dice/diceActions";
-import {AuthContext} from "../../context/AuthContext";
-import { Modal } from '../Modal/Modal';
-import { CSSTransition } from 'react-transition-group';
-import { getBalance } from '../../store/actions/Balance/balanceActions';
+import {DiceBetCard} from "../../pages/DicePage/components/DIceBetCard/DiceBetCard";
+import {HiloBetCard} from "../../pages/HiloPage/components/HiloBetCard/HiloBetCard";
 
 interface BetCardProps {
   formState: any;
+  type: string,
   handleChange: (value: any, iterator: string) => void;
 }
 
 export const BetCard = ({
   formState,
+  type,
   handleChange
 }: BetCardProps) => {
 
-  const [range, setRange] = useState<number>(50)
   const [bet, setBet] = useState<number>(0.0001)
 
-  const [modal, setModal] = useState<boolean>(false)
-
-  const {token} = useContext(AuthContext)
-
-  const dispatch = useDispatch()
-
-  const result = useSelector((state: any) => state.diceReducer.result)
-
   const changeRangeHandler = (value: number) => {
-    setRange(value)
-
     handleChange(value, 'range')
   }
 
@@ -66,34 +50,8 @@ export const BetCard = ({
     handleChange(Number(e.target.value), 'bet')
   }
 
-  const makeBetHandler = async () => {
-    await dispatch(startDice(token, {
-      bet,
-      chance: range - 1
-    }, range))
-
-    setModal(true)
-  }
-
-  const closeModalHandler = async () => {
-    try {
-      await dispatch(getBalance(token))
-
-      setModal(false)
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
   return (
     <Card className={'bet-card'}>
-      <CSSTransition in={modal} timeout={300} unmountOnExit classNames="my-node">
-        <Modal
-            title={'Dice result'}
-            formState={result}
-            onClose={closeModalHandler}
-        />
-      </CSSTransition>
       <div className="bet-card__counter">
         <div className="bet-card__counter_minus" onClick={() => changeBetHandler('minus')}>
           <MinusIcon />
@@ -108,32 +66,17 @@ export const BetCard = ({
           <PlusIcon />
         </div>
       </div>
-      <div className="bet-card__data">
-        <div className="bet-card__data_info">
-          <div className="bet-card__data_info-text">
-            {$t('Probability of Winning')}
-          </div>
-          <div className="bet-card__data_info-percent">
-            {$t(`${range}%`)}
-          </div>
-        </div>
-        <div className="bet-card__data_spinner">
-          <Range
-            min={1}
-            max={99}
-            value={range}
-            onChange={changeRangeHandler}
-          />
-        </div>
-      </div>
-      <div className="bet-card__buttons">
-        <Button primary onClick={makeBetHandler}>
-          {$t('Make a Bet')}
-        </Button>
-        <div className={'bet-card__buttons_currency'}>
-          {$t('BTC')}
-        </div>
-      </div>
+      {type === 'dice' ?
+        <DiceBetCard
+          changeRangeHandler={changeRangeHandler}
+          bet={bet}
+        /> : null
+      }
+      {type === 'hilo' ?
+        <HiloBetCard
+
+        /> : null
+      }
     </Card>
   )
 }

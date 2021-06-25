@@ -16,19 +16,35 @@ export const DepositPage = () => {
         {$t('Deposit')}
       </div>
 
-      <Card className={'fit-card'}>
-        <Input
-          onChange={(value) => setPromocode(value)}
-          placeholder={''}
-          type={'text'}
-          value={promocode}
-          title={'Use promo code to refill your balance'}
-        />
+        <div className="deposit-page__content">
+            <Card>
+                <Input
+                    onChange={(value) => setPromocode(value)}
+                    placeholder={''}
+                    type={'text'}
+                    value={promocode}
+                    title={'Use promo code to refill your balance'}
+                />
 
-        <Button primary>
-          {$t('Apply')}
-        </Button>
-      </Card>
+                <Button primary>
+                    {$t('Apply')}
+                </Button>
+            </Card>
+            <Card>
+                <div className={'text-secondary'}>
+                    {$t('Use one of payment option to refill your balance')}
+                </div>
+
+                <div className={'payment-options'}>
+                    <div className="payment-options__item">
+                        {$t('1')}
+                    </div>
+                    <div className="payment-options__item">
+                        {$t('2')}
+                    </div>
+                </div>
+            </Card>
+        </div>
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import {axiosClient} from "../../../utils/axiosClient";
 import {CHANGE_CURRENCY, GET_BTC_BALANCE, GET_USD_BALANCE} from "../actionTypes";
+import {updateErrorHandler} from "../Errors/ErrorActions";
 
 export function changeCurrency(ticker) {
 
@@ -31,7 +32,7 @@ export function getBalance(token, rate) {
             dispatch(getUsdBalance(usdValue))
 
         } catch (e) {
-            console.log(e)
+            dispatch(updateErrorHandler('Balance load error'))
         }
     }
 }

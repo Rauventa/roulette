@@ -1,12 +1,12 @@
 import {axiosClient} from "../../../utils/axiosClient";
-import {GET_DICE_HASH, START_DICE_SUCCESS} from "../actionTypes";
 import {updateErrorHandler} from "../Errors/ErrorActions";
+import {GET_HILO_HASH, START_HILO_SUCCESS} from "../actionTypes";
 import {openModalHandler} from "../Modal/modalActions";
 
-export function getDiceHash(token) {
+export function getHiloHash(token) {
     return async dispatch => {
         try {
-            const response = await axiosClient.get('/Dice/GetDiceHashAndCurrentComission', {
+            const response = await axiosClient.get('/HiLo/GetCurrentHashAndCurrentComission', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -15,46 +15,48 @@ export function getDiceHash(token) {
             if (!response) {
                 dispatch(updateErrorHandler('Cannot load hash'))
             } else {
-                dispatch(getDiceHashSuccess(response.data.payload.hash))
+                dispatch(getHiloHashSuccess(response.data.payload.hash))
             }
         } catch (e) {
+            console.log(e)
             dispatch(updateErrorHandler('Cannot load hash'))
         }
     }
 }
 
-export function startDice(token, data, ownNumber) {
+export function startHilo(token, data) {
     return async dispatch => {
         try {
-            const response = await axiosClient.post('/Dice/CheckDiceResult', data, {
+            const response = await axiosClient.post('/HiLo/CheckHiLoResult', data, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             })
 
+            console.log(response.data)
+
             if (response.data?.errors?.length) {
                 dispatch(updateErrorHandler(response.data.errors[0]))
             } else {
-                dispatch(startDiceSuccess({...response.data.payload, ownNumber}))
+                dispatch(startHiloSuccess(response.data.payload))
                 dispatch(openModalHandler())
             }
-
         } catch (e) {
-            dispatch(updateErrorHandler('Dice game load error'))
+            dispatch(updateErrorHandler('Hilo game load error'))
         }
     }
 }
 
-export function getDiceHashSuccess(hash) {
+export function getHiloHashSuccess(hash) {
     return {
-        type: GET_DICE_HASH,
+        type: GET_HILO_HASH,
         hash
     }
 }
 
-export function startDiceSuccess(result) {
+export function startHiloSuccess(result) {
     return {
-        type: START_DICE_SUCCESS,
+        type: START_HILO_SUCCESS,
         result
     }
 }

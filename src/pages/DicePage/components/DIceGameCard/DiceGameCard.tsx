@@ -1,23 +1,27 @@
 import React from 'react';
 import {$t} from "../../../../lib/i18n";
+import {useSelector} from "react-redux";
 
 interface DiceGameCardProps {
-  possibleProfit: any,
   currency: string,
   formState: any
 }
 
 export const DiceGameCard = ({
-  possibleProfit,
   currency,
   formState
 }: DiceGameCardProps) => {
+
+  const rate = useSelector((state: any) => state.balanceReducer.rate)
+
+  const possibleProfit = parseFloat((formState.betValue * Number((100 / formState.range * (1 - 2 / 100)).toFixed(4))).toFixed(8));
+
   return (
     <div className="game-card__counter">
       <div className="game-card__counter_value">
         <div className="game-card__counter_value-number">
           <div className="game-card__counter_value-number--count">
-            {$t(`${possibleProfit}`)}
+            {$t(`${currency === 'btc' ? possibleProfit : (possibleProfit*rate).toFixed(1)}`)}
           </div>
           <div className="game-card__counter_value-number--currency">
             {$t(currency === 'btc' ? 'BTC' : '$')}

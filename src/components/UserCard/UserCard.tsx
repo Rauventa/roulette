@@ -24,7 +24,9 @@ export const UserCard = () => {
   const rate = useSelector((state: any) => state.balanceReducer.rate)
 
   useEffect(() => {
-    dispatch(getBalance(token, rate))
+    if (token) {
+      dispatch(getBalance(token, rate))
+    }
   }, [token]);
 
   const logoutHandler = () => {
@@ -32,12 +34,16 @@ export const UserCard = () => {
     history.push('/auth')
   }
 
+  const goToCabinetHandler = () => {
+    history.push('/cabinet')
+  }
+
   return (
     <Card>
       {isAuth ?
         <div className={'user-card'}>
           <div className={'user-card__title'}>
-            <UserIcon />
+            <UserIcon onClick={goToCabinetHandler} />
             <div className={'user-card__title_text'}>
               <div className="user-card__title_text-name">
                 {$t(`${nickname}`)}

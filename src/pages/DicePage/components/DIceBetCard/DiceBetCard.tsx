@@ -9,6 +9,7 @@ import {getBalance} from "../../../../store/actions/Balance/balanceActions";
 import {AuthContext} from "../../../../context/AuthContext";
 import {useDispatch, useSelector} from "react-redux";
 import {Spinner} from "../../../../components/Spinner/Spinner";
+import {closeModalHandler, openModalHandler} from "../../../../store/actions/Modal/modalActions";
 
 interface DiceBetCardProps {
   bet: number;
@@ -21,7 +22,6 @@ export const DiceBetCard = ({
 }: DiceBetCardProps) => {
 
   const [range, setRange] = useState<number>(50)
-  const [modal, setModal] = useState<boolean>(false)
   const [loader, setLoader] = useState<boolean>(false)
 
   const {token} = useContext(AuthContext)
@@ -29,7 +29,9 @@ export const DiceBetCard = ({
   const dispatch = useDispatch()
 
   const result = useSelector((state: any) => state.diceReducer.result)
-  const rate = useSelector((state: any) => state.diceReducer.rate)
+  const rate = useSelector((state: any) => state.balanceReducer.rate)
+
+  const modal = useSelector((state: any) => state.modalReducer.modal)
 
   const rangeUpdate = (value: number) => {
     setRange(value)
@@ -41,17 +43,20 @@ export const DiceBetCard = ({
 
     setLoader(true)
 
-    await dispatch(startDice(token, {
-      bet,
-      chance: Number(range) + 1
-    }, range))
+    try {
+      await dispatch(startDice(token, {
+        bet,
+        chance: Number(range)
+      }, Number(range) + 1))
 
-    setLoader(false)
-    setModal(true)
+      setLoader(false)
+    } catch (e) {
+      console.log(e)
+    }
   }
 
-  const closeModalHandler = async () => {
-    setModal(false)
+  const modalCloseHandler = async () => {
+    dispatch(closeModalHandler())
     setLoader(true)
 
     try {
@@ -67,8 +72,9 @@ export const DiceBetCard = ({
       <CSSTransition in={modal} timeout={500} unmountOnExit classNames="my-node">
         <Modal
           title={'Dice result'}
+          type={'dice'}
           formState={result}
-          onClose={closeModalHandler}
+          onClose={modalCloseHandler}
         />
       </CSSTransition>
 

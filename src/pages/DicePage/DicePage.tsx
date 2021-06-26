@@ -7,6 +7,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {getDiceHash} from "../../store/actions/Dice/diceActions";
 import {AuthContext} from "../../context/AuthContext";
 import {DiceResults} from "./components/DiceResults/DiceResults";
+import {CSSTransition} from "react-transition-group";
+import {Spinner} from "../../components/Spinner/Spinner";
 
 export const DicePage = () => {
 
@@ -16,6 +18,7 @@ export const DicePage = () => {
   }
 
   const [formState, setFormState] = useState<any>(defaultFormState)
+  const [loader, setLoader] = useState<boolean>(false)
 
   const dispatch = useDispatch()
 
@@ -24,7 +27,12 @@ export const DicePage = () => {
   const hash = useSelector((state: any) => state.diceReducer.hash)
 
   useEffect(() => {
-    dispatch(getDiceHash(token))
+    setLoader(true)
+
+    if (token) {
+      dispatch(getDiceHash(token))
+      setLoader(false)
+    }
   }, [token]);
 
   const handleChange = (value: any, iterator: string) => {
@@ -51,6 +59,11 @@ export const DicePage = () => {
 
   return (
     <div className={'dice-page'}>
+
+      <CSSTransition in={loader} timeout={500} unmountOnExit classNames="my-node">
+        <Spinner />
+      </CSSTransition>
+
       <div className="dice-page__content">
         <UserCard />
 

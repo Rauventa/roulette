@@ -8,6 +8,7 @@ import { SignIn } from '../../pages/AuthPage/components/SignIn/SignIn';
 import {SignUp} from "../../pages/AuthPage/components/SignUp/SignUp";
 import {HiloPage} from "../../pages/HiloPage/HiloPage";
 import {AuthContext} from "../../context/AuthContext";
+import {CabinetPage} from "../../pages/CabinetPage/CabinetPage";
 
 export const RootRouter = () => {
 
@@ -30,6 +31,9 @@ export const RootRouter = () => {
                 </Route>
                 <Route path={'/withdraw'}>
                     <WithdrawPage />
+                </Route>
+                <Route path={'/cabinet'}>
+                  <CabinetPage />
                 </Route>
             </Switch>
         )

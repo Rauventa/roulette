@@ -74,7 +74,7 @@ export const BetCard = ({
       }
       {type === 'hilo' ?
         <HiloBetCard
-
+          bet={bet}
         /> : null
       }
     </Card>

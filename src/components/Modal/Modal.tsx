@@ -5,6 +5,7 @@ import './Modal.scss'
 
 interface ModalProps {
   title: string,
+  type: string,
   formState: any;
 
   onClose: () => void
@@ -12,18 +13,14 @@ interface ModalProps {
 
 export const Modal = ({
   title,
+  type,
   formState,
   onClose
 }: ModalProps) => {
 
-  console.log(formState)
-
   return (
     <div className={'modal-overflow'}>
       <div className={'modal'}>
-        {/*<div className="modal__title">*/}
-        {/*  {$t(title)}*/}
-        {/*</div>*/}
 
         <div className={`modal__title ${formState.userWin ? 'success' : 'danger'}`}>
           {formState.userWin ? $t('You won!') : $t('You lose')}
@@ -32,15 +29,25 @@ export const Modal = ({
         <div className="modal__content status-modal">
           <div className="status-modal__item">
             <div className="status-modal__item_title">
-              {$t('Your number')}
+              {$t('Your bet')}
             </div>
             <div className="status-modal__item_value">
-              {$t(formState.chance)}
+              {$t(`${(formState.bet).toFixed(8)} BTC`)}
             </div>
           </div>
+          {type === 'dice' ?
+            <div className="status-modal__item">
+              <div className="status-modal__item_title">
+                {$t('Your number')}
+              </div>
+              <div className="status-modal__item_value">
+                {$t(formState.ownNumber)}
+              </div>
+            </div> : null
+          }
           <div className="status-modal__item">
             <div className="status-modal__item_title">
-              {$t('Gained number')}
+              {$t('Generated number')}
             </div>
             <div className="status-modal__item_value">
               {$t(formState.hiddenNumber)}
@@ -54,7 +61,23 @@ export const Modal = ({
               }
             </div>
             <div className="status-modal__item_value">
-              {$t(`${Math.abs(formState.gain)} BTC`)}
+              {$t(`${Math.abs(formState.gain).toFixed(8)} BTC`)}
+            </div>
+          </div>
+          <div className="status-modal__item">
+            <div className="status-modal__item_title">
+              {$t('Salt')}
+            </div>
+            <div className="status-modal__item_value">
+              {$t(formState.salt)}
+            </div>
+          </div>
+          <div className="status-modal__item">
+            <div className="status-modal__item_title">
+              {$t('Proof')}
+            </div>
+            <div className="status-modal__item_value">
+              {$t('sdfsdf')}
             </div>
           </div>
         </div>

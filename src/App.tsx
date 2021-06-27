@@ -8,40 +8,25 @@ import {axiosClient} from "./utils/axiosClient";
 
 export const App = () => {
 
-    // const refreshTimeout = 1000 * 10;
+    const refreshTimeout = 3600 * 60;
 
     const {login, logout, token, refreshToken, userId, nickname} = useAuth()
     const isAuth = !!token
 
-    // const getRefreshToken = async () => {
-    //     try {
-    //         const response = await axiosClient.get('/Auth/GetRefreshToken', {
-    //             headers: {
-    //                 'Authorization': `Bearer ${token}`
-    //             }
-    //         })
-    //
-    //         console.log(response.data.payload)
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-    //
-    // useEffect(() => {
-    //     setInterval(async () => {
-    //       try {
-    //           const response = await axiosClient.get('/Auth/GetRefreshToken', {
-    //               headers: {
-    //                   'Authorization': `Bearer ${token}`
-    //               }
-    //           })
-    //
-    //           console.log(response.data.payload)
-    //       } catch (e) {
-    //           console.log(e)
-    //       }
-    //     }, refreshTimeout)
-    // }, []);
+    useEffect(() => {
+        setInterval(async () => {
+          try {
+              const response = await axiosClient.post('/Auth/GetRefreshToken', {
+                  jwtToken: token,
+                  refreshToken: refreshToken
+              })
+
+              console.log(response.data.payload)
+          } catch (e) {
+              console.log(e)
+          }
+        }, refreshTimeout)
+    }, []);
 
     return (
         <AuthContext.Provider value={{

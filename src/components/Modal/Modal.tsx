@@ -82,15 +82,6 @@ export const Modal = ({
           </div>
         </div>
 
-        {/*<p>Your bet - {formState.bet}</p>*/}
-        {/*<p>Your chance - {formState.chance}</p>*/}
-        {/*<p>Your number - {formState.ownNumber}</p>*/}
-        {/*<p>Computer number - {formState.hiddenNumber}</p>*/}
-        {/*<p>Profit - {formState.gain} BTC</p>*/}
-        {/*<p>Salt - {formState.salt}</p>*/}
-
-        {/*<h1>STATUS - {formState.userWin ? 'WIN' : 'LOSE'}</h1>*/}
-
         <div className="modal__buttons">
           <Button primary onClick={onClose}>
             {$t('Start new game')}

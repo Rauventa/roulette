@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { $t } from '../../lib/i18n';
 import './ErrorModal.scss'
 import {Button} from "../Button/Button";
 import {useDispatch, useSelector} from "react-redux";
 import { closeModalHandler } from '../../store/actions/Modal/modalActions';
+import {useHistory} from "react-router-dom";
+import {AuthContext} from "../../context/AuthContext";
 
 interface ErrorModalProps {
 
@@ -14,6 +16,11 @@ export const ErrorModal = ({
 }: ErrorModalProps) => {
 
   const message = useSelector((state: any) => state.errorReducer.errorMessage)
+  const status = useSelector((state: any) => state.errorReducer.status)
+
+  const history = useHistory()
+
+  const {logout} = useContext(AuthContext);
 
   const dispatch = useDispatch()
 
@@ -21,6 +28,11 @@ export const ErrorModal = ({
     dispatch(closeModalHandler())
 
     window.location.reload()
+  }
+
+  const logoutHandler = () => {
+    logout()
+    history.push('/login')
   }
 
   return (
@@ -31,13 +43,20 @@ export const ErrorModal = ({
         </div>
 
         <div className="error-modal__message">
-          {$t(message)}
+          {$t(`${message} with status ${status}`)}
         </div>
 
         <div className="modal__buttons">
-          <Button primary onClick={modalCloseHandler}>
-            {$t('Reload page')}
-          </Button>
+          {(status >= 500) ?
+            <Button primary onClick={modalCloseHandler}>
+              {$t('Reload page')}
+            </Button> : null
+          }
+          {status === 401 ?
+            <Button primary onClick={logoutHandler}>
+              {$t('Login again')}
+            </Button> : null
+          }
         </div>
       </div>
     </div>

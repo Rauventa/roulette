@@ -14,7 +14,7 @@ export const UserWallets = () => {
     const addWalletHandler = async () => {
         try {
             const response = await axiosClient.post('/Profile/AddWallet', {
-                address: Math.random().toString(36).substring(2),
+                address: '3BSasKraRXe56ckSBCeNE7ySMXCEYK7nCm',
                 currency: 'BTC'
             }, {
                 headers: {

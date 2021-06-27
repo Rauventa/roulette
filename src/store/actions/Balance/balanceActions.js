@@ -25,8 +25,6 @@ export function getBalance(token, rate) {
                 }
             });
 
-            console.log(response)
-
             dispatch(getBtcBalance(response.data.payload))
 
             const usdValue = response.data.payload * rate

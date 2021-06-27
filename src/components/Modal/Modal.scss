@@ -35,7 +35,13 @@
   }
 
   &__buttons {
+    display: flex;
 
+    button, a {
+      &:not(:last-child) {
+        margin-right: 20px;
+      }
+    }
   }
 
   .status-modal {

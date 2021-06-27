@@ -13,13 +13,13 @@ export function getHiloHash(token) {
             });
 
             if (!response) {
-                dispatch(updateErrorHandler('Cannot load hash'))
+                dispatch(updateErrorHandler('Cannot load hash', response.data.status))
             } else {
                 dispatch(getHiloHashSuccess(response.data.payload.hash))
             }
         } catch (e) {
             console.log(e)
-            dispatch(updateErrorHandler('Cannot load hash'))
+            dispatch(updateErrorHandler('Cannot load hash', e.response.status))
         }
     }
 }
@@ -33,16 +33,14 @@ export function startHilo(token, data) {
                 }
             })
 
-            console.log(response.data)
-
             if (response.data?.errors?.length) {
-                dispatch(updateErrorHandler(response.data.errors[0]))
+                dispatch(updateErrorHandler(response.data.errors[0], response.data.status))
             } else {
                 dispatch(startHiloSuccess(response.data.payload))
                 dispatch(openModalHandler())
             }
         } catch (e) {
-            dispatch(updateErrorHandler('Hilo game load error'))
+            dispatch(updateErrorHandler('Hilo game load error', e.response.status))
         }
     }
 }

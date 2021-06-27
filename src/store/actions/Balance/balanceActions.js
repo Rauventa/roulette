@@ -25,6 +25,8 @@ export function getBalance(token, rate) {
                 }
             });
 
+            console.log(response)
+
             dispatch(getBtcBalance(response.data.payload))
 
             const usdValue = response.data.payload * rate
@@ -32,7 +34,7 @@ export function getBalance(token, rate) {
             dispatch(getUsdBalance(usdValue))
 
         } catch (e) {
-            dispatch(updateErrorHandler('Balance load error'))
+            dispatch(updateErrorHandler('Balance load error', e.response.status))
         }
     }
 }

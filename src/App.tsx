@@ -19,9 +19,13 @@ export const App = () => {
               const response = await axiosClient.post('/Auth/GetRefreshToken', {
                   jwtToken: token,
                   refreshToken: refreshToken
+              }, {
+                  headers: {
+                      'Authorization': `Bearer ${token}`
+                  }
               })
 
-              console.log(response.data.payload)
+              console.log(response.data)
           } catch (e) {
               console.log(e)
           }

@@ -13,12 +13,12 @@ export function getDiceHash(token) {
             });
 
             if (!response) {
-                dispatch(updateErrorHandler('Cannot load hash'))
+                dispatch(updateErrorHandler('Cannot load hash', response.data.status))
             } else {
                 dispatch(getDiceHashSuccess(response.data.payload.hash))
             }
         } catch (e) {
-            dispatch(updateErrorHandler('Cannot load hash'))
+            dispatch(updateErrorHandler('Cannot load hash', e.response.status))
         }
     }
 }
@@ -33,14 +33,14 @@ export function startDice(token, data, ownNumber) {
             })
 
             if (response.data?.errors?.length) {
-                dispatch(updateErrorHandler(response.data.errors[0]))
+                dispatch(updateErrorHandler(response.data.errors[0], response.data.status))
             } else {
                 dispatch(startDiceSuccess({...response.data.payload, ownNumber}))
                 dispatch(openModalHandler())
             }
 
         } catch (e) {
-            dispatch(updateErrorHandler('Dice game load error'))
+            dispatch(updateErrorHandler('Dice game load error', e.response.status))
         }
     }
 }

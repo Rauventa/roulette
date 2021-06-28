@@ -10,6 +10,7 @@ import {AuthContext} from "../../../../context/AuthContext";
 import {Spinner} from "../../../../components/Spinner/Spinner";
 import {startDice} from "../../../../store/actions/Dice/diceActions";
 import {startHilo} from "../../../../store/actions/Hilo/hiloActions";
+import {useHistory} from "react-router-dom";
 
 interface HiloBetCardProps {
   bet: number;
@@ -24,7 +25,9 @@ export const HiloBetCard = ({
     moreRange: 52
   }
 
-  const {token} = useContext(AuthContext)
+  const history = useHistory()
+
+  const {token, isAuth} = useContext(AuthContext)
 
   const [loader, setLoader] = useState<boolean>(false)
 
@@ -37,17 +40,21 @@ export const HiloBetCard = ({
 
   const makeBetHandler = async (type: string) => {
 
-    setLoader(true)
+    if (!isAuth) {
+      history.push('/login')
+    } else {
+      setLoader(true)
 
-    try {
-      await dispatch(startHilo(token, {
-        bet,
-        rollType: type
-      }))
+      try {
+        await dispatch(startHilo(token, {
+          bet,
+          rollType: type
+        }))
 
-      setLoader(false)
-    } catch (e) {
-      console.log(e)
+        setLoader(false)
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 

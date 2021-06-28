@@ -13,10 +13,13 @@
       width: 80px;
       height: 100%;
       margin-right: 20px;
-      cursor: pointer;
       padding: 10px;
       border-radius: 12px;
       background-color: #2a2a41;
+    }
+
+    .active {
+      cursor: pointer;
       transition: all .5s;
 
       &:hover {

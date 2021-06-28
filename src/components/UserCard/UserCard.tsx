@@ -1,4 +1,4 @@
-import React, {useEffect, useContext} from 'react';
+import React, {useEffect, useContext, useState} from 'react';
 import {useHistory} from "react-router-dom";
 import './UserCard.scss';
 import {Card} from "../Card/Card";
@@ -9,6 +9,8 @@ import {ReactComponent as LogoutIcon} from "./img/logout.svg";
 import {AuthContext} from "../../context/AuthContext";
 import {useDispatch, useSelector} from "react-redux";
 import {getBalance} from "../../store/actions/Balance/balanceActions";
+import {CSSTransition} from "react-transition-group";
+import {Spinner} from "../Spinner/Spinner";
 
 export const UserCard = () => {
 
@@ -23,11 +25,23 @@ export const UserCard = () => {
   const currency = useSelector((state: any) => state.balanceReducer.currency)
   const rate = useSelector((state: any) => state.balanceReducer.rate)
 
-  useEffect(() => {
-    if (token) {
-      dispatch(getBalance(token, rate))
+  const fetchData = async () => {
+
+    if (isAuth) {
+      setLoader(true)
     }
+
+    if (token) {
+      await dispatch(getBalance(token, rate))
+      setLoader(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
   }, [token]);
+
+  const [loader, setLoader] = useState<boolean>(false)
 
   const logoutHandler = () => {
     logout()
@@ -40,16 +54,21 @@ export const UserCard = () => {
 
   return (
     <Card>
+
+      <CSSTransition in={loader} timeout={500} unmountOnExit classNames="my-node">
+        <Spinner />
+      </CSSTransition>
+
       {isAuth ?
         <div className={'user-card'}>
           <div className={'user-card__title'}>
-            <UserIcon onClick={goToCabinetHandler} />
+            <UserIcon className={isAuth ? 'active' : ''} onClick={goToCabinetHandler} />
             <div className={'user-card__title_text'}>
               <div className="user-card__title_text-name">
                 {$t(`${nickname}`)}
               </div>
               <div className="user-card__title_text-balance">
-                {$t(`${currency === 'btc' ? btc : usd.toFixed(1 )} ${currency === 'btc' ? 'BTC' : '$'}`)}
+                {$t(`${currency === 'btc' ? btc || 0 : usd.toFixed(1 ) || 0} ${currency === 'btc' ? 'BTC' : '$'}`)}
               </div>
             </div>
           </div>

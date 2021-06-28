@@ -7,6 +7,7 @@ import {ReactComponent as RuIcon} from "./img/russia.svg";
 import {ReactComponent as USIcon} from "./img/united-states.svg";
 import {ReactComponent as DiceIcon} from "./img/dice.svg";
 import {ReactComponent as FreeBtcIcon} from "./img/freebtc.svg";
+import {ReactComponent as UserIcon} from "./img/user.svg";
 import { Button } from '../Button/Button';
 import {LogoWheel} from "../Optional/LogoWheel/LogoWheel";
 import { AuthContext } from '../../context/AuthContext';
@@ -25,22 +26,13 @@ export const Header = () => {
   const currency = useSelector((state: any) => state.balanceReducer.currency)
   const rate = useSelector((state: any) => state.balanceReducer.rate)
 
-  // const currentCurrency = localStorage.getItem('currency')
   const currentLang = localStorage.getItem('lang')
 
-  // const [currency, setCurrency] = useState<string>(currentCurrency || 'btc');
   const [lang, setLang] = useState<string>(currentLang || 'ru');
   const [showLangs, setShowLangs] = useState<boolean>(false);
+  const [menu, setMenu] = useState<boolean>(false)
 
   useEffect(() => {
-    // if (!localStorage.currency) {
-    //   if (currency === 'btc') {
-    //     localStorage.setItem('currency', 'btc')
-    //   } else {
-    //     localStorage.setItem('currency', 'usd')
-    //   }
-    // }
-
     if (!localStorage.lang) {
       if (lang === 'ru') {
         localStorage.setItem('lang', 'ru')
@@ -49,16 +41,6 @@ export const Header = () => {
       }
     }
   }, []);
-
-  // const handleChangeCurrency = () => {
-  //   if (currency === 'btc') {
-  //     setCurrency('usd')
-  //     localStorage.setItem('currency', 'usd')
-  //   } else {
-  //     setCurrency('btc')
-  //     localStorage.setItem('currency', 'btc')
-  //   }
-  // }
 
   const handleChangeCurrency = () => {
     dispatch(changeCurrency(currency))
@@ -157,9 +139,22 @@ export const Header = () => {
                 {$t('Sign Up')}
               </Button>
             </div> :
-            <Button dark onClick={logoutHandler}>
-              <LogoutIcon />
-            </Button>
+            <div className="header__additional_user">
+              <div className="header__additional_user-value" onClick={() => setMenu(!menu)}>
+                <UserIcon />
+              </div>
+
+              {menu ?
+                  <div className="header__additional_user-list">
+                    <div className="header__additional_user-list--item" onClick={() => history.push('/cabinet')}>
+                      {$t('Wallets')}
+                    </div>
+                    <div className="header__additional_user-list--item" onClick={logoutHandler}>
+                      <LogoutIcon />
+                    </div>
+                  </div> : null
+              }
+            </div>
         }
       </div>
     </header>

@@ -112,5 +112,54 @@
     .btn-dark {
       padding: 15px;
     }
+    
+    &_user {
+      position: relative;
+      cursor: pointer;
+
+      &-value {
+        padding: 10px;
+        background-color: transparent;
+        border-radius: 12px;
+        transition: all .3s;
+
+        &:hover {
+          background-color: rgba(255,255,255,0.05);
+        }
+
+        svg {
+          width: 35px;
+          height: 35px;
+        }
+      }
+
+      &-list {
+        position: absolute;
+        background-color: #2a2a41;
+        border-radius: 12px;
+        top: 70px;
+        right: 0;
+
+        &--item {
+          cursor: pointer;
+          transition: all .3s;
+          padding: 15px 20px;
+          display: flex;
+          align-items: center;
+
+          &:hover {
+            background-color: rgba(255,255,255,0.05);
+          }
+
+          &:first-child {
+            border-radius: 12px 12px 0 0;
+          }
+
+          &:last-child {
+            border-radius: 0 0 12px 12px;
+          }
+        }
+      }
+    }
   }
 }

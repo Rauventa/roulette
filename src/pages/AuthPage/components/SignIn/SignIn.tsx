@@ -11,6 +11,8 @@ import {useHistory} from "react-router-dom";
 import {AuthContext} from "../../../../context/AuthContext";
 import {inputValidator} from "../../../../lib/validator";
 import '../../AuthPage.scss'
+import {CSSTransition} from "react-transition-group";
+import {Spinner} from "../../../../components/Spinner/Spinner";
 
 export const SignIn = () => {
 
@@ -21,6 +23,7 @@ export const SignIn = () => {
 
   const [formState, setFormState] = useState(defaultFormState)
   const [errors, setErrors] = useState<any>({})
+  const [loader, setLoader] = useState<boolean>(false)
 
   const history = useHistory()
   const {login} = useContext(AuthContext)
@@ -49,6 +52,8 @@ export const SignIn = () => {
 
   const handleSubmit = async () => {
 
+    setLoader(true)
+
     const {errors} = inputValidator(formState)
 
     if (!Object.keys(errors).length) {
@@ -62,6 +67,9 @@ export const SignIn = () => {
               response.data.payload.userId,
               response.data.payload.nickname
           )
+
+          setLoader(false)
+
           history.push('/dice')
         } else {
           setErrors({login: 'Authorization failed'})
@@ -77,6 +85,11 @@ export const SignIn = () => {
 
   return (
       <div className={'auth-page'}>
+
+        <CSSTransition in={loader} timeout={500} unmountOnExit classNames="my-node">
+          <Spinner />
+        </CSSTransition>
+
         <Card className={'fit-card'}>
           <div className="auth-page__signin">
             <div className="auth-page__title">

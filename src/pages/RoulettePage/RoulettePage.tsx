@@ -1,17 +1,17 @@
 import React from 'react';
-import {Card} from "../../components/Card/Card";
 import { $t } from '../../lib/i18n';
 
 export const RoulettePage = () => {
   return (
-    <div>
-      <h1>RoulettePage</h1>
+    <div className={'roulette'}>
 
-      <Card>
-        <div>
-          {$t('Welcome to React')}
+        <div className="page-title">
+            {$t('Roulette')}
         </div>
-      </Card>
+
+        <div className={'text-secondary'}>
+            {$t('This page stands in development')}
+        </div>
     </div>
   )
 }

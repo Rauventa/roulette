@@ -5,16 +5,19 @@ import { Button } from '../../components/Button/Button';
 import { $t } from '../../lib/i18n';
 import { Input } from '../../components/Input/Input';
 import {Select} from "../../components/Select/Select";
-import {axiosClient} from "../../utils/axiosClient";
 import {AuthContext} from "../../context/AuthContext";
 import {useDispatch, useSelector} from "react-redux";
-import {getWallets} from "../../store/actions/Balance/balanceActions";
+import {createWithdraw, getWallets} from "../../store/actions/Balance/balanceActions";
+import {CSSTransition} from "react-transition-group";
+import {Spinner} from "../../components/Spinner/Spinner";
 
 export const WithdrawPage = () => {
 
   const {token} = useContext(AuthContext)
 
-  const wallets = useSelector((state: any) => state.balanceReducer.wallets).map((item: any) => {
+  const wallets = useSelector((state: any) => state.balanceReducer.wallets)
+
+  const walletsOptions = wallets?.map((item: any) => {
     return {
       label: `${item.currency} ${item.address}`,
       value: item.id
@@ -23,17 +26,42 @@ export const WithdrawPage = () => {
 
   const [amount, setAmount] = useState<string>('0.01')
   const [wallet, setWallet] = useState<any>(null)
+  const [loader, setLoader] = useState<boolean>(false)
 
   const dispatch = useDispatch()
 
-  useEffect(() => {
+  const fetchData = async () => {
+    setLoader(true)
+
     if (token) {
-      dispatch(getWallets(token))
+      await dispatch(getWallets(token))
+      setLoader(false)
     }
+  }
+
+  useEffect(() => {
+    fetchData()
   }, []);
+
+  const withDrawHandler = () => {
+
+    const currentWallet = wallets?.find((item: any) => item.id === wallet.id)
+
+    dispatch(createWithdraw(token, {
+      id: '',
+      currency: currentWallet.currency,
+      address: currentWallet.address,
+      ownerId: currentWallet.ownerId,
+      amount
+    }))
+  }
 
   return (
     <div className={'withdraw-page'}>
+
+      <CSSTransition in={loader} timeout={500} unmountOnExit classNames="my-node">
+        <Spinner />
+      </CSSTransition>
 
       <div className="page-title">
         {$t('Withdraw')}
@@ -67,13 +95,13 @@ export const WithdrawPage = () => {
             <Select
               title={'Wallet'}
               placeholder={'Select wallet'}
-              options={wallets}
+              options={walletsOptions}
               value={wallet}
               onChange={(value) => setWallet(value)}
             />
           </div>
         </div>
-        <Button primary>
+        <Button primary onClick={withDrawHandler} disabled={!wallet}>
           {$t('Withdraw Funds')}
         </Button>
       </Card>

@@ -19,7 +19,7 @@ export function getHiloHash(token) {
             }
         } catch (e) {
             console.log(e)
-            dispatch(updateErrorHandler('Cannot load hash', e.response.status))
+            dispatch(updateErrorHandler('Cannot load hash', e.response?.status || null))
         }
     }
 }
@@ -40,7 +40,7 @@ export function startHilo(token, data) {
                 dispatch(openModalHandler())
             }
         } catch (e) {
-            dispatch(updateErrorHandler('Hilo game load error', e.response.status))
+            dispatch(updateErrorHandler('Hilo game load error', e.response?.status || null))
         }
     }
 }

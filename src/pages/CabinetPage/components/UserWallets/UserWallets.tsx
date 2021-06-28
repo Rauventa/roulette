@@ -10,6 +10,7 @@ import {createWallet, getWallets} from "../../../../store/actions/Balance/balanc
 import {Input} from "../../../../components/Input/Input";
 import {Select} from "../../../../components/Select/Select";
 import {CSSTransition} from "react-transition-group";
+import {Spinner} from "../../../../components/Spinner/Spinner";
 
 export const UserWallets = () => {
 
@@ -48,11 +49,19 @@ export const UserWallets = () => {
 
   const [formState, setFormState] = useState<any>(defaultFormState)
   const [addShower, setAddShower] = useState<boolean>(false)
+  const [loader, setLoader] = useState<boolean>(false)
+
+  const fetchData = async () => {
+    setLoader(true)
+
+    if (token) {
+      await dispatch(getWallets(token))
+      setLoader(false)
+    }
+  }
 
   useEffect(() => {
-    if (token) {
-      dispatch(getWallets(token))
-    }
+    fetchData()
   }, []);
 
   const formChangeHandler = (value: any, iterator: string) => {
@@ -93,6 +102,11 @@ export const UserWallets = () => {
 
   return (
     <Card title={'BTC Wallets'} className={'user-wallets'}>
+
+      <CSSTransition in={loader} timeout={500} unmountOnExit classNames="my-node">
+        <Spinner />
+      </CSSTransition>
+
       <div className="user-wallets__add">
         {addShower ?
           <Button dark onClick={() => setAddShower(!addShower)}>
@@ -125,7 +139,11 @@ export const UserWallets = () => {
                 data={item}
               />
             )
-          }) : null}
+          }) :
+            <div className={'text-secondary'}>
+              {$t('No wallets')}
+            </div>
+          }
         </div>
       </div>
     </Card>

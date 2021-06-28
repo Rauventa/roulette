@@ -22,17 +22,24 @@ export const DicePage = () => {
 
   const dispatch = useDispatch()
 
-  const {token} = useContext(AuthContext)
+  const {token, isAuth} = useContext(AuthContext)
 
-  const hash = useSelector((state: any) => state.diceReducer.hash)
+  const hash = useSelector((state: any) => state.diceReducer.hash) || 'Hash is invisible for unauthorized users'
 
-  useEffect(() => {
-    setLoader(true)
+  const fetchData = async () => {
+
+    if (isAuth) {
+      setLoader(true)
+    }
 
     if (token) {
-      dispatch(getDiceHash(token))
+      await dispatch(getDiceHash(token))
       setLoader(false)
     }
+  }
+
+  useEffect(() => {
+    fetchData()
   }, [token]);
 
   const handleChange = (value: any, iterator: string) => {

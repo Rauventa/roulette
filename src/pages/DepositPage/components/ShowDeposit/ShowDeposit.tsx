@@ -22,7 +22,7 @@ export const ShowDeposit = ({
   return (
     <div className="deposit-page__content">
       {code === '' ?
-        <div>
+        <div className={'text-secondary'}>
           {$t('No referral address')}
         </div> :
         <Card>

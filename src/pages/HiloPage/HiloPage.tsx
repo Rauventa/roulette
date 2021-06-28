@@ -20,17 +20,24 @@ export const HiloPage = () => {
 
   const dispatch = useDispatch()
 
-  const {token} = useContext(AuthContext)
+  const {token, isAuth} = useContext(AuthContext)
 
-  const hash = useSelector((state: any) => state.hiloReducer.hash)
+  const hash = useSelector((state: any) => state.hiloReducer.hash) || 'Hash is invisible for unauthorized users'
 
-  useEffect(() => {
-    setLoader(true)
+  const fetchData = async () => {
+
+    if (isAuth) {
+      setLoader(true)
+    }
 
     if (token) {
       dispatch(getHiloHash(token))
       setLoader(false)
     }
+  }
+
+  useEffect(() => {
+    fetchData()
   }, [token]);
 
   const handleChange = (value: any, iterator: string) => {

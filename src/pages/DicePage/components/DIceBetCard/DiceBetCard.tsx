@@ -10,6 +10,7 @@ import {AuthContext} from "../../../../context/AuthContext";
 import {useDispatch, useSelector} from "react-redux";
 import {Spinner} from "../../../../components/Spinner/Spinner";
 import {closeModalHandler, openModalHandler} from "../../../../store/actions/Modal/modalActions";
+import {useHistory} from "react-router-dom";
 
 interface DiceBetCardProps {
   bet: number;
@@ -24,7 +25,9 @@ export const DiceBetCard = ({
   const [range, setRange] = useState<number>(50)
   const [loader, setLoader] = useState<boolean>(false)
 
-  const {token} = useContext(AuthContext)
+  const history = useHistory()
+
+  const {token, isAuth} = useContext(AuthContext)
 
   const dispatch = useDispatch()
 
@@ -41,17 +44,21 @@ export const DiceBetCard = ({
 
   const makeBetHandler = async () => {
 
-    setLoader(true)
+    if (!isAuth) {
+      history.push('/login')
+    } else {
+      setLoader(true)
 
-    try {
-      await dispatch(startDice(token, {
-        bet,
-        chance: Number(range)
-      }, Number(range) + 1))
+      try {
+        await dispatch(startDice(token, {
+          bet,
+          chance: Number(range)
+        }, Number(range) + 1))
 
-      setLoader(false)
-    } catch (e) {
-      console.log(e)
+        setLoader(false)
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 

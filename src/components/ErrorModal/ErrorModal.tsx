@@ -47,13 +47,13 @@ export const ErrorModal = ({
         </div>
 
         <div className="modal__buttons">
-          {(status >= 500 || !status) ?
-            <Button primary onClick={modalCloseHandler}>
+          {(status >= 402 || !status) ?
+            <Button light onClick={modalCloseHandler}>
               {$t('Try again')}
             </Button> : null
           }
           {status === 401 ?
-            <Button primary onClick={logoutHandler}>
+            <Button light onClick={logoutHandler}>
               {$t('Login again')}
             </Button> : null
           }

@@ -34,7 +34,7 @@ export function getBalance(token, rate) {
             dispatch(getUsdBalance(usdValue))
 
         } catch (e) {
-            dispatch(updateErrorHandler('Balance load error', e.response.status))
+            dispatch(updateErrorHandler('Balance load error', e.response?.status || null))
         }
     }
 }
@@ -55,7 +55,7 @@ export function createWallet(token, data) {
             }
 
         } catch (e) {
-            dispatch(updateErrorHandler('Wallet create error', e.response.status))
+            dispatch(updateErrorHandler('Wallet create error', e.response?.status || null))
         }
     }
 }
@@ -76,7 +76,39 @@ export function getWallets(token) {
             }
 
         } catch (e) {
-            dispatch(updateErrorHandler('Wallets load error', e.response.status))
+            dispatch(updateErrorHandler('Wallets load error', e.response?.status || null))
+        }
+    }
+}
+
+export function deleteWallet(token, data) {
+    return async dispatch => {
+        try {
+            const response = await axiosClient.delete(`/Profile/DeleteWalletAddress?address=${data}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+
+            console.log(response)
+        } catch (e) {
+            dispatch(updateErrorHandler('Delete wallet error', e.response?.status || null))
+        }
+    }
+}
+
+export function createWithdraw(token, data) {
+    return async dispatch => {
+        try {
+            const response = await axiosClient.post('/CoinsPaid/WithdrawalRequest', data,{
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+
+            console.log(response.data.payload)
+        } catch (e) {
+            dispatch(updateErrorHandler('Create withdraw error', e.response.status))
         }
     }
 }

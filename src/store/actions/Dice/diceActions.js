@@ -18,7 +18,7 @@ export function getDiceHash(token) {
                 dispatch(getDiceHashSuccess(response.data.payload.hash))
             }
         } catch (e) {
-            dispatch(updateErrorHandler('Cannot load hash', e.response.status))
+            dispatch(updateErrorHandler('Cannot load hash', e.response?.status || null))
         }
     }
 }

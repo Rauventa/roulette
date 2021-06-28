@@ -4,6 +4,20 @@
     display: flex;
     justify-content: space-between;
 
+    &_title {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    &_text {
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+
+    &_buttons {
+      margin-top: 20px;
+    }
+
     .card {
       width: calc(50% - 10px);
 

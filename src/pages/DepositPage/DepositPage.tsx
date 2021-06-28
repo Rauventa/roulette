@@ -1,50 +1,61 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import './DepositPage.scss'
-import {Card} from "../../components/Card/Card";
-import { Input } from '../../components/Input/Input';
 import { $t } from '../../lib/i18n';
-import { Button } from '../../components/Button/Button';
+import {SelectDeposit} from "./components/SelectDeposit/SelectDeposit";
+import {ShowDeposit} from "./components/ShowDeposit/ShowDeposit";
+import {axiosClient} from "../../utils/axiosClient";
+import {AuthContext} from "../../context/AuthContext";
+import {CSSTransition} from "react-transition-group";
+import {Spinner} from "../../components/Spinner/Spinner";
 
 export const DepositPage = () => {
 
-  const [promocode, setPromocode] = useState<string>('')
+  const [page, setPage] = useState<string>('select')
+  const [code, setCode] = useState<string>('')
+  const [loader, setLoader] = useState<boolean>(false)
+
+  const {token} = useContext(AuthContext)
+
+  const handleChangePage = async (value: string) => {
+
+    setLoader(true)
+
+    try {
+      const response = await axiosClient.get('/Profile/GetDepositWalletAddress', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+
+      setCode(response.data.payload)
+    } catch (e) {
+      console.log(e)
+    }
+
+    setLoader(false)
+    setPage(value)
+  }
 
   return (
     <div className={'deposit-page'}>
+
+      <CSSTransition in={loader} timeout={500} unmountOnExit classNames="my-node">
+        <Spinner />
+      </CSSTransition>
 
       <div className="page-title">
         {$t('Deposit')}
       </div>
 
-        <div className="deposit-page__content">
-            <Card>
-                <Input
-                    onChange={(value) => setPromocode(value)}
-                    placeholder={''}
-                    type={'text'}
-                    value={promocode}
-                    title={'Use promo code to refill your balance'}
-                />
-
-                <Button primary>
-                    {$t('Apply')}
-                </Button>
-            </Card>
-            <Card>
-                <div className={'text-secondary'}>
-                    {$t('Use one of payment option to refill your balance')}
-                </div>
-
-                <div className={'payment-options'}>
-                    <div className="payment-options__item">
-                        {$t('1')}
-                    </div>
-                    <div className="payment-options__item">
-                        {$t('2')}
-                    </div>
-                </div>
-            </Card>
-        </div>
+      {page === 'select' ?
+        <SelectDeposit
+          onChangePage={handleChangePage}
+        /> :
+        <ShowDeposit
+          onChangePage={handleChangePage}
+          code={code}
+        />
+      }
     </div>
   )
 }

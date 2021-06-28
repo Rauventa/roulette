@@ -7,7 +7,13 @@ import {ReactComponent as SettingsIcon} from "./img/wallet-set.svg";
 import { $t } from '../../../../../lib/i18n';
 import {Button} from "../../../../../components/Button/Button";
 
-export const WalletItem = () => {
+interface WalletItemProps {
+  data: any
+}
+
+export const WalletItem = ({
+  data
+}: WalletItemProps) => {
   return (
     <div className={'wallet-item'}>
       <div className="wallet-item__content">
@@ -16,10 +22,10 @@ export const WalletItem = () => {
         </div>
         <div className="wallet-item__content_data">
           <div className="wallet-item__content_data-name">
-            {$t('kjlkjlkjlkj')}
+            {$t(data.address)}
           </div>
           <div className="wallet-item__content_data-balance text-secondary">
-            {$t('10 BTC')}
+            {$t(`${data.balance} ${data.currency}`)}
           </div>
         </div>
       </div>

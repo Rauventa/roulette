@@ -49,7 +49,7 @@ export const UserCard = () => {
                 {$t(`${nickname}`)}
               </div>
               <div className="user-card__title_text-balance">
-                {$t(`${currency === 'btc' ? btc : usd} ${currency === 'btc' ? 'BTC' : '$'}`)}
+                {$t(`${currency === 'btc' ? btc : usd.toFixed(1 )} ${currency === 'btc' ? 'BTC' : '$'}`)}
               </div>
             </div>
           </div>

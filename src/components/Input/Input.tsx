@@ -11,7 +11,7 @@ interface InputProps {
   name?: string,
   disabled?: boolean,
   errors?: any,
-  onChange: (e: string) => void
+  onChange?: (e: string) => void
 }
 
 export const Input = ({
@@ -32,6 +32,12 @@ export const Input = ({
     defaultClass+= ' input-disabled'
   }
 
+  const handleChange = (value: any) => {
+    if (onChange) {
+      onChange(value)
+    }
+  }
+
   return (
     <div className={'input-group'}>
       {title ?
@@ -46,7 +52,7 @@ export const Input = ({
         name={name}
         disabled={disabled}
         value={value}
-        onChange={(event) => onChange(event.target.value)}
+        onChange={(event) => handleChange(event.target.value)}
       />
       <div className="input-group__errors">
         {$t(errors)}

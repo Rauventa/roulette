@@ -30,7 +30,7 @@ export const Select = ({
   const noOptionsMessage = noMessage || 'No options'
 
   return (
-    <div className={'inout-group'}>
+    <div className={'input-group'}>
       {title ?
         <div className="input-group__title">
           {$t(title)}

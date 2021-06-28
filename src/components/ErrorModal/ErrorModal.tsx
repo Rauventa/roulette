@@ -43,13 +43,13 @@ export const ErrorModal = ({
         </div>
 
         <div className="error-modal__message">
-          {$t(`${message} with status ${status}`)}
+          {$t(`${message} ${status ? `with status ${status}` : ''}`)}
         </div>
 
         <div className="modal__buttons">
-          {(status >= 500) ?
+          {(status >= 500 || !status) ?
             <Button primary onClick={modalCloseHandler}>
-              {$t('Reload page')}
+              {$t('Try again')}
             </Button> : null
           }
           {status === 401 ?

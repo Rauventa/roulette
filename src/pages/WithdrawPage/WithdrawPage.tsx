@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import './WithdrawPage.scss'
 import {Card} from "../../components/Card/Card";
 import { Button } from '../../components/Button/Button';
@@ -7,38 +7,30 @@ import { Input } from '../../components/Input/Input';
 import {Select} from "../../components/Select/Select";
 import {axiosClient} from "../../utils/axiosClient";
 import {AuthContext} from "../../context/AuthContext";
+import {useDispatch, useSelector} from "react-redux";
+import {getWallets} from "../../store/actions/Balance/balanceActions";
 
 export const WithdrawPage = () => {
 
-  const walletsOptions = [
-    {
-      label: 'BTC wallet BINANCE',
-      value: 'btc-binance'
-    },
-    {
-      label: 'BTC wallet OKEX',
-      value: 'btc-okex'
-    },
-  ]
-
-  const [amount, setAmount] = useState<string>('0.01')
-  const [wallet, setWallet] = useState<any>(walletsOptions[0])
-
   const {token} = useContext(AuthContext)
 
-  const getWithdrawWallets = async () => {
-    try {
-      const response = await axiosClient.get('/Profile/GetWithdrawWallets', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-
-      console.log(response.data.payload)
-    } catch (e) {
-      console.log(e)
+  const wallets = useSelector((state: any) => state.balanceReducer.wallets).map((item: any) => {
+    return {
+      label: `${item.currency} ${item.address}`,
+      value: item.id
     }
-  }
+  })
+
+  const [amount, setAmount] = useState<string>('0.01')
+  const [wallet, setWallet] = useState<any>(null)
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (token) {
+      dispatch(getWallets(token))
+    }
+  }, []);
 
   return (
     <div className={'withdraw-page'}>
@@ -74,13 +66,14 @@ export const WithdrawPage = () => {
           <div className={'withdraw-page__content_wallet'}>
             <Select
               title={'Wallet'}
-              options={walletsOptions}
+              placeholder={'Select wallet'}
+              options={wallets}
               value={wallet}
               onChange={(value) => setWallet(value)}
             />
           </div>
         </div>
-        <Button primary onClick={getWithdrawWallets}>
+        <Button primary>
           {$t('Withdraw Funds')}
         </Button>
       </Card>

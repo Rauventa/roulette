@@ -12,8 +12,11 @@ import {Spinner} from "../../components/Spinner/Spinner";
 
 export const DicePage = () => {
 
+  const currency = useSelector((state: any) => state.balanceReducer.currency)
+
   const defaultFormState = {
     range: 50,
+    // betValue: currency === 'btc' ? 0.0001 : 10
     betValue: 0.0001
   }
 

@@ -35,6 +35,9 @@ export const HiloBetCard = ({
 
   const result = useSelector((state: any) => state.hiloReducer.result)
   const rate = useSelector((state: any) => state.balanceReducer.rate)
+  const currency = useSelector((state: any) => state.balanceReducer.currency)
+
+  const hash = useSelector((state: any) => state.hiloReducer.hash)
 
   const modal = useSelector((state: any) => state.modalReducer.modal)
 
@@ -46,10 +49,14 @@ export const HiloBetCard = ({
       setLoader(true)
 
       try {
-        await dispatch(startHilo(token, {
-          bet,
-          rollType: type
-        }))
+        await dispatch(startHilo(
+            token,
+            {
+              bet,
+              rollType: type
+            },
+            hash
+        ))
 
         setLoader(false)
       } catch (e) {
@@ -93,7 +100,10 @@ export const HiloBetCard = ({
           {$t(`Bet > ${defaultRange.moreRange}`)}
         </Button>
         <div className={'bet-card__buttons_currency'}>
-          {$t('BTC')}
+          {currency === 'btc' ?
+              $t('BTC') :
+              $t('USD')
+          }
         </div>
       </div>
     </>

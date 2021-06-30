@@ -30,6 +30,7 @@ export const Header = () => {
 
   const [lang, setLang] = useState<string>(currentLang || 'ru');
   const [showLangs, setShowLangs] = useState<boolean>(false);
+  const [showCurrency, setShowCurrency] = useState<boolean>(false);
   const [menu, setMenu] = useState<boolean>(false)
 
   useEffect(() => {
@@ -42,12 +43,37 @@ export const Header = () => {
     }
   }, []);
 
-  const handleChangeCurrency = () => {
-    dispatch(changeCurrency(currency))
+  const handleChangeCurrency = (value: string) => {
+    dispatch(changeCurrency(value))
+
+    setShowCurrency(false)
   }
 
   const showAllLangsHandler = () => {
     setShowLangs(!showLangs)
+
+    if (!showLangs) {
+      setShowCurrency(false)
+      setMenu(false)
+    }
+  }
+
+  const showAllCurrencyHandler = () => {
+    setShowCurrency(!showCurrency)
+
+    if (!showCurrency) {
+      setShowLangs(false)
+      setMenu(false)
+    }
+  }
+
+  const handleChangeMenu = () => {
+    setMenu(!menu)
+
+    if (!menu) {
+      setShowLangs(false)
+      setShowCurrency(false)
+    }
   }
 
   const handleChangeLang = (lang: string) => {
@@ -106,12 +132,25 @@ export const Header = () => {
           {$t(`1 BTC = ${rate}$`)}
         </div>
 
-        <div className="currency text-secondary" onClick={handleChangeCurrency}>
-          {currency === 'btc' ?
-            $t('BTC') :
-            $t('USD')
+        <div className="currency-select">
+          <div className="currency-select__current text-secondary" onClick={showAllCurrencyHandler}>
+            {currency === 'btc' ?
+                $t('BTC') :
+                $t('USD')
+            }
+          </div>
+          {showCurrency ?
+              <div className="currency-select__all">
+                <div className={'currency-select__all_item text-secondary'} onClick={() => handleChangeCurrency('btc')}>
+                  {$t('BTC')}
+                </div>
+                <div className={'currency-select__all_item text-secondary'} onClick={() => handleChangeCurrency('usd')}>
+                  {$t('USD')}
+                </div>
+              </div> : null
           }
         </div>
+
         <div className={'language-select'}>
           <div className="language-select__current" onClick={showAllLangsHandler}>
             {lang === 'ru' ?
@@ -125,8 +164,12 @@ export const Header = () => {
           </div>
           {showLangs ?
             <div className="language-select__all">
-              <RuIcon onClick={() => handleChangeLang('ru')} />
-              <USIcon onClick={() => handleChangeLang('en')} />
+              <div className="language-select__all_item">
+                <RuIcon onClick={() => handleChangeLang('ru')} />
+              </div>
+              <div className="language-select__all_item">
+                <USIcon onClick={() => handleChangeLang('en')} />
+              </div>
             </div> : null
           }
         </div>
@@ -140,7 +183,7 @@ export const Header = () => {
               </Button>
             </div> :
             <div className="header__additional_user">
-              <div className="header__additional_user-value" onClick={() => setMenu(!menu)}>
+              <div className="header__additional_user-value" onClick={handleChangeMenu}>
                 <UserIcon />
               </div>
 

@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Card } from '../Card/Card';
 import './BetCard.scss'
 import {ReactComponent as MinusIcon} from "./img/minus.svg";
 import {ReactComponent as PlusIcon} from "./img/plus.svg";
 import {DiceBetCard} from "../../pages/DicePage/components/DIceBetCard/DiceBetCard";
 import {HiloBetCard} from "../../pages/HiloPage/components/HiloBetCard/HiloBetCard";
+import {useSelector} from "react-redux";
 
 interface BetCardProps {
   formState: any;
@@ -18,7 +19,17 @@ export const BetCard = ({
   handleChange
 }: BetCardProps) => {
 
+  const currency = useSelector((state: any) => state.balanceReducer.currency)
+
   const [bet, setBet] = useState<number>(0.0001)
+
+  // useEffect(() => {
+  //   if (currency === 'btc') {
+  //     setBet(0.0001)
+  //   } else {
+  //     setBet(10)
+  //   }
+  // }, [currency])
 
   const changeRangeHandler = (value: number) => {
     handleChange(value, 'range')
@@ -26,7 +37,8 @@ export const BetCard = ({
 
   const changeBetHandler = (iterator: string) => {
 
-    const defaultStepValue = 0.0001;
+    // const defaultStepValue = currency === 'btc' ? 0.0001 : 1;
+    const defaultStepValue = 0.0001
 
     switch (iterator) {
       case 'minus':

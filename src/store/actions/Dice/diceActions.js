@@ -23,7 +23,7 @@ export function getDiceHash(token) {
     }
 }
 
-export function startDice(token, data, ownNumber) {
+export function startDice(token, data, ownNumber, hash) {
     return async dispatch => {
         try {
             const response = await axiosClient.post('/Dice/CheckDiceResult', data, {
@@ -35,7 +35,7 @@ export function startDice(token, data, ownNumber) {
             if (response.data?.errors?.length) {
                 dispatch(updateErrorHandler(response.data.errors[0], response.data.status))
             } else {
-                dispatch(startDiceSuccess({...response.data.payload, ownNumber}))
+                dispatch(startDiceSuccess({...response.data.payload, ownNumber, lastHash: hash}))
                 dispatch(openModalHandler())
             }
 

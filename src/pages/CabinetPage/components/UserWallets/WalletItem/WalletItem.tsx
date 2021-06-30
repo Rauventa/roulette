@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import './WalletItem.scss';
 
 import {ReactComponent as BTCIcon} from "./img/btc-ico-orange.svg";
@@ -10,23 +10,34 @@ import {useDispatch} from "react-redux";
 import {deleteWallet} from "../../../../../store/actions/Balance/balanceActions";
 import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../../../../components/Spinner/Spinner";
+import {AuthContext} from "../../../../../context/AuthContext";
 
 interface WalletItemProps {
-  data: any
+  data: any,
+  onDeleteHandler: () => void;
 }
 
 export const WalletItem = ({
-  data
+  data,
+  onDeleteHandler,
 }: WalletItemProps) => {
 
   const [loader, setLoader] = useState<boolean>(false)
 
   const dispatch = useDispatch()
 
+  const {token} = useContext(AuthContext)
+
   const removeHandler = async () => {
     setLoader(true)
 
-    await dispatch(deleteWallet(data.address))
+    try {
+      await dispatch(deleteWallet(token, data.address))
+
+      onDeleteHandler()
+    } catch (e) {
+      console.log(e)
+    }
 
     setLoader(false)
   }

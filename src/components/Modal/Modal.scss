@@ -46,6 +46,16 @@
 
   .status-modal {
 
+    &__divider {
+      height: 1px;
+      background-color: rgba(255,255,255,0.1);
+      margin: 20px 0;
+    }
+
+    &__info {
+      margin-bottom: 20px;
+    }
+
     &__item {
       display: flex;
       justify-content: space-between;

@@ -5,16 +5,9 @@ import {openModalHandler} from "../Modal/modalActions";
 import {startDiceSuccess} from "../Dice/diceActions";
 
 export function changeCurrency(ticker) {
-
-    let currency = 'btc'
-
-    if (ticker === 'btc') {
-        currency = 'usd'
-    }
-
     return {
         type: CHANGE_CURRENCY,
-        currency
+        currency: ticker
     }
 }
 
@@ -51,7 +44,7 @@ export function createWallet(token, data) {
             if (response.data?.errors?.length) {
                 dispatch(updateErrorHandler(response.data?.errors[0], response.data.status))
             } else {
-                return response.data.payload
+                return response.data.success
             }
 
         } catch (e) {
@@ -84,13 +77,21 @@ export function getWallets(token) {
 export function deleteWallet(token, data) {
     return async dispatch => {
         try {
-            const response = await axiosClient.delete(`/Profile/DeleteWalletAddress?address=${data}`, {
+            const response = await axiosClient.delete(`/Profile/DeleteWalletAddress`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
+                },
+                params: {
+                    address: data
                 }
             })
 
-            console.log(response)
+            if (response.data?.errors?.length) {
+                dispatch(updateErrorHandler(response.data?.errors[0], response.data.status))
+            } else {
+                return response.data.success
+            }
+
         } catch (e) {
             dispatch(updateErrorHandler('Delete wallet error', e.response?.status || null))
         }

@@ -87,14 +87,14 @@ export const UserWallets = () => {
 
   const addWalletHandler = async () => {
     try {
-      const response = await dispatch(createWallet(token, {
+      await dispatch(createWallet(token, {
         address: formState.address,
         currency: formState.currency.value
       }))
 
-      //TODO - show OK alerts
+      setAddShower(false)
 
-      console.log(response)
+      await fetchData()
     } catch (e) {
       console.log(e)
     }
@@ -137,6 +137,7 @@ export const UserWallets = () => {
               <WalletItem
                 key={index}
                 data={item}
+                onDeleteHandler={fetchData}
               />
             )
           }) :

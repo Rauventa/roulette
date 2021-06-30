@@ -18,6 +18,8 @@ export const Modal = ({
   onClose
 }: ModalProps) => {
 
+  const proofLine = `${formState.hiddenNumber}${formState.salt}`
+
   return (
     <div className={'modal-overflow'}>
       <div className={'modal'}>
@@ -64,20 +66,23 @@ export const Modal = ({
               {$t(`${Math.abs(formState.gain).toFixed(8)} BTC`)}
             </div>
           </div>
-          <div className="status-modal__item">
-            <div className="status-modal__item_title">
-              {$t('Salt')}
-            </div>
-            <div className="status-modal__item_value">
-              {$t(formState.salt)}
+          <div className="status-modal__divider" />
+          <div className="status-modal__info text-secondary">
+            {$t('Game hash = generated number + salt. You can check it with sha256 decoder.')}
+          </div>
+          <div className="status-modal__item small">
+            <div className="status-modal__item_info">
+              {$t(`Salt - ${formState.salt}`)}
             </div>
           </div>
-          <div className="status-modal__item">
-            <div className="status-modal__item_title">
-              {$t('Proof')}
+          <div className="status-modal__item small">
+            <div className="status-modal__item_info">
+              {$t(`Hash - ${formState.lastHash}`)}
             </div>
-            <div className="status-modal__item_value">
-              {$t('sdfsdf')}
+          </div>
+          <div className="status-modal__item small">
+            <div className="status-modal__item_info">
+              {$t(`Proof - ${proofLine}`)}
             </div>
           </div>
         </div>
@@ -86,6 +91,9 @@ export const Modal = ({
           <Button primary onClick={onClose}>
             {$t('Start new game')}
           </Button>
+          <a className={'btn btn-light'} href={`https://md5calc.com/hash/sha256/${proofLine}`} target={'_blank'}>
+            {$t('Check it')}
+          </a>
         </div>
 
       </div>

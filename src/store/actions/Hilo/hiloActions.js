@@ -24,7 +24,7 @@ export function getHiloHash(token) {
     }
 }
 
-export function startHilo(token, data) {
+export function startHilo(token, data, hash) {
     return async dispatch => {
         try {
             const response = await axiosClient.post('/HiLo/CheckHiLoResult', data, {
@@ -36,7 +36,7 @@ export function startHilo(token, data) {
             if (response.data?.errors?.length) {
                 dispatch(updateErrorHandler(response.data.errors[0], response.data.status))
             } else {
-                dispatch(startHiloSuccess(response.data.payload))
+                dispatch(startHiloSuccess({...response.data.payload, lastHash: hash}))
                 dispatch(openModalHandler())
             }
         } catch (e) {

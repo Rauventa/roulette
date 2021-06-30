@@ -33,6 +33,9 @@ export const DiceBetCard = ({
 
   const result = useSelector((state: any) => state.diceReducer.result)
   const rate = useSelector((state: any) => state.balanceReducer.rate)
+  const currency = useSelector((state: any) => state.balanceReducer.currency)
+
+  const hash = useSelector((state: any) => state.diceReducer.hash)
 
   const modal = useSelector((state: any) => state.modalReducer.modal)
 
@@ -50,10 +53,15 @@ export const DiceBetCard = ({
       setLoader(true)
 
       try {
-        await dispatch(startDice(token, {
-          bet,
-          chance: Number(range)
-        }, Number(range) + 1))
+        await dispatch(startDice(
+            token,
+            {
+              bet,
+              chance: Number(range)
+            },
+            Number(range) + 1,
+            hash
+            ))
 
         setLoader(false)
       } catch (e) {
@@ -112,7 +120,10 @@ export const DiceBetCard = ({
           {$t('Make a Bet')}
         </Button>
         <div className={'bet-card__buttons_currency'}>
-          {$t('BTC')}
+          {currency === 'btc' ?
+              $t('BTC') :
+              $t('USD')
+          }
         </div>
       </div>
     </>

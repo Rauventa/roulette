@@ -13,6 +13,8 @@ import {inputValidator} from "../../../../lib/validator";
 import '../../AuthPage.scss'
 import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../../../components/Spinner/Spinner";
+import {useDispatch} from "react-redux";
+import {updateErrorHandler} from "../../../../store/actions/Errors/ErrorActions";
 
 export const SignIn = () => {
 
@@ -27,6 +29,8 @@ export const SignIn = () => {
 
   const history = useHistory()
   const {login} = useContext(AuthContext)
+
+  const dispatch = useDispatch()
 
   const handleStateUpdate = (value: string, iterator: string) => {
     switch (iterator) {
@@ -51,7 +55,6 @@ export const SignIn = () => {
 
 
   const handleSubmit = async () => {
-
     setLoader(true)
 
     const {errors} = inputValidator(formState)
@@ -68,8 +71,6 @@ export const SignIn = () => {
               response.data.payload.nickname
           )
 
-          setLoader(false)
-
           history.push('/dice')
         } else {
           setErrors({login: 'Authorization failed'})
@@ -77,10 +78,13 @@ export const SignIn = () => {
 
       } catch (e) {
         setErrors({login: 'Authorization failed'})
+        dispatch(updateErrorHandler('Login error', e.response?.status || null))
       }
     } else {
       setErrors(errors)
     }
+
+    setLoader(false)
   }
 
   return (

@@ -19,6 +19,8 @@ export const SelectDeposit = ({
     onChangePage('currency')
   }
 
+  //TODO /api/Prheaofile/ActivatePromocode call with 200 and 500 status (success and error popup)- need to await dispatch data
+
   return (
     <div className="deposit-page__content">
       <Card>

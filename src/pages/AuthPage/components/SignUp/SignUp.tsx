@@ -12,6 +12,8 @@ import {axiosClient} from "../../../../utils/axiosClient";
 import {inputValidator} from "../../../../lib/validator";
 import {AuthContext} from "../../../../context/AuthContext";
 import '../../AuthPage.scss'
+import {updateErrorHandler} from "../../../../store/actions/Errors/ErrorActions";
+import {useDispatch} from "react-redux";
 
 export const SignUp = () => {
 
@@ -28,6 +30,8 @@ export const SignUp = () => {
 
   const history = useHistory()
   const {login} = useContext(AuthContext)
+
+  const dispatch = useDispatch()
 
   const handleStateUpdate = (value: any, iterator: string) => {
     switch (iterator) {
@@ -91,8 +95,8 @@ export const SignUp = () => {
         }
 
       } catch (e) {
-        console.log(e)
         setErrors({registration: 'Registration failed'})
+        dispatch(updateErrorHandler('Registration error', e.response?.status || null))
       }
     } else {
       setErrors(errors)

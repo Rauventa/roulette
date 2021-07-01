@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {Card} from "../../../../components/Card/Card";
 import {Input} from "../../../../components/Input/Input";
 import {Button} from "../../../../components/Button/Button";
-import {$t} from "../../../../lib/i18n";
 import {ReactComponent as BitcoinIcon} from "../../img/btc-ico-white.svg";
+import {useTranslation} from "react-i18next";
 
 interface SelectDepositProps {
   onChangePage: (value: string) => void;
@@ -13,13 +13,13 @@ export const SelectDeposit = ({
   onChangePage,
 }: SelectDepositProps) => {
 
+  const {t} = useTranslation()
+
   const [promocode, setPromocode] = useState<string>('')
 
   const handleSubmit = () => {
     onChangePage('currency')
   }
-
-  //TODO /api/Prheaofile/ActivatePromocode call with 200 and 500 status (success and error popup)- need to await dispatch data
 
   return (
     <div className="deposit-page__content">
@@ -33,12 +33,12 @@ export const SelectDeposit = ({
         />
 
         <Button primary>
-          {$t('Apply')}
+          {t('Apply')}
         </Button>
       </Card>
       <Card>
         <div className={'text-secondary'}>
-          {$t('Use one of payment option to refill your balance')}
+          {t('Use one of payment option to refill your balance')}
         </div>
 
         <div className={'payment-options'}>

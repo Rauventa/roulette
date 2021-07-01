@@ -1,6 +1,5 @@
 import React, {useContext, useState} from 'react';
 import {Button} from "../../../../components/Button/Button";
-import {$t} from "../../../../lib/i18n";
 import {useDispatch, useSelector} from "react-redux";
 import {CSSTransition} from "react-transition-group";
 import {Modal} from "../../../../components/Modal/Modal";
@@ -8,9 +7,9 @@ import {closeModalHandler} from "../../../../store/actions/Modal/modalActions";
 import {getBalance} from "../../../../store/actions/Balance/balanceActions";
 import {AuthContext} from "../../../../context/AuthContext";
 import {Spinner} from "../../../../components/Spinner/Spinner";
-import {startDice} from "../../../../store/actions/Dice/diceActions";
 import {startHilo} from "../../../../store/actions/Hilo/hiloActions";
 import {useHistory} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 interface HiloBetCardProps {
   bet: number;
@@ -24,6 +23,8 @@ export const HiloBetCard = ({
     lessRange: 48,
     moreRange: 52
   }
+
+  const {t} = useTranslation()
 
   const history = useHistory()
 
@@ -94,15 +95,15 @@ export const HiloBetCard = ({
 
       <div className="bet-card__buttons">
         <Button primary onClick={() => makeBetHandler('LessThan48')}>
-          {$t(`Bet < ${defaultRange.lessRange}`)}
+          {t(`Bet < ${defaultRange.lessRange}`)}
         </Button>
         <Button primary onClick={() => makeBetHandler('MoreTHan52')}>
-          {$t(`Bet > ${defaultRange.moreRange}`)}
+          {t(`Bet > ${defaultRange.moreRange}`)}
         </Button>
         <div className={'bet-card__buttons_currency'}>
           {currency === 'btc' ?
-              $t('BTC') :
-              $t('USD')
+              t('BTC') :
+              t('USD')
           }
         </div>
       </div>

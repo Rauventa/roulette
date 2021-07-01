@@ -3,7 +3,6 @@ import {useHistory} from "react-router-dom";
 import './UserCard.scss';
 import {Card} from "../Card/Card";
 import {Button} from "../Button/Button";
-import {$t} from "../../lib/i18n";
 import {ReactComponent as UserIcon} from "./img/user.svg";
 import {ReactComponent as LogoutIcon} from "./img/logout.svg";
 import {AuthContext} from "../../context/AuthContext";
@@ -11,10 +10,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {getBalance} from "../../store/actions/Balance/balanceActions";
 import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../Spinner/Spinner";
+import {useTranslation} from "react-i18next";
 
 export const UserCard = () => {
 
   const {logout, isAuth, token, nickname} = useContext(AuthContext);
+
+  const {t} = useTranslation()
 
   const history = useHistory()
 
@@ -65,19 +67,19 @@ export const UserCard = () => {
             <UserIcon className={isAuth ? 'active' : ''} onClick={goToCabinetHandler} />
             <div className={'user-card__title_text'}>
               <div className="user-card__title_text-name">
-                {$t(`${nickname}`)}
+                {t(`${nickname}`)}
               </div>
               <div className="user-card__title_text-balance">
-                {$t(`${currency === 'btc' ? btc || 0 : usd.toFixed(1 ) || 0} ${currency === 'btc' ? 'BTC' : '$'}`)}
+                {t(`${currency === 'btc' ? btc || 0 : usd.toFixed(1 ) || 0} ${currency === 'btc' ? 'BTC' : '$'}`)}
               </div>
             </div>
           </div>
           <div className="user-card__buttons">
             <Button light href={'/deposit'}>
-              {$t('Deposit')}
+              {t('Deposit')}
             </Button>
             <Button secondary href={'/withdraw'}>
-              {$t('Withdraw')}
+              {t('Withdraw')}
             </Button>
             <Button dark onClick={logoutHandler}>
               <LogoutIcon />
@@ -88,12 +90,12 @@ export const UserCard = () => {
           <div className={'user-card__title'}>
             <UserIcon />
             <div className={'user-card__title_text'}>
-              {$t('You are guest')}
+              {t('You are guest')}
             </div>
           </div>
           <div className="user-card__buttons">
             <Button dark href={'/login'}>
-              {$t('Sign In')}
+              {t('Sign In')}
             </Button>
           </div>
         </div>

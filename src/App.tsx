@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {Suspense, useContext, useEffect} from 'react';
 import './styles/main.scss'
 import {AppLayout} from "./layouts/AppLayout/AppLayout";
 import { AuthContext } from './context/AuthContext';
@@ -36,9 +36,11 @@ export const App = () => {
         <AuthContext.Provider value={{
             token, refreshToken, userId, nickname, login, logout, isAuth
         }}>
-            <AppLayout>
-                <RootRouter />
-            </AppLayout>
+            <Suspense fallback="loading">
+                <AppLayout>
+                    <RootRouter />
+                </AppLayout>
+            </Suspense>
         </AuthContext.Provider>
     )
 }

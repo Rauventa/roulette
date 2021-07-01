@@ -1,18 +1,20 @@
 import React, {useContext, useState} from 'react';
 import './DepositPage.scss'
-import { $t } from '../../lib/i18n';
 import {SelectDeposit} from "./components/SelectDeposit/SelectDeposit";
 import {ShowDeposit} from "./components/ShowDeposit/ShowDeposit";
 import {axiosClient} from "../../utils/axiosClient";
 import {AuthContext} from "../../context/AuthContext";
 import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../components/Spinner/Spinner";
+import {useTranslation} from "react-i18next";
 
 export const DepositPage = () => {
 
   const [page, setPage] = useState<string>('select')
   const [code, setCode] = useState<string>('')
   const [loader, setLoader] = useState<boolean>(false)
+
+  const {t} = useTranslation()
 
   const {token} = useContext(AuthContext)
 
@@ -44,7 +46,7 @@ export const DepositPage = () => {
       </CSSTransition>
 
       <div className="page-title">
-        {$t('Deposit')}
+        {t('Deposit')}
       </div>
 
       {page === 'select' ?

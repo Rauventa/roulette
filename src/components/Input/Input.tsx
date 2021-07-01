@@ -1,6 +1,6 @@
 import React from 'react';
-import { $t } from '../../lib/i18n';
 import './Input.scss'
+import {useTranslation} from "react-i18next";
 
 interface InputProps {
   className?: string,
@@ -26,6 +26,8 @@ export const Input = ({
   onChange
 }: InputProps) => {
 
+  const {t} = useTranslation()
+
   let defaultClass = 'input'
 
   if (disabled) {
@@ -42,12 +44,12 @@ export const Input = ({
     <div className={'input-group'}>
       {title ?
         <div className="input-group__title">
-          {$t(title)}
+          {t(title)}
         </div> : null
       }
       <input
         className={`${defaultClass} ${className ? className : ''}`}
-        placeholder={$t(placeholder)}
+        placeholder={t(placeholder)}
         type={type}
         name={name}
         disabled={disabled}
@@ -55,7 +57,7 @@ export const Input = ({
         onChange={(event) => handleChange(event.target.value)}
       />
       <div className="input-group__errors">
-        {$t(errors)}
+        {t(errors)}
       </div>
     </div>
   )

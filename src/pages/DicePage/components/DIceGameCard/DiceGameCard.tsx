@@ -1,6 +1,6 @@
 import React from 'react';
-import {$t} from "../../../../lib/i18n";
 import {useSelector} from "react-redux";
+import {useTranslation} from "react-i18next";
 
 interface DiceGameCardProps {
   currency: string,
@@ -12,6 +12,8 @@ export const DiceGameCard = ({
   formState
 }: DiceGameCardProps) => {
 
+  const {t} = useTranslation()
+
   const rate = useSelector((state: any) => state.balanceReducer.rate)
 
   const possibleProfit = parseFloat((formState.betValue * Number((100 / formState.range * (1 - 2 / 100)).toFixed(4))).toFixed(8));
@@ -21,22 +23,22 @@ export const DiceGameCard = ({
       <div className="game-card__counter_value">
         <div className="game-card__counter_value-number">
           <div className="game-card__counter_value-number--count">
-            {$t(`${currency === 'btc' ? possibleProfit : (possibleProfit*rate).toFixed(1)}`)}
+            {t(`${currency === 'btc' ? possibleProfit : (possibleProfit*rate).toFixed(1)}`)}
           </div>
           <div className="game-card__counter_value-number--currency">
-            {$t(currency === 'btc' ? 'BTC' : '$')}
+            {t(currency === 'btc' ? 'BTC' : '$')}
           </div>
         </div>
         <div className="game-card__counter_value-info">
-          {$t('Possible win')}
+          {t('Possible win')}
         </div>
       </div>
       <div className="game-card__counter_percent">
         <div className="game-card__counter_percent-value">
-          {$t(`${formState.range + 1}`)}
+          {t(`${formState.range + 1}`)}
         </div>
         <div className="game-card__counter_percent-info">
-          {$t('Roll under')}
+          {t('Roll under')}
         </div>
       </div>
     </div>

@@ -1,5 +1,4 @@
 import React, {useContext, useState} from 'react';
-import {$t} from "../../../../lib/i18n";
 import {Input} from "../../../../components/Input/Input";
 import {Checkbox} from "../../../../components/Checkbox/Checkbox";
 import {NavLink, useHistory} from "react-router-dom";
@@ -14,6 +13,7 @@ import {AuthContext} from "../../../../context/AuthContext";
 import '../../AuthPage.scss'
 import {updateErrorHandler} from "../../../../store/actions/Errors/ErrorActions";
 import {useDispatch} from "react-redux";
+import {useTranslation} from "react-i18next";
 
 export const SignUp = () => {
 
@@ -27,6 +27,8 @@ export const SignUp = () => {
 
   const [formState, setFormState] = useState(defaultFormState)
   const [errors, setErrors] = useState<any>({})
+
+  const {t} = useTranslation()
 
   const history = useHistory()
   const {login} = useContext(AuthContext)
@@ -108,7 +110,7 @@ export const SignUp = () => {
         <Card className={'fit-card'}>
           <div className="auth-page__signup">
             <div className="auth-page__title">
-              {$t('Sign Up')}
+              {t('Sign Up')}
             </div>
             <div className="form-group">
               <Input
@@ -142,20 +144,20 @@ export const SignUp = () => {
                   onChange={(value) => handleStateUpdate(value, 'license')}
               >
                 <div>
-                  {$t('I confirm that I agree to the')}
+                  {t('I confirm that I agree to the')}
                   <NavLink to={'/'} className={'danger-link'}>
-                    {$t('License agreement')}
+                    {t('License agreement')}
                   </NavLink>
                 </div>
               </Checkbox>
 
               <div className={'errors-shower'}>
-                {$t(errors?.registration)}
+                {t(errors?.registration)}
               </div>
 
               <div className="auth-page__buttons">
                 <Button primary onClick={handleSubmit}>
-                  {$t('Sign Up')}
+                  {t('Sign Up')}
                 </Button>
                 <div className="auth-page__buttons_socials">
                   <div className="auth-page__buttons_socials-item">

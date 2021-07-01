@@ -1,5 +1,4 @@
 import React, {useContext, useState} from 'react';
-import {$t} from "../../../../lib/i18n";
 import {Input} from "../../../../components/Input/Input";
 import {Button} from "../../../../components/Button/Button";
 import {ReactComponent as InstagramIcon} from "../../img/igram.svg";
@@ -15,6 +14,7 @@ import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../../../components/Spinner/Spinner";
 import {useDispatch} from "react-redux";
 import {updateErrorHandler} from "../../../../store/actions/Errors/ErrorActions";
+import {useTranslation} from "react-i18next";
 
 export const SignIn = () => {
 
@@ -22,6 +22,8 @@ export const SignIn = () => {
     email: '',
     password: ''
   }
+
+  const {t} = useTranslation()
 
   const [formState, setFormState] = useState(defaultFormState)
   const [errors, setErrors] = useState<any>({})
@@ -97,7 +99,7 @@ export const SignIn = () => {
         <Card className={'fit-card'}>
           <div className="auth-page__signin">
             <div className="auth-page__title">
-              {$t('Sign In')}
+              {t('Sign In')}
             </div>
             <div className="input-group">
               <Input
@@ -118,16 +120,16 @@ export const SignIn = () => {
               />
 
               <div className={'errors-shower'}>
-                {$t(errors?.login)}
+                {t(errors?.login)}
               </div>
 
               <div className="auth-page__additional">
-                {$t('Forgot your password?')}
+                {t('Forgot your password?')}
               </div>
 
               <div className="auth-page__buttons">
                 <Button primary onClick={handleSubmit}>
-                  {$t('Log In')}
+                  {t('Log In')}
                 </Button>
                 <div className="auth-page__buttons_socials">
                   <div className="auth-page__buttons_socials-item">

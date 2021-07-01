@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import { $t } from '../../lib/i18n';
+import { t } from '../../lib/i18n';
 import './ErrorModal.scss'
 import {Button} from "../Button/Button";
 import {useDispatch, useSelector} from "react-redux";
@@ -39,22 +39,22 @@ export const ErrorModal = ({
     <div className={'modal-overflow '}>
       <div className="modal error-modal">
         <div className="modal__title">
-          {$t('Error')}
+          {t('Error')}
         </div>
 
         <div className="error-modal__message">
-          {$t(`${message} ${status ? `with status ${status}` : ''}`)}
+          {t(`${message} ${status ? `with status ${status}` : ''}`)}
         </div>
 
         <div className="modal__buttons">
           {(status >= 402 || !status) ?
             <Button light onClick={modalCloseHandler}>
-              {$t('Try again')}
+              {t('Try again')}
             </Button> : null
           }
           {status === 401 ?
             <Button light onClick={logoutHandler}>
-              {$t('Login again')}
+              {t('Login again')}
             </Button> : null
           }
         </div>

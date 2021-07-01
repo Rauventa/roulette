@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useState} from 'react';
 import './WithdrawPage.scss'
 import {Card} from "../../components/Card/Card";
 import { Button } from '../../components/Button/Button';
-import { $t } from '../../lib/i18n';
 import { Input } from '../../components/Input/Input';
 import {Select} from "../../components/Select/Select";
 import {AuthContext} from "../../context/AuthContext";
@@ -10,10 +9,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {createWithdraw, getWallets} from "../../store/actions/Balance/balanceActions";
 import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../components/Spinner/Spinner";
+import {useTranslation} from "react-i18next";
 
 export const WithdrawPage = () => {
 
   const {token} = useContext(AuthContext)
+
+  const {t} = useTranslation()
 
   const wallets = useSelector((state: any) => state.balanceReducer.wallets)
 
@@ -64,7 +66,7 @@ export const WithdrawPage = () => {
       </CSSTransition>
 
       <div className="page-title">
-        {$t('Withdraw')}
+        {t('Withdraw')}
       </div>
 
       <Card>
@@ -80,14 +82,14 @@ export const WithdrawPage = () => {
             <div className="input-bottom-placeholder">
               <div className="input-bottom-placeholder__left">
                 <div className="input-bottom-placeholder_item">
-                  {$t('Min 0.001 BTC')}
+                  {t('Min 0.001 BTC')}
                 </div>
                 <div className="input-bottom-placeholder_item">
-                  {$t('Max 350 BTC')}
+                  {t('Max 350 BTC')}
                 </div>
               </div>
               <div className="input-bottom-placeholder__right">
-                {$t('Commission 0.0005 BTC')}
+                {t('Commission 0.0005 BTC')}
               </div>
             </div>
           </div>
@@ -102,7 +104,7 @@ export const WithdrawPage = () => {
           </div>
         </div>
         <Button primary onClick={withDrawHandler} disabled={!wallet}>
-          {$t('Withdraw Funds')}
+          {t('Withdraw Funds')}
         </Button>
       </Card>
     </div>

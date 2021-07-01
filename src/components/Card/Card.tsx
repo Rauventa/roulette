@@ -1,6 +1,6 @@
 import React from 'react';
-import { $t } from '../../lib/i18n';
 import './Card.scss'
+import {useTranslation} from "react-i18next";
 
 interface CardProps {
   children: React.ReactNode,
@@ -13,11 +13,14 @@ export const Card = ({
   title,
   className
 }: CardProps) => {
+
+  const {t} = useTranslation()
+
   return (
     <div className={`card ${className ? className : ''}`}>
       {title ?
         <div className="card__title">
-          {$t(title)}
+          {t(title)}
         </div> : null
       }
 

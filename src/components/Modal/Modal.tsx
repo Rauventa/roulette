@@ -1,7 +1,7 @@
 import React from 'react';
-import { $t } from '../../lib/i18n';
 import { Button } from '../Button/Button';
 import './Modal.scss'
+import {useTranslation} from "react-i18next";
 
 interface ModalProps {
   title: string,
@@ -18,81 +18,83 @@ export const Modal = ({
   onClose
 }: ModalProps) => {
 
-  const proofLine = `${formState.hiddenNumber}${formState.salt}`
+  const proofLine = `${formState.hiddenNumber}${formState.salt}`;
+
+  const {t} = useTranslation()
 
   return (
     <div className={'modal-overflow'}>
       <div className={'modal'}>
 
         <div className={`modal__title ${formState.userWin ? 'success' : 'danger'}`}>
-          {formState.userWin ? $t('You won!') : $t('You lose')}
+          {formState.userWin ? t('You won!') : t('You lose')}
         </div>
 
         <div className="modal__content status-modal">
           <div className="status-modal__item">
             <div className="status-modal__item_title">
-              {$t('Your bet')}
+              {t('Your bet')}
             </div>
             <div className="status-modal__item_value">
-              {$t(`${(formState.bet).toFixed(8)} BTC`)}
+              {t(`${(formState.bet).toFixed(8)} BTC`)}
             </div>
           </div>
           {type === 'dice' ?
             <div className="status-modal__item">
               <div className="status-modal__item_title">
-                {$t('Your number')}
+                {t('Your number')}
               </div>
               <div className="status-modal__item_value">
-                {$t(formState.ownNumber)}
+                {t(formState.ownNumber)}
               </div>
             </div> : null
           }
           <div className="status-modal__item">
             <div className="status-modal__item_title">
-              {$t('Generated number')}
+              {t('Generated number')}
             </div>
             <div className="status-modal__item_value">
-              {$t(formState.hiddenNumber)}
+              {t(formState.hiddenNumber)}
             </div>
           </div>
           <div className="status-modal__item">
             <div className="status-modal__item_title">
               {formState.userWin ?
-                  $t('Total win') :
-                  $t('Total loss')
+                  t('Total win') :
+                  t('Total loss')
               }
             </div>
             <div className="status-modal__item_value">
-              {$t(`${Math.abs(formState.gain).toFixed(8)} BTC`)}
+              {t(`${Math.abs(formState.gain).toFixed(8)} BTC`)}
             </div>
           </div>
           <div className="status-modal__divider" />
           <div className="status-modal__info text-secondary">
-            {$t('Game hash = generated number + salt. You can check it with sha256 decoder.')}
+            {t('Game hash = generated number + salt. You can check it with sha256 decoder.')}
           </div>
           <div className="status-modal__item small">
             <div className="status-modal__item_info">
-              {$t(`Salt - ${formState.salt}`)}
+              {t(`Salt - ${formState.salt}`)}
             </div>
           </div>
           <div className="status-modal__item small">
             <div className="status-modal__item_info">
-              {$t(`Hash - ${formState.lastHash}`)}
+              {t(`Hash - ${formState.lastHash}`)}
             </div>
           </div>
           <div className="status-modal__item small">
             <div className="status-modal__item_info">
-              {$t(`Proof - ${proofLine}`)}
+              {t(`Proof - ${proofLine}`)}
             </div>
           </div>
         </div>
 
         <div className="modal__buttons">
           <Button primary onClick={onClose}>
-            {$t('Start new game')}
+            {t('Start new game')}
           </Button>
           <a className={'btn btn-light'} href={`https://md5calc.com/hash/sha256/${proofLine}`} target={'_blank'}>
-            {$t('Check it')}
+            {t('Check it')}
           </a>
         </div>
 

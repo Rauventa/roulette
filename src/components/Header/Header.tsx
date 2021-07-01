@@ -1,5 +1,4 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { $t } from '../../lib/i18n';
 import './Header.scss';
 import { NavLink, useHistory } from 'react-router-dom';
 import {ReactComponent as RouletteIcon} from "./img/roulette.svg";
@@ -14,10 +13,13 @@ import { AuthContext } from '../../context/AuthContext';
 import {ReactComponent as LogoutIcon} from "./img/logout.svg";
 import {useDispatch, useSelector} from "react-redux";
 import {changeCurrency} from "../../store/actions/Balance/balanceActions";
+import {useTranslation} from "react-i18next";
 
 export const Header = () => {
 
   const {logout, isAuth} = useContext(AuthContext);
+
+  const {t, i18n} = useTranslation()
 
   const history = useHistory();
 
@@ -26,22 +28,9 @@ export const Header = () => {
   const currency = useSelector((state: any) => state.balanceReducer.currency)
   const rate = useSelector((state: any) => state.balanceReducer.rate)
 
-  const currentLang = localStorage.getItem('lang')
-
-  const [lang, setLang] = useState<string>(currentLang || 'ru');
   const [showLangs, setShowLangs] = useState<boolean>(false);
   const [showCurrency, setShowCurrency] = useState<boolean>(false);
   const [menu, setMenu] = useState<boolean>(false)
-
-  useEffect(() => {
-    if (!localStorage.lang) {
-      if (lang === 'ru') {
-        localStorage.setItem('lang', 'ru')
-      } else {
-        localStorage.setItem('lang', 'en')
-      }
-    }
-  }, []);
 
   const handleChangeCurrency = (value: string) => {
     dispatch(changeCurrency(value))
@@ -76,16 +65,8 @@ export const Header = () => {
     }
   }
 
-  const handleChangeLang = (lang: string) => {
-    if (lang === 'ru') {
-      setLang('ru')
-      localStorage.setItem('lang', 'ru')
-      // i18n.changeLanguage('ru')
-    } else {
-      setLang('en')
-      localStorage.setItem('lang', 'en')
-      // i18n.changeLanguage('en')
-    }
+  const changeLanguage = (language: string) => {
+    i18n.changeLanguage(language)
 
     setShowLangs(false)
   }
@@ -106,7 +87,7 @@ export const Header = () => {
             <RouletteIcon />
           </div>
           <div className="header__nav_item-name">
-            {$t('Roulette')}
+            {t('Roulette')}
           </div>
         </NavLink>
         <NavLink className="header__nav_item" to={'/dice'} >
@@ -114,7 +95,7 @@ export const Header = () => {
             <RouletteIcon />
           </div>
           <div className="header__nav_item-name">
-            {$t('Dice')}
+            {t('Dice')}
           </div>
         </NavLink>
         <NavLink className="header__nav_item" to={'/hilo'} >
@@ -122,30 +103,30 @@ export const Header = () => {
             <RouletteIcon />
           </div>
           <div className="header__nav_item-name">
-            {$t('HiLo')}
+            {t('HiLo')}
           </div>
         </NavLink>
       </div>
       <div className="header__additional">
 
         <div className="header__additional_rate">
-          {$t(`1 BTC = ${rate}$`)}
+          {t(`1 BTC = ${rate}$`)}
         </div>
 
         <div className="currency-select">
           <div className="currency-select__current text-secondary" onClick={showAllCurrencyHandler}>
             {currency === 'btc' ?
-                $t('BTC') :
-                $t('USD')
+                t('BTC') :
+                t('USD')
             }
           </div>
           {showCurrency ?
               <div className="currency-select__all">
                 <div className={'currency-select__all_item text-secondary'} onClick={() => handleChangeCurrency('btc')}>
-                  {$t('BTC')}
+                  {t('BTC')}
                 </div>
                 <div className={'currency-select__all_item text-secondary'} onClick={() => handleChangeCurrency('usd')}>
-                  {$t('USD')}
+                  {t('USD')}
                 </div>
               </div> : null
           }
@@ -153,7 +134,7 @@ export const Header = () => {
 
         <div className={'language-select'}>
           <div className="language-select__current" onClick={showAllLangsHandler}>
-            {lang === 'ru' ?
+            {i18n.language === 'ru' ?
               <div className="language-icon">
                 <RuIcon />
               </div> :
@@ -164,11 +145,11 @@ export const Header = () => {
           </div>
           {showLangs ?
             <div className="language-select__all">
-              <div className="language-select__all_item">
-                <RuIcon onClick={() => handleChangeLang('ru')} />
+              <div className="language-select__all_item" onClick={() => changeLanguage('ru')}>
+                <RuIcon />
               </div>
-              <div className="language-select__all_item">
-                <USIcon onClick={() => handleChangeLang('en')} />
+              <div className="language-select__all_item" onClick={() => changeLanguage('en')}>
+                <USIcon />
               </div>
             </div> : null
           }
@@ -176,10 +157,10 @@ export const Header = () => {
         {!isAuth ?
             <div className="header__additional_auth">
               <Button dark href={'/login'}>
-                {$t('Sign In')}
+                {t('Sign In')}
               </Button>
               <Button dark href={'/registration'}>
-                {$t('Sign Up')}
+                {t('Sign Up')}
               </Button>
             </div> :
             <div className="header__additional_user">
@@ -190,7 +171,7 @@ export const Header = () => {
               {menu ?
                   <div className="header__additional_user-list">
                     <div className="header__additional_user-list--item" onClick={() => history.push('/cabinet')}>
-                      {$t('Wallets')}
+                      {t('Wallets')}
                     </div>
                     <div className="header__additional_user-list--item" onClick={logoutHandler}>
                       <LogoutIcon />

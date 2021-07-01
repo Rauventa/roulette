@@ -1,7 +1,7 @@
 import React from 'react';
 import './Select.scss';
 import ReactSelect from 'react-select';
-import {$t} from "../../lib/i18n";
+import {useTranslation} from "react-i18next";
 
 interface SelectProps {
   className?: string,
@@ -23,6 +23,8 @@ export const Select = ({
   noMessage
 }: SelectProps) => {
 
+  const {t} = useTranslation()
+
   const handleChange = (newValue: any) => {
     onChange(newValue)
   }
@@ -33,7 +35,7 @@ export const Select = ({
     <div className={'input-group'}>
       {title ?
         <div className="input-group__title">
-          {$t(title)}
+          {t(title)}
         </div> : null
       }
 
@@ -41,7 +43,7 @@ export const Select = ({
         className={`select-container ${className || ''}`}
         classNamePrefix="select"
         options={options}
-        placeholder={placeholder ? placeholder : ''}
+        placeholder={placeholder ? t(placeholder) : ''}
         value={value}
         onChange={handleChange}
         noOptionsMessage={() => noOptionsMessage}

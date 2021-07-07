@@ -1,8 +1,9 @@
-import {GET_HILO_HASH, START_HILO_SUCCESS} from "../../actions/actionTypes";
+import {GET_HILO_HASH, GET_HILO_HISTORY, START_HILO_SUCCESS} from "../../actions/actionTypes";
 
 const initialState = {
     hash: '',
-    result: {}
+    result: {},
+    history: []
 };
 
 export default function hiloReducer(state = initialState, action) {
@@ -17,6 +18,11 @@ export default function hiloReducer(state = initialState, action) {
                 ...state,
                 result: action.result,
                 hash: action.result.hashForNextGame
+            }
+        case GET_HILO_HISTORY:
+            return {
+                ...state,
+                history: action.history
             }
         default:
             return state

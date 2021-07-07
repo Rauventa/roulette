@@ -9,6 +9,7 @@ import {AuthContext} from "../../context/AuthContext";
 import {DiceResults} from "./components/DiceResults/DiceResults";
 import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../components/Spinner/Spinner";
+import {StatsRow} from "../../components/StatsRow/StatsRow";
 
 export const DicePage = () => {
 
@@ -75,6 +76,9 @@ export const DicePage = () => {
       </CSSTransition>
 
       <div className="dice-page__content">
+
+        <StatsRow />
+
         <UserCard />
 
         <BetCard

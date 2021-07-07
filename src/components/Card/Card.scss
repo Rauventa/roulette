@@ -4,9 +4,26 @@
   background-color: #2a2a41;
 
   &__title {
+    display: flex;
+    align-items: center;
     padding: 20px 20px 0 20px;
-    font-size: 20px;
-    font-weight: 600;
+
+    &_icon {
+      margin-right: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    &_text {
+      font-size: 20px;
+      font-weight: 600;
+    }
   }
 
   &__content {

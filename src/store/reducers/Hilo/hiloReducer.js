@@ -2,6 +2,7 @@ import {GET_HILO_HASH, START_HILO_SUCCESS} from "../../actions/actionTypes";
 
 const initialState = {
     hash: '',
+    gameNumber: null,
     result: {}
 };
 
@@ -10,7 +11,8 @@ export default function hiloReducer(state = initialState, action) {
         case GET_HILO_HASH:
             return {
                 ...state,
-                hash: action.hash
+                hash: action.hash,
+                gameNumber: action.gameNumber
             }
         case START_HILO_SUCCESS:
             return {

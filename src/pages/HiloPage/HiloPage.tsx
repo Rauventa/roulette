@@ -23,6 +23,7 @@ export const HiloPage = () => {
   const {token, isAuth} = useContext(AuthContext)
 
   const hash = useSelector((state: any) => state.hiloReducer.hash) || 'Hash is invisible for unauthorized users'
+  const gameNumber = useSelector((state: any) => state.hiloReducer.gameNumber)
 
   const fetchData = async () => {
 
@@ -72,6 +73,7 @@ export const HiloPage = () => {
 
         <GameCard
           formState={formState}
+          gameNumber={gameNumber}
           hash={hash}
           type={'hilo'}
         />

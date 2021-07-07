@@ -2,6 +2,7 @@ import {GET_DICE_HASH, START_DICE_SUCCESS} from "../../actions/actionTypes";
 
 const initialState = {
     hash: '',
+    gameNumber: null,
     result: {}
 };
 
@@ -10,7 +11,8 @@ export default function diceReducer(state = initialState, action) {
         case GET_DICE_HASH:
             return {
                 ...state,
-                hash: action.hash
+                hash: action.hash,
+                gameNumber: action.gameNumber
             }
         case START_DICE_SUCCESS:
             return {

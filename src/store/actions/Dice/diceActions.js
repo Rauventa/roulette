@@ -6,7 +6,7 @@ import {openModalHandler} from "../Modal/modalActions";
 export function getDiceHash(token) {
     return async dispatch => {
         try {
-            const response = await axiosClient.get('/Dice/GetDiceHashAndCurrentComission', {
+            const response = await axiosClient.get('/Dice/GetCurrentGameData', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -15,7 +15,7 @@ export function getDiceHash(token) {
             if (!response) {
                 dispatch(updateErrorHandler('Cannot load hash', response.data.status))
             } else {
-                dispatch(getDiceHashSuccess(response.data.payload.hash))
+                dispatch(getDiceHashSuccess(response.data.payload.hash, response.data.payload.gameNumber))
             }
         } catch (e) {
             dispatch(updateErrorHandler('Cannot load hash', e.response?.status || null))
@@ -45,10 +45,11 @@ export function startDice(token, data, ownNumber, hash) {
     }
 }
 
-export function getDiceHashSuccess(hash) {
+export function getDiceHashSuccess(hash, gameNumber) {
     return {
         type: GET_DICE_HASH,
-        hash
+        hash,
+        gameNumber
     }
 }
 

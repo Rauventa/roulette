@@ -27,7 +27,8 @@ export const DicePage = () => {
 
   const {token, isAuth} = useContext(AuthContext)
 
-  const hash = useSelector((state: any) => state.diceReducer.hash) || 'Hash is invisible for unauthorized users'
+  const hash = useSelector((state: any) => state.diceReducer.hash) || Math.random().toString(36).substring(7);
+  const gameNumber = useSelector((state: any) => state.diceReducer.gameNumber)
 
   const fetchData = async () => {
 
@@ -86,6 +87,7 @@ export const DicePage = () => {
         <GameCard
           formState={formState}
           hash={hash}
+          gameNumber={gameNumber}
           type={'dice'}
         />
 

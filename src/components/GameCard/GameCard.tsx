@@ -9,19 +9,21 @@ import {useSelector} from "react-redux";
 interface GameCardProps {
   formState: any,
   hash: string,
+  gameNumber: number,
   type: string
 }
 
 export const GameCard = ({
   formState,
   hash,
+  gameNumber,
   type
 }: GameCardProps) => {
 
   const currency = useSelector((state: any) => state.balanceReducer.currency)
 
   return (
-    <Card className={'game-card'} title={'Game'}>
+    <Card className={'game-card'} title={`Game #${gameNumber}`}>
       <div className={'game-card__subtitle'}>
         <div className="card__subtitle_left">
           {$t('Fair Game')}

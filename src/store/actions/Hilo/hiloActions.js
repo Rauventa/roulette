@@ -6,7 +6,7 @@ import {openModalHandler} from "../Modal/modalActions";
 export function getHiloHash(token) {
     return async dispatch => {
         try {
-            const response = await axiosClient.get('/HiLo/GetCurrentHashAndCurrentComission', {
+            const response = await axiosClient.get('/HiLo/GetCurrentGameData', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -15,7 +15,7 @@ export function getHiloHash(token) {
             if (!response) {
                 dispatch(updateErrorHandler('Cannot load hash', response.data.status))
             } else {
-                dispatch(getHiloHashSuccess(response.data.payload.hash))
+                dispatch(getHiloHashSuccess(response.data.payload.hash, response.data.payload.gameNumber))
             }
         } catch (e) {
             console.log(e)
@@ -45,10 +45,11 @@ export function startHilo(token, data, hash) {
     }
 }
 
-export function getHiloHashSuccess(hash) {
+export function getHiloHashSuccess(hash, gameNumber) {
     return {
         type: GET_HILO_HASH,
-        hash
+        hash,
+        gameNumber
     }
 }
 

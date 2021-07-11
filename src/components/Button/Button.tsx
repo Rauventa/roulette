@@ -13,6 +13,8 @@ interface ButtonProps {
 
   href?: any,
 
+  className?: string,
+
   children: React.ReactNode
 }
 
@@ -24,6 +26,7 @@ export const Button = ({
   disabled,
   onClick,
   href,
+  className,
   children
 }: ButtonProps) => {
 
@@ -33,33 +36,33 @@ export const Button = ({
     }
   }
 
-  let className = 'btn'
+  let classDefault = 'btn'
 
   if (primary) {
-    className+= ' btn-primary'
+    classDefault+= ' btn-primary'
   }
 
   if (secondary) {
-    className+= ' btn-secondary'
+    classDefault+= ' btn-secondary'
   }
 
   if (light) {
-    className+= ' btn-light'
+    classDefault+= ' btn-light'
   }
 
   if (dark) {
-    className+= ' btn-dark'
+    classDefault+= ' btn-dark'
   }
 
   if (disabled) {
-    className+= ' btn-disabled'
+    classDefault+= ' btn-disabled'
   }
 
   if (href) {
     return (
       <NavLink
         to={href}
-        className={className}
+        className={`${classDefault} ${className ? className : ''}`}
       >
         {children}
       </NavLink>
@@ -67,7 +70,7 @@ export const Button = ({
   } else {
     return (
       <button
-        className={className}
+        className={`${classDefault} ${className ? className : ''}`}
         disabled={disabled}
         onClick={returnClickHandler}
       >

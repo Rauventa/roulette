@@ -54,7 +54,8 @@ export function getDiceHistory(token, data) {
                 },
                 params: {
                     pageSize: data.pageSize,
-                    pageNumber: data.pageNumber
+                    pageNumber: data.pageNumber,
+                    onlyMe: data.onlyMe
                 }
             })
 

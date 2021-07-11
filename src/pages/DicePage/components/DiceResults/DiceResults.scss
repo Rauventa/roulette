@@ -1,3 +1,30 @@
 .history-card {
   width: 100% !important;
+  position: relative;
+
+  &__extra {
+    display: flex;
+    position: absolute;
+    top: 20px;
+    right: 10px;
+
+    .default {
+      background-color: #2a2a41 !important;
+
+      &:hover {
+        background: rgba(255,255,255,0.1) !important;
+      }
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+
+      &:not(:last-child) {
+        margin-right: 20px;
+      }
+    }
+  }
 }

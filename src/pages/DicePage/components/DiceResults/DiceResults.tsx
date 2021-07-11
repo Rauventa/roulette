@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import './DiceResults.scss';
 import { Card } from '../../../../components/Card/Card';
 import {useDispatch, useSelector} from "react-redux";
@@ -7,6 +7,10 @@ import {AuthContext} from "../../../../context/AuthContext";
 import {Table} from "../../../../components/Table/Table";
 import { $t } from '../../../../lib/i18n';
 import dateformat from 'dateformat'
+import DefaultIcon from './img/default.png'
+import { Button } from '../../../../components/Button/Button';
+import {CSSTransition} from "react-transition-group";
+import {Spinner} from "../../../../components/Spinner/Spinner";
 
 export const DiceResults = () => {
 
@@ -15,12 +19,17 @@ export const DiceResults = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getDiceHistory(token, {pageSize: 100000, pageNumber: 0}))
+    dispatch(getDiceHistory(token, {pageSize: 100000, pageNumber: 0, onlyMe: false}))
   }, [])
+
+  const [historyType, setHistoryType] = useState<string>('all')
+  const [loader, setLoader] = useState<boolean>(false)
 
   const data = useSelector((state: any) => state.diceReducer.history).map((item: any) => {
     return {
       name: item.userName,
+      icon: item.userAvatarUrl,
+      game: item.gameNumber,
       bet: `${parseFloat(item.bet.toFixed(8))} BTC`,
       chance: `${item.chance}%`,
       own: item.chance + 1,
@@ -32,10 +41,48 @@ export const DiceResults = () => {
     }
   })
 
+  const changeHistoryType = async (type: string) => {
+
+    setLoader(true)
+
+    setHistoryType(type)
+
+    try {
+      if (type === 'all') {
+        await dispatch(getDiceHistory(token, {pageSize: 100000, pageNumber: 0, onlyMe: false}))
+      }
+
+      if (type === 'me') {
+        await dispatch(getDiceHistory(token, {pageSize: 100000, pageNumber: 0, onlyMe: true}))
+      }
+    } catch (e) {
+      console.log(e)
+    }
+
+    setLoader(false)
+  }
+
   const columns = [
     {
       Header: 'Name',
-      accessor: 'name'
+      accessor: 'name',
+      Cell: ({row: {original}}: any) => (
+        <div className={'table-user'}>
+          <div className={'table-user__icon'}>
+            {original.icon ?
+              <img src={original.icon} alt="user icon"/> :
+              <img src={DefaultIcon} alt="user icon"/>
+            }
+          </div>
+          <div className="table-user__name">
+            {$t(original.name)}
+          </div>
+        </div>
+      )
+    },
+    {
+      Header: 'Game',
+      accessor: 'game'
     },
     {
       Header: 'Bet',
@@ -86,7 +133,24 @@ export const DiceResults = () => {
   ]
 
   return (
-    <Card className={'history-card'} title={'Games History'}>
+    <Card
+      className={'history-card'}
+      title={'Games History'}
+    >
+
+      <CSSTransition in={loader} timeout={500} unmountOnExit classNames="my-node">
+        <Spinner />
+      </CSSTransition>
+
+      <div className="history-card__extra">
+        <Button dark className={historyType === 'me' ? 'default' : ''} onClick={() => changeHistoryType('all')}>
+          {$t('All players')}
+        </Button>
+        <Button dark className={historyType === 'all' ? 'default' : ''} onClick={() => changeHistoryType('me')}>
+          {$t('Only me')}
+        </Button>
+      </div>
+
       <Table
           data={data}
           columns={columns}

@@ -20,6 +20,7 @@ export const HiloResults = () => {
     const data = useSelector((state: any) => state.hiloReducer.history).map((item: any) => {
         return {
             name: item.userName,
+            game: item.gameNumber,
             bet: `${parseFloat(item.bet.toFixed(8))} BTC`,
             roll: item.rollType,
             generated: item.hiddenNumber,
@@ -34,6 +35,10 @@ export const HiloResults = () => {
         {
             Header: 'Name',
             accessor: 'name'
+        },
+        {
+            Header: 'Game',
+            accessor: 'game'
         },
         {
             Header: 'Bet',

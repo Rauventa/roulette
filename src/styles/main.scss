@@ -170,3 +170,22 @@ input {
   padding: 20px 10px 0 10px;
   color: #1db37c !important;
 }
+
+table {
+
+  .table-user {
+    display: flex;
+    align-items: center;
+
+    &__icon {
+      display: flex;
+      align-items: center;
+
+      img {
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+      }
+    }
+  }
+}

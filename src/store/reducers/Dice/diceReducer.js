@@ -1,9 +1,9 @@
-import {GET_DICE_HASH, START_DICE_SUCCESS} from "../../actions/actionTypes";
+import {GET_DICE_HASH, GET_DICE_HISTORY, START_DICE_SUCCESS} from "../../actions/actionTypes";
 
 const initialState = {
     hash: '',
-    gameNumber: null,
-    result: {}
+    result: {},
+    history: [],
 };
 
 export default function diceReducer(state = initialState, action) {
@@ -19,6 +19,11 @@ export default function diceReducer(state = initialState, action) {
                 ...state,
                 result: action.result,
                 hash: action.result.hashForNextGame
+            }
+        case GET_DICE_HISTORY:
+            return {
+                ...state,
+                history: action.history
             }
         default:
             return state

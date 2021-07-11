@@ -9,6 +9,7 @@ import {SignUp} from "../../pages/AuthPage/components/SignUp/SignUp";
 import {HiloPage} from "../../pages/HiloPage/HiloPage";
 import {AuthContext} from "../../context/AuthContext";
 import {CabinetPage} from "../../pages/CabinetPage/CabinetPage";
+import {RatingPage} from "../../pages/RatingPage/RatingPage";
 
 export const RootRouter = () => {
 
@@ -35,6 +36,9 @@ export const RootRouter = () => {
                 <Route path={'/cabinet'}>
                   <CabinetPage />
                 </Route>
+                <Route path={'/rating'}>
+                    <RatingPage />
+                </Route>
             </Switch>
         )
     } else {
@@ -54,6 +58,9 @@ export const RootRouter = () => {
                 </Route>
                 <Route path={'/hilo'}>
                     <HiloPage />
+                </Route>
+                <Route path={'/rating'}>
+                    <RatingPage />
                 </Route>
             </Switch>
         )

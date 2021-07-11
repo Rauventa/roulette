@@ -1,6 +1,6 @@
 import {axiosClient} from "../../../utils/axiosClient";
 import {updateErrorHandler} from "../Errors/ErrorActions";
-import {GET_HILO_HASH, START_HILO_SUCCESS} from "../actionTypes";
+import {GET_HILO_HASH, GET_HILO_HISTORY, START_HILO_SUCCESS} from "../actionTypes";
 import {openModalHandler} from "../Modal/modalActions";
 
 export function getHiloHash(token) {
@@ -45,7 +45,29 @@ export function startHilo(token, data, hash) {
     }
 }
 
-export function getHiloHashSuccess(hash, gameNumber) {
+export function getHiloHistory(token, data) {
+    return async dispatch => {
+        try {
+            const response = await axiosClient.get('/Statistics/GetHiloHistory', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                params: {
+                    pageSize: data.pageSize,
+                    pageNumber: data.pageNumber
+                }
+            })
+
+            //TODO - response error log
+
+            dispatch(getHiloHistorySuccess(response.data.payload.reverse()))
+        } catch (e) {
+            dispatch(updateErrorHandler('Dice game load error', 500))
+        }
+    }
+}
+
+export function getHiloHashSuccess(hash,gameNumber) {
     return {
         type: GET_HILO_HASH,
         hash,
@@ -57,5 +79,12 @@ export function startHiloSuccess(result) {
     return {
         type: START_HILO_SUCCESS,
         result
+    }
+}
+
+export function getHiloHistorySuccess(history) {
+    return {
+        type: GET_HILO_HISTORY,
+        history
     }
 }

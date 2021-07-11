@@ -1,0 +1,11 @@
+.rating-page {
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    .card {
+      width: calc(33.3% - 10px);
+    }
+  }
+}

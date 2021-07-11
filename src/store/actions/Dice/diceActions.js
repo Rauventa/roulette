@@ -1,5 +1,5 @@
 import {axiosClient} from "../../../utils/axiosClient";
-import {GET_DICE_HASH, START_DICE_SUCCESS} from "../actionTypes";
+import {GET_DICE_HASH, GET_DICE_HISTORY, START_DICE_SUCCESS} from "../actionTypes";
 import {updateErrorHandler} from "../Errors/ErrorActions";
 import {openModalHandler} from "../Modal/modalActions";
 
@@ -45,6 +45,28 @@ export function startDice(token, data, ownNumber, hash) {
     }
 }
 
+export function getDiceHistory(token, data) {
+    return async dispatch => {
+        try {
+            const response = await axiosClient.get('/Statistics/GetDiceHistory', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                params: {
+                    pageSize: data.pageSize,
+                    pageNumber: data.pageNumber
+                }
+            })
+
+            //TODO - response error log
+
+            dispatch(getDiceHistorySuccess(response.data.payload.reverse()))
+        } catch (e) {
+            dispatch(updateErrorHandler('Dice game load error', 500))
+        }
+    }
+}
+
 export function getDiceHashSuccess(hash, gameNumber) {
     return {
         type: GET_DICE_HASH,
@@ -57,5 +79,12 @@ export function startDiceSuccess(result) {
     return {
         type: START_DICE_SUCCESS,
         result
+    }
+}
+
+export function getDiceHistorySuccess(history) {
+    return {
+        type: GET_DICE_HISTORY,
+        history
     }
 }

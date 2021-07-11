@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import {$t} from "../../../../lib/i18n";
 import {Range} from "../../../../components/Range/Range";
 import {Button} from "../../../../components/Button/Button";
-import {startDice} from "../../../../store/actions/Dice/diceActions";
+import {getDiceHistory, startDice} from "../../../../store/actions/Dice/diceActions";
 import {CSSTransition} from "react-transition-group";
 import {Modal} from "../../../../components/Modal/Modal";
 import {getBalance} from "../../../../store/actions/Balance/balanceActions";
@@ -62,6 +62,8 @@ export const DiceBetCard = ({
             Number(range) + 1,
             hash
             ))
+
+        await dispatch(getDiceHistory(token, {pageSize: 100000, pageNumber: 0}))
 
         setLoader(false)
       } catch (e) {

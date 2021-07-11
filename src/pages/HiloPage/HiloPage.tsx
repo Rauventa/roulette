@@ -8,6 +8,7 @@ import {AuthContext} from "../../context/AuthContext";
 import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../components/Spinner/Spinner";
 import { getHiloHash } from '../../store/actions/Hilo/hiloActions';
+import {HiloResults} from "./components/HiloResults/HiloResults";
 
 export const HiloPage = () => {
 
@@ -77,6 +78,8 @@ export const HiloPage = () => {
           hash={hash}
           type={'hilo'}
         />
+
+        <HiloResults />
       </div>
     </div>
   )

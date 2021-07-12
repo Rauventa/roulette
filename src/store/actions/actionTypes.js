@@ -23,3 +23,4 @@ export const CLOSE_MODAL_HANDLER = 'CLOSE_MODAL_HANDLER'
 
 //STATS
 export const GET_STATS = 'GET_STATS'
+export const GET_RATING = 'GET_RATING'

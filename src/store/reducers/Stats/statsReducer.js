@@ -1,7 +1,8 @@
-import {GET_STATS} from "../../actions/actionTypes";
+import {GET_RATING, GET_STATS} from "../../actions/actionTypes";
 
 const initialState = {
-    stats: {}
+    stats: {},
+    rating: []
 };
 
 export default function statsReducer(state = initialState, action) {
@@ -10,6 +11,11 @@ export default function statsReducer(state = initialState, action) {
             return {
                 ...state,
                 stats: action.stats
+            }
+        case GET_RATING:
+            return {
+                ...state,
+                rating: action.rating
             }
         default:
             return state

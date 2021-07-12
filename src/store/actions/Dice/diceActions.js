@@ -2,6 +2,7 @@ import {axiosClient} from "../../../utils/axiosClient";
 import {GET_DICE_HASH, GET_DICE_HISTORY, START_DICE_SUCCESS} from "../actionTypes";
 import {updateErrorHandler} from "../Errors/ErrorActions";
 import {openModalHandler} from "../Modal/modalActions";
+import {getRating, getStats} from "../Stats/statsActions";
 
 export function getDiceHash(token) {
     return async dispatch => {

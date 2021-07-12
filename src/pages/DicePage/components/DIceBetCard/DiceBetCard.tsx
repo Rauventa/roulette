@@ -11,6 +11,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Spinner} from "../../../../components/Spinner/Spinner";
 import {closeModalHandler, openModalHandler} from "../../../../store/actions/Modal/modalActions";
 import {useHistory} from "react-router-dom";
+import {getRating, getStats} from "../../../../store/actions/Stats/statsActions";
 
 interface DiceBetCardProps {
   bet: number;
@@ -64,6 +65,9 @@ export const DiceBetCard = ({
             ))
 
         await dispatch(getDiceHistory(token, {pageSize: 100000, pageNumber: 0}))
+
+        await dispatch(getStats(token))
+        await dispatch(getRating(token))
 
         setLoader(false)
       } catch (e) {

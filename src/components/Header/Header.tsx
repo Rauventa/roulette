@@ -192,6 +192,9 @@ export const Header = () => {
                     <div className="header__additional_user-list--item" onClick={() => history.push('/cabinet')}>
                       {$t('Wallets')}
                     </div>
+                    <div className="header__additional_user-list--item" onClick={() => history.push('/rating')}>
+                      {$t('Rating')}
+                    </div>
                     <div className="header__additional_user-list--item" onClick={logoutHandler}>
                       <LogoutIcon />
                     </div>

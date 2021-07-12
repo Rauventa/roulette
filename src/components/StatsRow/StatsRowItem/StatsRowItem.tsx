@@ -13,8 +13,6 @@ export const StatsRowItem = ({
   value
 }: StatsRowItemProps) => {
 
-  console.log(title, value)
-
   return (
     <>
       {title === 'topJackpot' ?

@@ -10,7 +10,7 @@ export const RoulettePage = () => {
             {$t('Roulette')}
         </div>
 
-        <StatsRow />
+        {/*<StatsRow />*/}
 
         <div className={'text-secondary'}>
             {$t('This page stands in development')}

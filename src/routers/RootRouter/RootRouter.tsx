@@ -10,6 +10,7 @@ import {HiloPage} from "../../pages/HiloPage/HiloPage";
 import {AuthContext} from "../../context/AuthContext";
 import {CabinetPage} from "../../pages/CabinetPage/CabinetPage";
 import {RatingPage} from "../../pages/RatingPage/RatingPage";
+import {ProfilePage} from "../../pages/ProfilePage/ProfilePage";
 
 export const RootRouter = () => {
 
@@ -39,6 +40,9 @@ export const RootRouter = () => {
                 <Route path={'/rating'}>
                     <RatingPage />
                 </Route>
+              <Route path={'/profile'}>
+                <ProfilePage />
+              </Route>
             </Switch>
         )
     } else {

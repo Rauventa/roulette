@@ -11,6 +11,7 @@ import {Spinner} from "../../../../components/Spinner/Spinner";
 import {startDice} from "../../../../store/actions/Dice/diceActions";
 import {getHiloHistory, startHilo} from "../../../../store/actions/Hilo/hiloActions";
 import {useHistory} from "react-router-dom";
+import {getRating, getStats} from "../../../../store/actions/Stats/statsActions";
 
 interface HiloBetCardProps {
   bet: number;
@@ -59,6 +60,9 @@ export const HiloBetCard = ({
         ))
 
         dispatch(getHiloHistory(token, {pageSize: 100000, pageNumber: 0}))
+
+        await dispatch(getStats(token))
+        await dispatch(getRating(token))
 
         setLoader(false)
       } catch (e) {

@@ -7,12 +7,16 @@ import {Button} from "../Button/Button";
 interface TableProps {
     data: any,
     columns: any,
+    noPagination?: boolean,
+    noHeader?: boolean,
     onPaginationClick?: (pageIndex: any) => void,
 }
 
 export const Table = ({
     data,
     columns,
+    noPagination,
+    noHeader,
     onPaginationClick
 }: TableProps) => {
 
@@ -58,30 +62,32 @@ export const Table = ({
     return (
         <div>
             <table {...getTableProps()} className={'table'}>
-                <thead>
-                {headerGroups.map(headerGroup => (
+                {!noHeader ?
+                  <thead>
+                  {headerGroups.map(headerGroup => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
                         {headerGroup.headers.map(column => (
-                            <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                          <th {...column.getHeaderProps()}>{column.render('Header')}</th>
                         ))}
                     </tr>
-                ))}
-                </thead>
+                  ))}
+                  </thead> : null
+                }
                 <tbody {...getTableBodyProps()}>
-                {page.map((row, i) => {
-                    prepareRow(row)
-                    return (
-                        <tr {...row.getRowProps()}>
-                            {row.cells.map(cell => {
-                                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                            })}
-                        </tr>
-                    )
-                })}
+                    {page.map((row, i) => {
+                        prepareRow(row)
+                        return (
+                            <tr {...row.getRowProps()}>
+                                {row.cells.map(cell => {
+                                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                })}
+                            </tr>
+                        )
+                    })}
                 </tbody>
             </table>
 
-            {pageCount !== 1 ?
+            {!noPagination && pageCount !== 1 ?
                 <div className="pagination">
                     <Button dark onClick={() => paginationClickHandler(pageIndex - 1, 'start')} disabled={!canPreviousPage}>
                         {'<<'}

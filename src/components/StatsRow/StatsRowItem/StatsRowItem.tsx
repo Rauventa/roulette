@@ -1,6 +1,11 @@
 import React from 'react';
 import {$t} from "../../../lib/i18n";
-import {ReactComponent as DefaultIcon} from "./img/btc-ico.svg";
+import {ReactComponent as Card1Icon} from "./img/card-1.svg";
+import {ReactComponent as Card2Icon} from "./img/card-2.svg";
+import {ReactComponent as Card3Icon} from "./img/card-3.svg";
+import {ReactComponent as Card4Icon} from "./img/card-4.svg";
+import {ReactComponent as Card5Icon} from "./img/card-5.svg";
+import {ReactComponent as Card6Icon} from "./img/card-6.svg";
 import {toDotThs} from "../../../lib/numberRefractor";
 
 interface StatsRowItemProps {
@@ -18,7 +23,7 @@ export const StatsRowItem = ({
       {title === 'topJackpot' ?
         <div className={'stats-row__item'}>
           <div className="stats-row__item_icon">
-            <DefaultIcon />
+            <Card1Icon />
           </div>
           <div className="stats-row__item_text">
             <div className="stats-row__item_text-title">
@@ -37,7 +42,7 @@ export const StatsRowItem = ({
       {title === 'paidTotal' ?
         <div className={'stats-row__item'}>
           <div className="stats-row__item_icon">
-            <DefaultIcon />
+            <Card2Icon />
           </div>
           <div className="stats-row__item_text">
             <div className="stats-row__item_text-title">
@@ -56,7 +61,7 @@ export const StatsRowItem = ({
       {title === 'gamesToday' ?
         <div className={'stats-row__item'}>
           <div className="stats-row__item_icon">
-            <DefaultIcon />
+            <Card3Icon />
           </div>
           <div className="stats-row__item_text">
             <div className="stats-row__item_text-title">
@@ -72,7 +77,7 @@ export const StatsRowItem = ({
       {title === 'gamesTotal' ?
         <div className={'stats-row__item'}>
           <div className="stats-row__item_icon">
-            <DefaultIcon />
+            <Card3Icon />
           </div>
           <div className="stats-row__item_text">
             <div className="stats-row__item_text-title">
@@ -88,7 +93,7 @@ export const StatsRowItem = ({
       {title === 'topLuck' ?
         <div className={'stats-row__item'}>
           <div className="stats-row__item_icon">
-            <DefaultIcon />
+            <Card4Icon />
           </div>
           <div className="stats-row__item_text">
             <div className="stats-row__item_text-title">
@@ -107,7 +112,7 @@ export const StatsRowItem = ({
       {title === 'maxBet' ?
         <div className={'stats-row__item'}>
           <div className="stats-row__item_icon">
-            <DefaultIcon />
+            <Card5Icon />
           </div>
           <div className="stats-row__item_text">
             <div className="stats-row__item_text-title">
@@ -126,7 +131,7 @@ export const StatsRowItem = ({
       {title === 'wonTotal' ?
         <div className={'stats-row__item'}>
           <div className="stats-row__item_icon">
-            <DefaultIcon />
+            <Card2Icon />
           </div>
           <div className="stats-row__item_text">
             <div className="stats-row__item_text-title">

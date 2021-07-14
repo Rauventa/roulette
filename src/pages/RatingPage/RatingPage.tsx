@@ -9,7 +9,7 @@ import {getRating} from "../../store/actions/Stats/statsActions";
 import {AuthContext} from "../../context/AuthContext";
 import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../components/Spinner/Spinner";
-import DefaultIcon from "../DicePage/components/DiceResults/img/default.png";
+import DefaultIcon from "./img/default.png";
 import {$t} from "../../lib/i18n";
 
 export const RatingPage = () => {

@@ -1,8 +1,6 @@
 import {axiosClient} from "../../../utils/axiosClient";
 import {CHANGE_CURRENCY, GET_BTC_BALANCE, GET_USD_BALANCE, GET_WALLETS} from "../actionTypes";
 import {updateErrorHandler} from "../Errors/ErrorActions";
-import {openModalHandler} from "../Modal/modalActions";
-import {startDiceSuccess} from "../Dice/diceActions";
 
 export function changeCurrency(ticker) {
     return {

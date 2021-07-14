@@ -1,6 +1,6 @@
 import React from 'react';
 import {Card} from "../../../components/Card/Card";
-import {ReactComponent as JackpotIcon} from "../img/btc-ico.svg";
+import {ReactComponent as MaxGamesIcon} from "../img/card-3.svg";
 import {Table} from "../../../components/Table/Table";
 import {TableRatingProps} from "../../../interfaces/rating/IRating";
 
@@ -21,7 +21,7 @@ export const MaxGamesRating = ({
       <Card
         title={'Max Games'}
         icon={
-            <JackpotIcon />
+            <MaxGamesIcon />
         }
       >
           <Table

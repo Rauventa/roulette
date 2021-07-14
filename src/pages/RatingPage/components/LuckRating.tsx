@@ -1,7 +1,7 @@
 import React from 'react';
 import {Card} from "../../../components/Card/Card";
 import {TableRatingProps} from "../../../interfaces/rating/IRating";
-import {ReactComponent as JackpotIcon} from "../img/btc-ico.svg";
+import {ReactComponent as LuckIcon} from "../img/card-4.svg";
 import {Table} from "../../../components/Table/Table";
 
 export const LuckRating = ({
@@ -21,7 +21,7 @@ export const LuckRating = ({
         <Card
           title={'Top Luck'}
           icon={
-              <JackpotIcon />
+              <LuckIcon />
           }
         >
             <Table

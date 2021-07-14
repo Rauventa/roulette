@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from '../../../components/Card/Card';
-import {ReactComponent as JackpotIcon} from "../img/btc-ico.svg";
+import {ReactComponent as JackpotIcon} from "../img/card-1.svg";
 import {Table} from "../../../components/Table/Table";
 import {TableRatingProps} from "../../../interfaces/rating/IRating";
 

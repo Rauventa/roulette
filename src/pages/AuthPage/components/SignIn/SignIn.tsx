@@ -23,7 +23,7 @@ export const SignIn = () => {
     password: ''
   }
 
-  const [formState, setFormState] = useState(defaultFormState)
+  const [formState, setFormState] = useState<any>(defaultFormState)
   const [errors, setErrors] = useState<any>({})
   const [loader, setLoader] = useState<boolean>(false)
 
@@ -35,7 +35,7 @@ export const SignIn = () => {
   const handleStateUpdate = (value: string, iterator: string) => {
     switch (iterator) {
       case 'email':
-        setFormState(prev => {
+        setFormState((prev: any) => {
           return {
             ...prev,
             email: value
@@ -43,7 +43,7 @@ export const SignIn = () => {
         })
         break;
       case 'password':
-        setFormState(prev => {
+        setFormState((prev: any) => {
           return {
             ...prev,
             password: value

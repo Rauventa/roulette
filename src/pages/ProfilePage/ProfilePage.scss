@@ -1,0 +1,57 @@
+.profile {
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+
+    &_tabs {
+      display: flex;
+
+      &-tab {
+        background-color: rgba(255,255,255, 0.03);
+        border-radius: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 15px 25px;
+        transition: ease-in-out .3s;
+
+        &:hover {
+          cursor: pointer;
+          background-color: rgba(255,255,255, 0.15);
+        }
+
+        &:not(:last-child) {
+          margin-right: 20px;
+        }
+      }
+
+      .active {
+        background-color: rgba(255,255,255, 0.15);
+      }
+    }
+  }
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+
+    .card {
+      width: calc(33.3% - 20px);
+
+      &__title {
+        margin-bottom: 20px;
+      }
+
+      input {
+        width: 100%;
+      }
+
+      &:not(:last-child) {
+        margin-right: 20px;
+      }
+    }
+  }
+}

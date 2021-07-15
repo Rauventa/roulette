@@ -23,13 +23,15 @@ export const BetCard = ({
 
   const [bet, setBet] = useState<number>(0.0001)
 
-  // useEffect(() => {
-  //   if (currency === 'btc') {
-  //     setBet(0.0001)
-  //   } else {
-  //     setBet(10)
-  //   }
-  // }, [currency])
+  useEffect(() => {
+    if (currency === 'btc') {
+      setBet(0.0001)
+      handleChange(0.0001, 'bet')
+    } else {
+      setBet(10)
+      handleChange(10, 'bet')
+    }
+  }, [currency])
 
   const changeRangeHandler = (value: number) => {
     handleChange(value, 'range')
@@ -37,8 +39,7 @@ export const BetCard = ({
 
   const changeBetHandler = (iterator: string) => {
 
-    // const defaultStepValue = currency === 'btc' ? 0.0001 : 1;
-    const defaultStepValue = 0.0001
+    const defaultStepValue = currency === 'btc' ? 0.0001 : 1;
 
     switch (iterator) {
       case 'minus':
@@ -71,7 +72,7 @@ export const BetCard = ({
         <input
           className={'bet-card__counter_value'}
           type="text"
-          value={bet?.toFixed(4)}
+          value={currency === 'btc' ? bet?.toFixed(4) : bet}
           onChange={changeInputBetValue}
         />
         <div className="bet-card__counter_plus" onClick={() => changeBetHandler('plus')}>

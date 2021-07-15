@@ -17,7 +17,6 @@ export const DicePage = () => {
 
   const defaultFormState = {
     range: 50,
-    // betValue: currency === 'btc' ? 0.0001 : 10
     betValue: 0.0001
   }
 

@@ -14,7 +14,11 @@ export const DiceGameCard = ({
 
   const rate = useSelector((state: any) => state.balanceReducer.rate)
 
-  const possibleProfit = parseFloat((formState.betValue * Number((100 / formState.range * (1 - 2 / 100)).toFixed(4))).toFixed(8));
+  let possibleProfit = parseFloat((formState.betValue * Number((100 / formState.range * (1 - 2 / 100)).toFixed(4))).toFixed(8));
+
+  if (currency === 'usd') {
+    possibleProfit = parseFloat((formState.betValue * Number((100 / formState.range * (1 - 2 / 100)).toFixed(4))).toFixed(8)) / rate
+  }
 
   return (
     <div className="game-card__counter">

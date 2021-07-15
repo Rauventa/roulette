@@ -2,6 +2,8 @@ import React from 'react';
 import { $t } from '../../lib/i18n';
 import { Button } from '../Button/Button';
 import './Modal.scss'
+import {useSelector} from "react-redux";
+import {stat} from "fs";
 
 interface ModalProps {
   title: string,
@@ -18,7 +20,10 @@ export const Modal = ({
   onClose
 }: ModalProps) => {
 
-  const proofLine = `${formState.hiddenNumber}${formState.salt}`
+  const proofLine = `${formState.hiddenNumber}${formState.salt}`;
+
+  const currency = useSelector((state: any) => state.balanceReducer.currency);
+  const rate = useSelector((state: any) => state.balanceReducer.rate)
 
   return (
     <div className={'modal-overflow'}>
@@ -34,7 +39,7 @@ export const Modal = ({
               {$t('Your bet')}
             </div>
             <div className="status-modal__item_value">
-              {$t(`${(formState.bet).toFixed(8)} BTC`)}
+              {$t(`${currency === 'btc' ? parseFloat((formState.bet).toFixed(8)) : parseFloat((formState.bet * rate).toFixed(1))} ${currency === 'btc' ? 'BTC' : '$'}`)}
             </div>
           </div>
           {type === 'dice' ?
@@ -63,7 +68,7 @@ export const Modal = ({
               }
             </div>
             <div className="status-modal__item_value">
-              {$t(`${Math.abs(formState.gain).toFixed(8)} BTC`)}
+              {$t(`${currency === 'btc' ? parseFloat(Math.abs(formState.gain).toFixed(8)) : parseFloat(Math.abs(formState.gain * rate).toFixed(8))} ${currency === 'btc' ? 'BTC' : '$'}`)}
             </div>
           </div>
           <div className="status-modal__divider" />

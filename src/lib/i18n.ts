@@ -57,7 +57,7 @@ i18n
     },
   });
 
-export const $t = (text: string) => {
+export const $t = (text: any) => {
 
   // const {t} = useTranslation();
   //

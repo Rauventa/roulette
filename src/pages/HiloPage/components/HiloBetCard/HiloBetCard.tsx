@@ -49,11 +49,13 @@ export const HiloBetCard = ({
     } else {
       setLoader(true)
 
+      let betWithCurrency = currency === 'btc' ? bet : (bet / rate).toFixed(8)
+
       try {
         await dispatch(startHilo(
             token,
             {
-              bet,
+              bet: betWithCurrency,
               rollType: type
             },
             hash

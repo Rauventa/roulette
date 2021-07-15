@@ -1,6 +1,8 @@
 import React from 'react';
 import {$t} from "../../../../lib/i18n";
 import {useSelector} from "react-redux";
+import {getTicker} from "../../../../lib/tickers";
+import {currencyValueChanger} from "../../../../lib/numberRefractor";
 
 interface DiceGameCardProps {
   currency: string,
@@ -25,10 +27,10 @@ export const DiceGameCard = ({
       <div className="game-card__counter_value">
         <div className="game-card__counter_value-number">
           <div className="game-card__counter_value-number--count">
-            {$t(`${currency === 'btc' ? possibleProfit : (possibleProfit*rate).toFixed(1)}`)}
+            {$t(currencyValueChanger(currency, rate, possibleProfit))}
           </div>
           <div className="game-card__counter_value-number--currency">
-            {$t(currency === 'btc' ? 'BTC' : '$')}
+            {$t(getTicker(currency))}
           </div>
         </div>
         <div className="game-card__counter_value-info">

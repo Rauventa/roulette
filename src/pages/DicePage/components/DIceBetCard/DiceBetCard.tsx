@@ -53,16 +53,19 @@ export const DiceBetCard = ({
     } else {
       setLoader(true)
 
+      let betWithCurrency = currency === 'btc' ? bet : (bet / rate).toFixed(8)
+
       try {
         await dispatch(startDice(
             token,
             {
-              bet,
+              bet: betWithCurrency,
               chance: Number(range)
             },
             Number(range) + 1,
             hash
-            ))
+            )
+        )
 
         await dispatch(getDiceHistory(token, {pageSize: 100000, pageNumber: 0}))
 

@@ -4,6 +4,8 @@ import { Button } from '../Button/Button';
 import './Modal.scss'
 import {useSelector} from "react-redux";
 import {stat} from "fs";
+import {currencyValueChanger} from "../../lib/numberRefractor";
+import {getTicker} from "../../lib/tickers";
 
 interface ModalProps {
   title: string,
@@ -39,7 +41,7 @@ export const Modal = ({
               {$t('Your bet')}
             </div>
             <div className="status-modal__item_value">
-              {$t(`${currency === 'btc' ? parseFloat((formState.bet).toFixed(8)) : parseFloat((formState.bet * rate).toFixed(1))} ${currency === 'btc' ? 'BTC' : '$'}`)}
+              {$t(`${currencyValueChanger(currency, rate, formState.bet)} ${getTicker(currency)}`)}
             </div>
           </div>
           {type === 'dice' ?
@@ -68,7 +70,7 @@ export const Modal = ({
               }
             </div>
             <div className="status-modal__item_value">
-              {$t(`${currency === 'btc' ? parseFloat(Math.abs(formState.gain).toFixed(8)) : parseFloat(Math.abs(formState.gain * rate).toFixed(8))} ${currency === 'btc' ? 'BTC' : '$'}`)}
+              {$t(`${currencyValueChanger(currency, rate, formState.gain, {absolute: true})} ${getTicker(currency)}`)}
             </div>
           </div>
           <div className="status-modal__divider" />

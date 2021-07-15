@@ -60,7 +60,7 @@ export function getHiloHistory(token, data) {
 
             //TODO - response error log
 
-            dispatch(getHiloHistorySuccess(response.data.payload.reverse()))
+            dispatch(getHiloHistorySuccess(response.data.payload.data.reverse()))
         } catch (e) {
             dispatch(updateErrorHandler('Dice game load error', 500))
         }

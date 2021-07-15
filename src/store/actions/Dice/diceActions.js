@@ -62,7 +62,7 @@ export function getDiceHistory(token, data) {
 
             //TODO - response error log
 
-            dispatch(getDiceHistorySuccess(response.data.payload.reverse()))
+            dispatch(getDiceHistorySuccess(response.data.payload.data.reverse()))
         } catch (e) {
             dispatch(updateErrorHandler('Dice game load error', 500))
         }

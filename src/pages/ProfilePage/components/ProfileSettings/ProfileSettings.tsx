@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { Card } from '../../../../components/Card/Card';
 import {Input} from "../../../../components/Input/Input";
+import {FileInput} from "../../../../components/FileInput/FileInput";
 
 export const ProfileSettings = () => {
 
@@ -46,7 +47,11 @@ export const ProfileSettings = () => {
     return (
         <>
             <Card title={'Photo'}>
-                <p>dfdfdf</p>
+                <FileInput
+                    id={'photo-setting-input'}
+                    name={'photo-setting-input'}
+                    label={'Upload photo'}
+                />
             </Card>
             <Card title={'Main'}>
                 <div className={'input-group'}>

@@ -22,6 +22,9 @@ export const HiloResults = () => {
         dispatch(getHiloHistory(token, {pageSize: 100000, pageNumber: 0, onlyMe: false}))
     }, [])
 
+    const currency = useSelector((state: any) => state.balanceReducer.currency)
+    const rate = useSelector((state: any) => state.balanceReducer.rate)
+
     const [historyType, setHistoryType] = useState<string>('all')
     const [loader, setLoader] = useState<boolean>(false)
 
@@ -60,6 +63,8 @@ export const HiloResults = () => {
 
         setLoader(false)
     }
+
+    //TODO - add $ currency into the table
 
     const columns = [
         {

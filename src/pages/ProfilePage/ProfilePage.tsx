@@ -6,6 +6,7 @@ import {ProfileSettings} from "./components/ProfileSettings/ProfileSettings";
 import {ProfileHistory} from "./components/ProfileHistory/ProfileHistory";
 import {ProfileDeposit} from "./components/ProfileDeposit/ProfileDeposit";
 import {ProfileReferral} from "./components/ProfileReferral/ProfileReferral";
+import {UserWallets} from "../CabinetPage/components/UserWallets/UserWallets";
 
 export const ProfilePage = () => {
 
@@ -23,6 +24,10 @@ export const ProfilePage = () => {
         {
             title: 'Deposit',
             iterator: 'deposit'
+        },
+        {
+            title: 'Wallets',
+            iterator: 'wallets'
         },
         {
             title: 'Referral',
@@ -71,6 +76,10 @@ export const ProfilePage = () => {
 
             {page === 'deposit' ?
                 <ProfileDeposit /> : null
+            }
+
+            {page === 'wallets' ?
+                <UserWallets /> : null
             }
 
             {page === 'referral' ?

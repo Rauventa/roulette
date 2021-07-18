@@ -189,8 +189,8 @@ export const Header = () => {
 
               {menu ?
                   <div className="header__additional_user-list">
-                    <div className="header__additional_user-list--item" onClick={() => history.push('/cabinet')}>
-                      {$t('Wallets')}
+                    <div className="header__additional_user-list--item" onClick={() => history.push('/profile')}>
+                      {$t('Profile')}
                     </div>
                     <div className="header__additional_user-list--item" onClick={() => history.push('/rating')}>
                       {$t('Rating')}

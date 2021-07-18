@@ -34,9 +34,9 @@ export const RootRouter = () => {
                 <Route path={'/withdraw'}>
                     <WithdrawPage />
                 </Route>
-                <Route path={'/cabinet'}>
-                  <CabinetPage />
-                </Route>
+                {/*<Route path={'/cabinet'}>*/}
+                {/*  <CabinetPage />*/}
+                {/*</Route>*/}
                 <Route path={'/rating'}>
                     <RatingPage />
                 </Route>

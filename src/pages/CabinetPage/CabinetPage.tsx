@@ -9,9 +9,9 @@ export const CabinetPage = () => {
         {$t('Cabinet')}
       </div>
 
-      <div className="cabinet__content">
-        <UserWallets />
-      </div>
+      {/*<div className="cabinet__content">*/}
+      {/*  <UserWallets />*/}
+      {/*</div>*/}
     </div>
   )
 }

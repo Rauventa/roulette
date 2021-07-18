@@ -27,7 +27,7 @@ export const DicePage = () => {
 
   const {token, isAuth} = useContext(AuthContext)
 
-  const hash = useSelector((state: any) => state.diceReducer.hash) || Math.random().toString(36).substring(7);
+  const hash = useSelector((state: any) => state.diceReducer.hash) || Math.random().toString(36).substring(2);
   const gameNumber = useSelector((state: any) => state.diceReducer.gameNumber)
 
   const fetchData = async () => {
@@ -94,7 +94,9 @@ export const DicePage = () => {
           type={'dice'}
         />
 
-        <DiceResults />
+        {isAuth ?
+            <DiceResults /> : null
+        }
       </div>
     </div>
   )

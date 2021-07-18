@@ -24,7 +24,7 @@ export const HiloPage = () => {
 
   const {token, isAuth} = useContext(AuthContext)
 
-  const hash = useSelector((state: any) => state.hiloReducer.hash) || 'Hash is invisible for unauthorized users'
+  const hash = useSelector((state: any) => state.hiloReducer.hash) || Math.random().toString(36).substring(2)
   const gameNumber = useSelector((state: any) => state.hiloReducer.gameNumber)
 
   const fetchData = async () => {
@@ -83,7 +83,9 @@ export const HiloPage = () => {
           type={'hilo'}
         />
 
-        <HiloResults />
+        {isAuth ?
+            <HiloResults /> : null
+        }
       </div>
     </div>
   )

@@ -193,3 +193,12 @@ table {
 .white-text {
   color: #fff !important;
 }
+
+.icon-select-option {
+  display: flex;
+  align-items: center;
+
+  svg {
+    margin-right: 10px;
+  }
+}

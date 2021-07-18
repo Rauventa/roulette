@@ -1,5 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
 import './WithdrawPage.scss'
+
+import {ReactComponent as BTCIcon} from "./img/btc-ico-orange.svg";
+import {ReactComponent as ETHIcon} from "./img/eth.svg";
+
 import {Card} from "../../components/Card/Card";
 import { Button } from '../../components/Button/Button';
 import { $t } from '../../lib/i18n';
@@ -19,8 +23,8 @@ export const WithdrawPage = () => {
 
   const walletsOptions = wallets?.map((item: any) => {
     return {
-      label: `${item.currency} ${item.address}`,
-      value: item.id
+      label: <div className={'icon-select-option'}> {item.currency === 'BTC' ? <BTCIcon /> : null } {item.currency === 'ETH' ? <ETHIcon /> : null} {item.address} </div>,
+      value: item.id,
     }
   })
 
@@ -42,6 +46,8 @@ export const WithdrawPage = () => {
   useEffect(() => {
     fetchData()
   }, []);
+
+  console.log(walletsOptions)
 
   const withDrawHandler = () => {
 

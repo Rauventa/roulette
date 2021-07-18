@@ -2,6 +2,7 @@ import React, {useContext, useState} from 'react';
 import './WalletItem.scss';
 
 import {ReactComponent as BTCIcon} from "./img/btc-ico-orange.svg";
+import {ReactComponent as ETHIcon} from "./img/eth.svg";
 import {ReactComponent as TrashIcon} from "./img/wallet-del.svg";
 import {ReactComponent as SettingsIcon} from "./img/wallet-set.svg";
 import { $t } from '../../../../../lib/i18n';
@@ -50,9 +51,17 @@ export const WalletItem = ({
       </CSSTransition>
 
       <div className="wallet-item__content">
-        <div className="wallet-item__content_icon">
-          <BTCIcon />
-        </div>
+        {data.currency === 'BTC' ?
+          <div className="wallet-item__content_icon btc">
+            <BTCIcon />
+          </div> : null
+        }
+
+        {data.currency === 'ETH' ?
+          <div className="wallet-item__content_icon eth">
+            <ETHIcon />
+          </div> : null
+        }
         <div className="wallet-item__content_data">
           <div className="wallet-item__content_data-name">
             {$t(data.address)}

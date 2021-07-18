@@ -16,9 +16,16 @@
       justify-content: center;
       align-items: center;
       padding: 10px;
-      background: rgba(255,136,0,0.1);
       border-radius: 100px;
       margin-right: 20px;
+    }
+
+    .btc {
+      background: rgba(255,136,0,0.1);
+    }
+
+    .eth {
+      background: rgba(98, 126, 234, 0.2);
     }
 
     &_data {

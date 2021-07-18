@@ -6,7 +6,7 @@ import {ProfileSettings} from "./components/ProfileSettings/ProfileSettings";
 import {ProfileHistory} from "./components/ProfileHistory/ProfileHistory";
 import {ProfileDeposit} from "./components/ProfileDeposit/ProfileDeposit";
 import {ProfileReferral} from "./components/ProfileReferral/ProfileReferral";
-import {UserWallets} from "../CabinetPage/components/UserWallets/UserWallets";
+import {UserWallets} from "./components/UserWallets/UserWallets";
 
 export const ProfilePage = () => {
 

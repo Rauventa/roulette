@@ -1,6 +1,6 @@
 import React from 'react';
 import {$t} from "../../lib/i18n";
-import {UserWallets} from "./components/UserWallets/UserWallets";
+import {UserWallets} from "../ProfilePage/components/UserWallets/UserWallets";
 
 export const CabinetPage = () => {
   return (

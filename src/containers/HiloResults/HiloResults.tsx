@@ -11,6 +11,8 @@ import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../components/Spinner/Spinner";
 import {Button} from "../../components/Button/Button";
 import {IResult} from "../../interfaces/results/IResult";
+import {currencyValueChanger} from "../../lib/numberRefractor";
+import {getTicker} from "../../lib/tickers";
 
 export const HiloResults = ({
   type
@@ -35,11 +37,11 @@ export const HiloResults = ({
             name: item.userName,
             icon: item.userAvatarUrl,
             game: item.gameNumber,
-            bet: `${parseFloat(item.bet.toFixed(8))} BTC`,
+            bet: item.bet,
             roll: item.rollType,
             generated: item.hiddenNumber,
             result: item.userWin,
-            profit: `${parseFloat(item.gain.toFixed(8))} BTC`,
+            profit: item.gain,
             date: dateformat(new Date(item.playDate).toString(), "d.mm.yyyy, hh:MM"),
             hash: item.hash,
         }
@@ -92,7 +94,12 @@ export const HiloResults = ({
         },
         {
             Header: 'Bet',
-            accessor: 'bet'
+            accessor: 'bet',
+            Cell: ({row: {original}} : any) => (
+              <div>
+                  {$t(`${currencyValueChanger(currency, rate, original.bet)} ${getTicker(currency)}`)}
+              </div>
+            )
         },
         {
             Header: 'Roll',
@@ -118,7 +125,12 @@ export const HiloResults = ({
         },
         {
             Header: 'Profit',
-            accessor: 'profit'
+            accessor: 'profit',
+            Cell: ({row: {original}} : any) => (
+              <div>
+                  {$t(`${currencyValueChanger(currency, rate, original.profit)} ${getTicker(currency)}`)}
+              </div>
+            )
         },
         {
             Header: 'Date',

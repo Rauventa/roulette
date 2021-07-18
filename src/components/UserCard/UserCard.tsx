@@ -4,7 +4,7 @@ import './UserCard.scss';
 import {Card} from "../Card/Card";
 import {Button} from "../Button/Button";
 import {$t} from "../../lib/i18n";
-import {ReactComponent as UserIcon} from "./img/user.svg";
+import UserIcon from './img/default.png'
 import {ReactComponent as LogoutIcon} from "./img/logout.svg";
 import {AuthContext} from "../../context/AuthContext";
 import {useDispatch, useSelector} from "react-redux";
@@ -48,9 +48,9 @@ export const UserCard = () => {
     history.push('/auth')
   }
 
-  const goToCabinetHandler = () => {
-    history.push('/profile')
-  }
+  // const goToCabinetHandler = () => {
+  //   history.push('/profile')
+  // }
 
   return (
     <Card>
@@ -62,7 +62,7 @@ export const UserCard = () => {
       {isAuth ?
         <div className={'user-card'}>
           <div className={'user-card__title'}>
-            <UserIcon className={isAuth ? 'active' : ''} onClick={goToCabinetHandler} />
+            <img src={UserIcon} alt="user-icon"/>
             <div className={'user-card__title_text'}>
               <div className="user-card__title_text-name">
                 {$t(`${nickname}`)}
@@ -86,7 +86,7 @@ export const UserCard = () => {
         </div> :
         <div className={'user-card'}>
           <div className={'user-card__title'}>
-            <UserIcon />
+            <img src={UserIcon} alt="user-icon"/>
             <div className={'user-card__title_text'}>
               {$t('You are guest')}
             </div>

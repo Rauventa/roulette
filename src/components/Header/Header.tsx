@@ -5,9 +5,7 @@ import { NavLink, useHistory } from 'react-router-dom';
 import {ReactComponent as RouletteIcon} from "./img/roulette.svg";
 import {ReactComponent as RuIcon} from "./img/russia.svg";
 import {ReactComponent as USIcon} from "./img/united-states.svg";
-import {ReactComponent as DiceIcon} from "./img/dice.svg";
-import {ReactComponent as FreeBtcIcon} from "./img/freebtc.svg";
-import {ReactComponent as UserIcon} from "./img/user.svg";
+import UserIcon from './img/default.png';
 import { Button } from '../Button/Button';
 import {LogoWheel} from "../Optional/LogoWheel/LogoWheel";
 import { AuthContext } from '../../context/AuthContext';
@@ -184,7 +182,7 @@ export const Header = () => {
             </div> :
             <div className="header__additional_user">
               <div className="header__additional_user-value" onClick={handleChangeMenu}>
-                <UserIcon />
+                <img src={UserIcon} alt="user-icon"/>
               </div>
 
               {menu ?

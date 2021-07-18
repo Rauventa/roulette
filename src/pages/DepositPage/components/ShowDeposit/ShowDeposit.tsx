@@ -20,17 +20,17 @@ export const ShowDeposit = ({
   }
 
   return (
-    <div className="deposit-page__content">
+    <div className="deposit-container__content">
       {code === '' ?
         <div className={'text-secondary'}>
           {$t('No referral address')}
         </div> :
         <Card>
-          <div className="deposit-page__content_title text-secondary">
+          <div className="deposit-container__content_title text-secondary">
             {$t('Your own BTC wallet')}
           </div>
 
-          <div className="deposit-page__content_text">
+          <div className="deposit-container__content_text">
             {$t('Top up your wallet and funds will be credited to your account')}
           </div>
 
@@ -45,7 +45,7 @@ export const ShowDeposit = ({
             <QRCode value={code} /> : null
           }
 
-          <div className={'deposit-page__content_buttons'}>
+          <div className={'deposit-container__content_buttons'}>
             <Button light onClick={handleSubmit}>
               {$t('Go back')}
             </Button>

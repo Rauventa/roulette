@@ -1,0 +1,13 @@
+.profile-deposit {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  .deposit-container {
+    width: 100%;
+  }
+
+  .card {
+    width: calc(50% - 20px);
+  }
+}

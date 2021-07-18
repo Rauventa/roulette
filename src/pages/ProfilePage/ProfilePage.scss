@@ -37,6 +37,7 @@
   &__content {
     display: flex;
     justify-content: space-between;
+    width: 100%;
 
     .card {
       width: calc(33.3% - 20px);

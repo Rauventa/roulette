@@ -1,18 +1,21 @@
 import React, {useContext, useEffect, useState} from 'react';
 import './DiceResults.scss';
-import { Card } from '../../../../components/Card/Card';
+import { Card } from '../../components/Card/Card';
 import {useDispatch, useSelector} from "react-redux";
-import {getDiceHistory} from "../../../../store/actions/Dice/diceActions";
-import {AuthContext} from "../../../../context/AuthContext";
-import {Table} from "../../../../components/Table/Table";
-import { $t } from '../../../../lib/i18n';
+import {getDiceHistory} from "../../store/actions/Dice/diceActions";
+import {AuthContext} from "../../context/AuthContext";
+import {Table} from "../../components/Table/Table";
+import { $t } from '../../lib/i18n';
 import dateformat from 'dateformat'
 import DefaultIcon from './img/default.png'
-import { Button } from '../../../../components/Button/Button';
+import { Button } from '../../components/Button/Button';
 import {CSSTransition} from "react-transition-group";
-import {Spinner} from "../../../../components/Spinner/Spinner";
+import {Spinner} from "../../components/Spinner/Spinner";
+import {IResult} from "../../interfaces/results/IResult";
 
-export const DiceResults = () => {
+export const DiceResults = ({
+  type
+}: IResult) => {
 
   const {token} = useContext(AuthContext)
 
@@ -147,14 +150,16 @@ export const DiceResults = () => {
         <Spinner />
       </CSSTransition>
 
-      <div className="history-card__extra">
-        <Button dark className={historyType === 'me' ? 'default' : ''} onClick={() => changeHistoryType('all')}>
-          {$t('All players')}
-        </Button>
-        <Button dark className={historyType === 'all' ? 'default' : ''} onClick={() => changeHistoryType('me')}>
-          {$t('Only me')}
-        </Button>
-      </div>
+      {type === 'all' ?
+        <div className="history-card__extra">
+          <Button dark className={historyType === 'me' ? 'default' : ''} onClick={() => changeHistoryType('all')}>
+            {$t('All players')}
+          </Button>
+          <Button dark className={historyType === 'all' ? 'default' : ''} onClick={() => changeHistoryType('me')}>
+            {$t('Only me')}
+          </Button>
+        </div> : null
+      }
 
       <Table
           data={data}

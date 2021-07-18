@@ -8,7 +8,7 @@ import {AuthContext} from "../../context/AuthContext";
 import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../components/Spinner/Spinner";
 import { getHiloHash } from '../../store/actions/Hilo/hiloActions';
-import {HiloResults} from "./components/HiloResults/HiloResults";
+import {HiloResults} from "../../containers/HiloResults/HiloResults";
 import {StatsRow} from "../../components/StatsRow/StatsRow";
 
 export const HiloPage = () => {
@@ -84,7 +84,9 @@ export const HiloPage = () => {
         />
 
         {isAuth ?
-            <HiloResults /> : null
+            <HiloResults
+              type={'all'}
+            /> : null
         }
       </div>
     </div>

@@ -22,7 +22,7 @@ export const SelectDeposit = ({
   //TODO /api/Prheaofile/ActivatePromocode call with 200 and 500 status (success and error popup)- need to await dispatch data
 
   return (
-    <div className="deposit-page__content">
+    <div className="deposit-container__content">
       <Card>
         <Input
           onChange={(value) => setPromocode(value)}

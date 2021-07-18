@@ -5,6 +5,7 @@ import errorReducer from "./Errors/ErrorReducer";
 import modalReducer from "./Modal/modalReducer";
 import hiloReducer from "./Hilo/hiloReducer";
 import statsReducer from "./Stats/statsReducer";
+import profileReducer from "./Profile/profileReducer";
 
 export default combineReducers({
     balanceReducer: balanceReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
     errorReducer: errorReducer,
     modalReducer: modalReducer,
     hiloReducer: hiloReducer,
-    statsReducer: statsReducer
+    statsReducer: statsReducer,
+    profileReducer: profileReducer
 })

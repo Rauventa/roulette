@@ -1,7 +1,12 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import { Card } from '../../../../components/Card/Card';
 import {Input} from "../../../../components/Input/Input";
 import {FileInput} from "../../../../components/FileInput/FileInput";
+import { Button } from '../../../../components/Button/Button';
+import { $t } from '../../../../lib/i18n';
+import {useDispatch} from "react-redux";
+import {uploadAvatar} from "../../../../store/actions/Profile/profileActions";
+import {AuthContext} from "../../../../context/AuthContext";
 
 export const ProfileSettings = () => {
 
@@ -10,6 +15,10 @@ export const ProfileSettings = () => {
         newPassword: '',
         confirmPassword: ''
     }
+
+    const dispatch = useDispatch()
+
+    const {token} = useContext(AuthContext)
 
     const [formState, setFormState] = useState<any>(defaultFormState)
     const [formErrors, setFormErrors] = useState<any>({})
@@ -44,6 +53,10 @@ export const ProfileSettings = () => {
         }
     }
 
+    const savePicHandler = async (data: any) => {
+        dispatch(uploadAvatar(token, data))
+    }
+
     return (
         <>
             <Card title={'Photo'}>
@@ -51,6 +64,7 @@ export const ProfileSettings = () => {
                     id={'photo-setting-input'}
                     name={'photo-setting-input'}
                     label={'Upload photo'}
+                    onChange={savePicHandler}
                 />
             </Card>
             <Card title={'Main'}>

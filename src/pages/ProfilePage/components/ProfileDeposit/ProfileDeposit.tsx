@@ -1,9 +1,11 @@
 import React from 'react';
+import './ProfileDeposit.scss';
+import {DepositContainer} from "../../../../containers/DepositContainer/DepositContainer";
 
 export const ProfileDeposit = () => {
     return (
-        <>
-            <p>dsfsdf</p>
-        </>
+        <div className={'profile-deposit'}>
+          <DepositContainer />
+        </div>
     )
 }

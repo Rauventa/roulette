@@ -7,13 +7,15 @@ interface FileInputProps {
     name?: string,
     label: string,
     extra?: any,
+    onChange: (value: any) => void,
 }
 
 export const FileInput = ({
     id,
     name,
     label,
-    extra
+    extra,
+    onChange,
 }: FileInputProps) => {
 
     const defaultImageSrc = 'https://avrorasochi.ru/wp-content/uploads/2016/10/orionthemes-placeholder-image.jpg';
@@ -22,7 +24,11 @@ export const FileInput = ({
 
     const imageChangeHandler = (e: any) => {
         setFile(e.target.files[0])
+
+        onChange(e.target.files[0])
     }
+
+  console.log(file)
 
     return (
         <>

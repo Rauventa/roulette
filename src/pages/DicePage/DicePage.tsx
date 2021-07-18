@@ -6,7 +6,7 @@ import {GameCard} from "../../components/GameCard/GameCard";
 import {useDispatch, useSelector} from "react-redux";
 import {getDiceHash} from "../../store/actions/Dice/diceActions";
 import {AuthContext} from "../../context/AuthContext";
-import {DiceResults} from "./components/DiceResults/DiceResults";
+import {DiceResults} from "../../containers/DiceResults/DiceResults";
 import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../components/Spinner/Spinner";
 import {StatsRow} from "../../components/StatsRow/StatsRow";
@@ -95,7 +95,9 @@ export const DicePage = () => {
         />
 
         {isAuth ?
-            <DiceResults /> : null
+            <DiceResults
+              type={'all'}
+            /> : null
         }
       </div>
     </div>

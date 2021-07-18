@@ -49,7 +49,7 @@ export const UserCard = () => {
   }
 
   const goToCabinetHandler = () => {
-    history.push('/cabinet')
+    history.push('/profile')
   }
 
   return (

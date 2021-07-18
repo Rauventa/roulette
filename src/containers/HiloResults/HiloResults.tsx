@@ -1,18 +1,20 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Card} from "../../../../components/Card/Card";
-import {Table} from "../../../../components/Table/Table";
-import {AuthContext} from "../../../../context/AuthContext";
+import {Card} from "../../components/Card/Card";
+import {Table} from "../../components/Table/Table";
+import {AuthContext} from "../../context/AuthContext";
 import {useDispatch, useSelector} from "react-redux";
 import dateformat from "dateformat";
-import {$t} from "../../../../lib/i18n";
-import {getHiloHistory} from "../../../../store/actions/Hilo/hiloActions";
-import {getDiceHistory} from "../../../../store/actions/Dice/diceActions";
-import DefaultIcon from "../../../DicePage/components/DiceResults/img/default.png";
+import {$t} from "../../lib/i18n";
+import {getHiloHistory} from "../../store/actions/Hilo/hiloActions";
+import DefaultIcon from "../DiceResults/img/default.png";
 import {CSSTransition} from "react-transition-group";
-import {Spinner} from "../../../../components/Spinner/Spinner";
-import {Button} from "../../../../components/Button/Button";
+import {Spinner} from "../../components/Spinner/Spinner";
+import {Button} from "../../components/Button/Button";
+import {IResult} from "../../interfaces/results/IResult";
 
-export const HiloResults = () => {
+export const HiloResults = ({
+  type
+}: IResult) => {
 
     const {token} = useContext(AuthContext)
 
@@ -144,14 +146,16 @@ export const HiloResults = () => {
                 <Spinner />
             </CSSTransition>
 
-            <div className="history-card__extra">
-                <Button dark className={historyType === 'me' ? 'default' : ''} onClick={() => changeHistoryType('all')}>
-                    {$t('All players')}
-                </Button>
-                <Button dark className={historyType === 'all' ? 'default' : ''} onClick={() => changeHistoryType('me')}>
-                    {$t('Only me')}
-                </Button>
-            </div>
+            {type === 'all' ?
+              <div className="history-card__extra">
+                  <Button dark className={historyType === 'me' ? 'default' : ''} onClick={() => changeHistoryType('all')}>
+                      {$t('All players')}
+                  </Button>
+                  <Button dark className={historyType === 'all' ? 'default' : ''} onClick={() => changeHistoryType('me')}>
+                      {$t('Only me')}
+                  </Button>
+              </div> : null
+            }
 
             <Table
                 data={data}

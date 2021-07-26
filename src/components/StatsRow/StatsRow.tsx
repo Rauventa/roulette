@@ -26,9 +26,10 @@ export const StatsRow = () => {
 
     return (
         <div className={'stats-row'}>
-          {data.map((item: any) => {
+          {data.map((item: any, index: number) => {
             return (
               <StatsRowItem
+                key={index}
                 title={item.title}
                 value={item.value}
               />

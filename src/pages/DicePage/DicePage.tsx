@@ -79,7 +79,7 @@ export const DicePage = () => {
 
         <StatsRow />
 
-        <UserCard />
+        {/*<UserCard />*/}
 
         <BetCard
           formState={formState}

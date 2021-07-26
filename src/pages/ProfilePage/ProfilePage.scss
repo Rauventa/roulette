@@ -37,6 +37,7 @@
   &__content {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
     width: 100%;
 
     .card {
@@ -52,6 +53,12 @@
 
       &:not(:last-child) {
         margin-right: 20px;
+      }
+
+      .input-group {
+        &:not(:last-child) {
+          margin-bottom: 20px;
+        }
       }
     }
   }

@@ -54,9 +54,11 @@ export const Input = ({
         value={value}
         onChange={(event) => handleChange(event.target.value)}
       />
-      <div className="input-group__errors">
-        {$t(errors)}
-      </div>
+      {errors ?
+          <div className="input-group__errors">
+            {$t(errors)}
+          </div> : null
+      }
     </div>
   )
 }

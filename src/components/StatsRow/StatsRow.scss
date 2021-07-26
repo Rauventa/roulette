@@ -22,7 +22,7 @@
     &_icon {
       border-radius: 100px;
       background: rgba(255,255,255,0.03);
-      padding: 15px;
+      padding: 10px;
       margin-bottom: 10px;
       display: flex;
       justify-content: center;
@@ -34,8 +34,9 @@
       flex-direction: column;
 
       &-title {
-        font-weight: bold;
-        font-size: 30px;
+        font-family: 'Averta', sans-serif;
+        font-size: 36px;
+        font-weight: 700;
 
         &--dollar {
           margin-right: 5px;
@@ -51,8 +52,9 @@
       &-subtitle {
         text-transform: uppercase;
         color: rgba(255, 255, 255, 0.6);
-        font-weight: 600;
         font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1px;
       }
     }
   }

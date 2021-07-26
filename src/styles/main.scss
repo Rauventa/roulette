@@ -173,6 +173,10 @@ input {
 
 table {
 
+  .hidden-nickname {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
   .table-user {
     display: flex;
     align-items: center;
@@ -185,6 +189,7 @@ table {
         width: 30px;
         height: 30px;
         margin-right: 10px;
+        border-radius: 100px;
       }
     }
   }
@@ -201,4 +206,12 @@ table {
   svg {
     margin-right: 10px;
   }
+}
+
+.active-dropdown {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
 }

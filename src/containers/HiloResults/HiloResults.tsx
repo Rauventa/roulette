@@ -13,6 +13,7 @@ import {Button} from "../../components/Button/Button";
 import {IResult} from "../../interfaces/results/IResult";
 import {currencyValueChanger} from "../../lib/numberRefractor";
 import {getTicker} from "../../lib/tickers";
+import {config} from "../../config/config";
 
 export const HiloResults = ({
   type
@@ -68,8 +69,6 @@ export const HiloResults = ({
         setLoader(false)
     }
 
-    //TODO - add $ currency into the table
-
     const columns = [
         {
             Header: 'Name',
@@ -78,13 +77,18 @@ export const HiloResults = ({
               <div className={'table-user'}>
                   <div className={'table-user__icon'}>
                       {original.icon ?
-                        <img src={original.icon} alt="user icon"/> :
-                        <img src={DefaultIcon} alt="user icon"/>
+                          <img src={`${config.apiPhotoPrefixUrl}/${original.icon}`} alt="user icon"/> :
+                          <img src={DefaultIcon} alt="user icon"/>
                       }
                   </div>
-                  <div className="table-user__name">
-                      {$t(original.name)}
-                  </div>
+                  {original.name === '[Hidden]' ?
+                      <div className="table-user__name hidden-nickname">
+                          {$t('Hidden')}
+                      </div> :
+                      <div className="table-user__name">
+                          {$t(original.name)}
+                      </div>
+                  }
               </div>
             )
         },

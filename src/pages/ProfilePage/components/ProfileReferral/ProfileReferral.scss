@@ -1,0 +1,38 @@
+.profile-referral {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  &__list {
+    width: calc(50% - 20px);
+  }
+
+  &__statistic {
+    width: calc(50% - 20px);
+  }
+
+  .card {
+    width: 100%;
+  }
+
+  .referral-link-card {
+    margin-bottom: 40px;
+
+    input {
+      text-overflow: ellipsis;
+    }
+
+    .input-group__title {
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 13px;
+    }
+
+    .card__title {
+      margin-bottom: 0;
+    }
+
+    &__text {
+      margin-bottom: 20px;
+    }
+  }
+}

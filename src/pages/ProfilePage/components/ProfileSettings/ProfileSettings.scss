@@ -1,0 +1,88 @@
+.user-card {
+  display: flex;
+  flex-direction: column;
+
+  &__main {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  &__icon {
+    margin-right: 20px;
+    position: relative;
+    cursor: pointer;
+
+    label {
+      position: relative;
+      z-index: 2;
+
+      img {
+        opacity: 1;
+        transition: all .3s;
+      }
+    }
+
+    &:hover {
+      img {
+        opacity: 0.2;
+      }
+
+      .user-card__icon_hover {
+        opacity: 1;
+      }
+    }
+    
+    &_hover {
+      width: 96px;
+      height: 96px;
+      z-index: 1;
+      background-color: rgba(0,0,0,0.8);
+      border-radius: 100px;
+      opacity: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      svg {
+        width: 20px;
+
+        path {
+          fill: rgba(255, 255, 255, 0.6);
+        }
+      }
+    }
+
+    img {
+      width: 96px;
+      height: 96px;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+
+    &_name {
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+
+    &_balance {
+      color: rgba(255,255,255,0.6);
+      font-family: 'Averta', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+    }
+  }
+
+  &__nickname {
+    .checkbox {
+      margin-bottom: 0;
+    }
+  }
+}

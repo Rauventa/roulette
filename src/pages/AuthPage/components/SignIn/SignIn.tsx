@@ -63,12 +63,14 @@ export const SignIn = () => {
       try {
         const response = await axiosClient.post('/Auth/Login', formState)
 
+        const data = response.data.payload;
+
         if (response.data.payload.jwtToken) {
           login(
-              response.data.payload.jwtToken,
-              response.data.payload.refreshToken,
-              response.data.payload.userId,
-              response.data.payload.nickname
+              data.jwtToken,
+              data.refreshToken,
+              data.userId,
+              data.nickname
           )
 
           history.push('/dice')

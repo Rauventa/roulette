@@ -68,7 +68,7 @@ export const HiloPage = () => {
 
         <StatsRow />
 
-        <UserCard />
+        {/*<UserCard />*/}
 
         <BetCard
           formState={formState}

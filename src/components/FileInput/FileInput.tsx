@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
+import React, {ReactNode, useState} from 'react';
 import { $t } from '../../lib/i18n';
 import './FileInput.scss'
 
 interface FileInputProps {
     id: string,
     name?: string,
-    label: string,
+    label?: string,
+    defaultImage?: any,
     extra?: any,
     onChange: (value: any) => void,
 }
@@ -14,11 +15,10 @@ export const FileInput = ({
     id,
     name,
     label,
+    defaultImage,
     extra,
     onChange,
 }: FileInputProps) => {
-
-    const defaultImageSrc = 'https://avrorasochi.ru/wp-content/uploads/2016/10/orionthemes-placeholder-image.jpg';
 
     const [file, setFile] = useState<any>(null)
 
@@ -28,16 +28,15 @@ export const FileInput = ({
         onChange(e.target.files[0])
     }
 
-  console.log(file)
-
     return (
         <>
             <label
                 htmlFor={id}
             >
-                {$t(label)}
-
-                <img src={file ? URL.createObjectURL(file) : defaultImageSrc} alt=""/>
+                {label ?
+                    $t(label) : null
+                }
+                <img src={file ? URL.createObjectURL(file) : defaultImage} alt=""/>
             </label>
             <input
                 className={'input-file'}

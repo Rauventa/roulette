@@ -7,6 +7,7 @@ import {ProfileHistory} from "./components/ProfileHistory/ProfileHistory";
 import {ProfileDeposit} from "./components/ProfileDeposit/ProfileDeposit";
 import {ProfileReferral} from "./components/ProfileReferral/ProfileReferral";
 import {UserWallets} from "./components/UserWallets/UserWallets";
+import {UserStats} from "../../containers/UserStats/UserStats";
 
 export const ProfilePage = () => {
 
@@ -56,13 +57,6 @@ export const ProfilePage = () => {
                     )
                 })}
             </div>
-            <div className="profile__header_buttons">
-                {page === 'settings' ?
-                    <Button light>
-                        {$t('Save')}
-                    </Button> : null
-                }
-            </div>
         </div>
 
         <div className="profile__content">
@@ -85,6 +79,10 @@ export const ProfilePage = () => {
             {page === 'referral' ?
                 <ProfileReferral /> : null
             }
+        </div>
+
+        <div className="profile__stats">
+            <UserStats />
         </div>
     </div>
   )

@@ -5,7 +5,6 @@ import {ReactComponent as Card2Icon} from "./img/card-2.svg";
 import {ReactComponent as Card3Icon} from "./img/card-3.svg";
 import {ReactComponent as Card4Icon} from "./img/card-4.svg";
 import {ReactComponent as Card5Icon} from "./img/card-5.svg";
-import {ReactComponent as Card6Icon} from "./img/card-6.svg";
 import {toDotThs} from "../../../lib/numberRefractor";
 
 interface StatsRowItemProps {

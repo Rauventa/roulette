@@ -14,6 +14,7 @@ import {Spinner} from "../../components/Spinner/Spinner";
 import {IResult} from "../../interfaces/results/IResult";
 import {currencyValueChanger} from "../../lib/numberRefractor";
 import {getTicker} from "../../lib/tickers";
+import { config } from '../../config/config';
 
 export const DiceResults = ({
   type
@@ -78,13 +79,18 @@ export const DiceResults = ({
         <div className={'table-user'}>
           <div className={'table-user__icon'}>
             {original.icon ?
-              <img src={original.icon} alt="user icon"/> :
+              <img src={`${config.apiPhotoPrefixUrl}/${original.icon}`} alt="user icon"/> :
               <img src={DefaultIcon} alt="user icon"/>
             }
           </div>
-          <div className="table-user__name">
-            {$t(original.name)}
-          </div>
+          {original.name === '[Hidden]' ?
+              <div className="table-user__name hidden-nickname">
+                {$t('Hidden')}
+              </div> :
+              <div className="table-user__name">
+                {$t(original.name)}
+              </div>
+          }
         </div>
       )
     },

@@ -4,7 +4,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 
     &_tabs {
       display: flex;
@@ -42,10 +42,6 @@
 
     .card {
       width: calc(33.3% - 20px);
-
-      &__title {
-        margin-bottom: 20px;
-      }
 
       input {
         width: 100%;

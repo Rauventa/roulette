@@ -6,6 +6,7 @@ import {SelectDeposit} from "../../pages/DepositPage/components/SelectDeposit/Se
 import {ShowDeposit} from "../../pages/DepositPage/components/ShowDeposit/ShowDeposit";
 import {AuthContext} from "../../context/AuthContext";
 import {axiosClient} from "../../utils/axiosClient";
+import {PaymentHistory} from "../PaymentHistory/PaymentHistory";
 
 export const DepositContainer = () => {
 
@@ -51,6 +52,8 @@ export const DepositContainer = () => {
           code={code}
         />
       }
+
+      <PaymentHistory />
     </div>
   )
 }

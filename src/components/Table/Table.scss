@@ -21,7 +21,7 @@
     width: 100px;
     position: relative;
     transition: all .3s;
-    cursor: pointer;
+    //cursor: pointer;
 
     &:hover {
       .table-hidden__full {
@@ -42,11 +42,15 @@
   }
 
   .danger {
-    color: #e12d81;
+    color: #ff00aa;
   }
 
   .success {
-    color: #28d171;
+    color: #00ffaa;
+  }
+
+  .bold {
+    font-weight: 600;
   }
 }
 

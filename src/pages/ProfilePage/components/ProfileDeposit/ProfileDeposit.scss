@@ -8,6 +8,12 @@
   }
 
   .card {
-    width: calc(50% - 20px);
+    &:first-child {
+      width: calc(30% - 15px);
+    }
+
+    &:last-child {
+      width: calc(70% - 15px);
+    }
   }
 }

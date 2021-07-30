@@ -1,21 +1,29 @@
 import {
     GET_AVATAR,
-    GET_NICKNAME_VISIBILITY,
+    GET_NICKNAME_VISIBILITY, GET_PROFILE_INFO, GET_REFERRAL_LINK,
     GET_REFERRALS,
     GET_REFERRALS_STATISTIC,
     GET_USER_STATS
 } from "../../actions/actionTypes";
 
 const initialState = {
+    profileInfo: {},
     userStats: [],
     referrals: [],
+    referralsCount: null,
     referralStats: [],
     nicknameVisibility: false,
-    avatar: null
+    avatar: null,
+    referralLink: null,
 };
 
 export default function profileReducer(state = initialState, action) {
     switch (action.type) {
+        case GET_PROFILE_INFO:
+            return {
+                ...state,
+                profileInfo: action.profileInfo
+            }
         case GET_AVATAR:
             return {
                 ...state,
@@ -29,7 +37,8 @@ export default function profileReducer(state = initialState, action) {
         case GET_REFERRALS:
             return {
                 ...state,
-                referrals: action.referrals
+                referrals: action.referrals,
+                referralsCount: action.referralsCount
             }
         case GET_REFERRALS_STATISTIC:
             return {
@@ -40,6 +49,11 @@ export default function profileReducer(state = initialState, action) {
             return {
                 ...state,
                 nicknameVisibility: action.nicknameVisibility
+            }
+        case GET_REFERRAL_LINK:
+            return {
+                ...state,
+                referralLink: action.referralLink
             }
         default:
             return state

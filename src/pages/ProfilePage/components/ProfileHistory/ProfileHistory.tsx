@@ -34,12 +34,14 @@ export const ProfileHistory = () => {
             {type.value === 'dice' ?
               <DiceResults
                 type={'me'}
+                noTitle
               /> : null
             }
 
             {type.value === 'hilo' ?
               <HiloResults
                 type={'me'}
+                noTitle
               /> : null
             }
         </div>

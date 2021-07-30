@@ -43,6 +43,10 @@ export const ProfilePage = () => {
   return (
     <div className={'profile'}>
 
+        <div className="profile__stats">
+            <UserStats />
+        </div>
+
         <div className="profile__header">
             <div className="profile__header_tabs">
                 {tabs.map((item: any, index: number) => {
@@ -79,10 +83,6 @@ export const ProfilePage = () => {
             {page === 'referral' ?
                 <ProfileReferral /> : null
             }
-        </div>
-
-        <div className="profile__stats">
-            <UserStats />
         </div>
     </div>
   )

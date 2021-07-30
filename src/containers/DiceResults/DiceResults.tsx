@@ -7,7 +7,10 @@ import {AuthContext} from "../../context/AuthContext";
 import {Table} from "../../components/Table/Table";
 import { $t } from '../../lib/i18n';
 import dateformat from 'dateformat'
+
 import DefaultIcon from './img/default.png'
+import {ReactComponent as InfoIcon} from "./img/icon-info.svg";
+
 import { Button } from '../../components/Button/Button';
 import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../components/Spinner/Spinner";
@@ -17,7 +20,8 @@ import {getTicker} from "../../lib/tickers";
 import { config } from '../../config/config';
 
 export const DiceResults = ({
-  type
+  type,
+  noTitle
 }: IResult) => {
 
   const {token} = useContext(AuthContext)
@@ -25,13 +29,13 @@ export const DiceResults = ({
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getDiceHistory(token, {pageSize: 100000, pageNumber: 0, onlyMe: false}))
+    changeHistoryType(type)
   }, [])
 
   const currency = useSelector((state: any) => state.balanceReducer.currency)
   const rate = useSelector((state: any) => state.balanceReducer.rate)
 
-  const [historyType, setHistoryType] = useState<string>('all')
+  const [historyType, setHistoryType] = useState<string>(type)
   const [loader, setLoader] = useState<boolean>(false)
 
   const data = useSelector((state: any) => state.diceReducer.history).map((item: any) => {
@@ -45,7 +49,7 @@ export const DiceResults = ({
       generated: item.hiddenNumber,
       result: item.userWin,
       profit: item.gain,
-      date: dateformat(new Date(item.playDate).toString(), "d.mm.yyyy, hh:MM"),
+      date: dateformat(new Date(item.playDate).toString(), "d.mm.yyyy hh:MM"),
       hash: item.hash,
     }
   })
@@ -112,29 +116,12 @@ export const DiceResults = ({
       accessor: 'chance'
     },
     {
-      Header: 'Your number',
-      accessor: 'own'
-    },
-    {
-      Header: 'Generated number',
-      accessor: 'generated'
-    },
-    {
       Header: 'Result',
       accessor: 'result',
       Cell: ({row: {original}}: any) => (
-          <div className={original.result ? 'success' : 'danger'}>
-            {$t(original.result ? 'Win' : 'Lose')}
+          <div className={`bold ${original.result ? 'success' : 'danger'}`}>
+            {$t(`${original.result ? '+' : '-'} ${currencyValueChanger(currency, rate, original.profit, {absolute: true})} ${getTicker(currency)}`)}
           </div>
-      )
-    },
-    {
-      Header: 'Profit',
-      accessor: 'profit',
-      Cell: ({row: {original}} : any) => (
-        <div>
-          {$t(`${currencyValueChanger(currency, rate, original.profit)} ${getTicker(currency)}`)}
-        </div>
       )
     },
     {
@@ -142,15 +129,24 @@ export const DiceResults = ({
       accessor: 'date'
     },
     {
-      Header: 'Hash',
+      Header: 'Fair Game',
       accessor: 'hash',
       Cell: ({row: {original}}: any) => (
           <div className={'table-hidden'}>
-            {$t(`${original.hash.slice(0, 10)}...`)}
+            {$t(`${original.hash.slice(0, 15)}...`)}
 
-            <span className={'table-hidden__full'}>
-                  {$t(original.hash)}
-            </span>
+            {/*<span className={'table-hidden__full'}>*/}
+            {/*      {$t(original.hash)}*/}
+            {/*</span>*/}
+          </div>
+      )
+    },
+    {
+      Header: '',
+      accessor: 'actions',
+      Cell: ({row: {original}}: any) => (
+          <div>
+            <InfoIcon />
           </div>
       )
     },
@@ -159,7 +155,7 @@ export const DiceResults = ({
   return (
     <Card
       className={'history-card'}
-      title={'Games History'}
+      title={!noTitle ? 'Games History' : ''}
     >
 
       <CSSTransition in={loader} timeout={500} unmountOnExit classNames="my-node">

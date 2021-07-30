@@ -101,7 +101,7 @@ export const SignIn = () => {
             <div className="auth-page__title">
               {$t('Sign In')}
             </div>
-            <div className="input-group">
+            <div className="form-group">
               <Input
                   className={errors?.email ? 'input-error' : ''}
                   placeholder={'Email or Phone'}
@@ -119,9 +119,11 @@ export const SignIn = () => {
                   onChange={(value) => handleStateUpdate(value, 'password')}
               />
 
-              <div className={'errors-shower'}>
-                {$t(errors?.login)}
-              </div>
+              {errors.length ?
+                  <div className={'errors-shower'}>
+                    {$t(errors?.login)}
+                  </div> : null
+              }
 
               <div className="auth-page__additional">
                 {$t('Forgot your password?')}

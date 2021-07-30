@@ -1,6 +1,18 @@
 export const toDotThs = (value: number) => {
-  //@ts-ignore
-  return Math.abs(value) > 999 ? Math.sign(value)*((Math.abs(value)/1000).toFixed(1)) + 'k' : Math.sign(value)*Math.abs(value)
+
+  let refractedValue = `${Math.sign(value)*Math.abs(value)}`
+
+  if (Math.abs(value) > 999 && Math.abs(value) < 999999) {
+    //@ts-ignore
+    refractedValue = Math.sign(value)*((Math.abs(value)/1000).toFixed(0)) + 'k'
+  }
+
+  if (Math.abs(value) > 999999) {
+    //@ts-ignore
+    refractedValue = Math.sign(value)*((Math.abs(value)/1000000).toFixed(0)) + 'm'
+  }
+
+  return refractedValue
 }
 
 export const currencyValueChanger = (currency: string, rate: number, value: number, params?: any) => {

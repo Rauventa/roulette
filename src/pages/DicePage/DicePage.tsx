@@ -97,7 +97,10 @@ export const DicePage = () => {
         {isAuth ?
             <DiceResults
               type={'all'}
-            /> : null
+            /> :
+            <DiceResults
+                type={'me'}
+            />
         }
       </div>
     </div>

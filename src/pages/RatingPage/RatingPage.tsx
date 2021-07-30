@@ -11,6 +11,7 @@ import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../components/Spinner/Spinner";
 import DefaultIcon from "./img/default.png";
 import {$t} from "../../lib/i18n";
+import {config} from "../../config/config";
 
 export const RatingPage = () => {
 
@@ -49,17 +50,22 @@ export const RatingPage = () => {
     {
       accessor: 'nickname',
       Cell: ({row: {original}}: any) => (
-        <div className={'table-user'}>
-          <div className={'table-user__icon'}>
-            {original.avatar ?
-              <img src={original.icon} alt="user icon"/> :
-              <img src={DefaultIcon} alt="user icon"/>
+          <div className={'table-user'}>
+            <div className={'table-user__icon'}>
+              {original.avatar ?
+                  <img src={`${config.apiPhotoPrefixUrl}/${original.avatar}`} alt="user icon"/> :
+                  <img src={DefaultIcon} alt="user icon"/>
+              }
+            </div>
+            {original.nickname === '[Hidden]' ?
+                <div className="table-user__name hidden-nickname">
+                  {$t('Hidden')}
+                </div> :
+                <div className="table-user__name">
+                  {$t(original.nickname)}
+                </div>
             }
           </div>
-          <div className="table-user__name white-text">
-            {$t(original.nickname)}
-          </div>
-        </div>
       )
     },
     {

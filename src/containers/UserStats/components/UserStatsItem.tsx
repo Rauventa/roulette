@@ -1,9 +1,11 @@
 import React from 'react';
 import {$t} from "../../../lib/i18n";
-import {toDotThs} from "../../../lib/numberRefractor";
+import {currencyValueChanger, toDotThs} from "../../../lib/numberRefractor";
 import {ReactComponent as Card3Icon} from "../../../components/StatsRow/StatsRowItem/img/card-3.svg";
 import {ReactComponent as Card2Icon} from "../../../components/StatsRow/StatsRowItem/img/card-2.svg";
 import {ReactComponent as Card4Icon} from "../../../components/StatsRow/StatsRowItem/img/card-4.svg";
+import {useSelector} from "react-redux";
+import { getTicker } from '../../../lib/tickers';
 
 interface UserStatsItemProps {
     title: string,
@@ -14,6 +16,10 @@ export const UserStatsItem = ({
     title,
     value
 }: UserStatsItemProps) => {
+
+    const currency = useSelector((state: any) => state.balanceReducer.currency)
+    const rate = useSelector((state: any) => state.balanceReducer.rate)
+
     return (
         <>
             {title === 'gamesTotal' ?
@@ -39,9 +45,9 @@ export const UserStatsItem = ({
                     <div className="stats-row__item_text">
                         <div className="stats-row__item_text-title">
                              <span className={'stats-row__item_text-title--dollar'}>
-                                 {$t('$')}
+                                 {$t(`${getTicker(currency, {shortTickers: true})}`)}
                              </span>
-                            {$t(`${toDotThs(value)}`)}
+                            {$t(`${toDotThs(currencyValueChanger(currency, rate, value))}`)}
                         </div>
                         <div className="stats-row__item_text-subtitle">
                             {$t('Paid total')}
@@ -57,9 +63,9 @@ export const UserStatsItem = ({
                     <div className="stats-row__item_text">
                         <div className="stats-row__item_text-title">
                              <span className={'stats-row__item_text-title--dollar'}>
-                                 {$t('$')}
+                                 {$t(`${getTicker(currency, {shortTickers: true})}`)}
                              </span>
-                            {$t(`${toDotThs(value)}`)}
+                            {$t(`${toDotThs(currencyValueChanger(currency, rate, value))}`)}
                         </div>
                         <div className="stats-row__item_text-subtitle">
                             {$t('Won total')}

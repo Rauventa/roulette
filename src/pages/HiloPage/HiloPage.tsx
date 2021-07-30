@@ -86,7 +86,10 @@ export const HiloPage = () => {
         {isAuth ?
             <HiloResults
               type={'all'}
-            /> : null
+            /> :
+            <HiloResults
+                type={'me'}
+            />
         }
       </div>
     </div>

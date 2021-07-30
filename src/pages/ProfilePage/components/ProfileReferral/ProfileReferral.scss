@@ -2,13 +2,14 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
 
-  &__list {
-    width: calc(50% - 20px);
+  &__info {
+    width: calc(50% - 15px);
   }
 
   &__statistic {
-    width: calc(50% - 20px);
+    width: calc(50% - 15px);
   }
 
   .card {
@@ -16,7 +17,7 @@
   }
 
   .referral-link-card {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 
     input {
       text-overflow: ellipsis;
@@ -25,10 +26,6 @@
     .input-group__title {
       color: rgba(255, 255, 255, 0.4);
       font-size: 13px;
-    }
-
-    .card__title {
-      margin-bottom: 0;
     }
 
     &__text {

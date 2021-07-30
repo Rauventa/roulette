@@ -12,9 +12,10 @@ import {ReactComponent as PenIcon} from "./img/pen.svg";
 
 import {useDispatch, useSelector} from "react-redux";
 import {
+    changeEmail,
     changeNickname, changePassword,
     getAvatar,
-    getNicknameVisibility,
+    getNicknameVisibility, getProfileInfo,
     uploadAvatar
 } from "../../../../store/actions/Profile/profileActions";
 import {AuthContext} from "../../../../context/AuthContext";
@@ -22,21 +23,33 @@ import {config} from "../../../../config/config";
 import {Checkbox} from "../../../../components/Checkbox/Checkbox";
 import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../../../components/Spinner/Spinner";
+import {getTicker} from "../../../../lib/tickers";
 
 export const ProfileSettings = () => {
 
-    const defaultFormState = {
-        oldPassword: '',
-        password: '',
-        confirmPassword: ''
-    }
-
     const dispatch = useDispatch()
 
-    const {token, nickname} = useContext(AuthContext)
+    const {token} = useContext(AuthContext)
 
     const nicknameVisibility = useSelector((state: any) => state.profileReducer.nicknameVisibility)
+    const profileInfo = useSelector((state: any) => state.profileReducer.profileInfo)
     const avatar = useSelector((state: any) => state.profileReducer.avatar)
+    const btc = useSelector((state: any) => state.balanceReducer.balanceBtc)
+    const usd = useSelector((state: any) => state.balanceReducer.balanceUsd)
+    const currency = useSelector((state: any) => state.balanceReducer.currency)
+
+    const defaultFormState = {
+        passwordData: {
+            oldPassword: '',
+            password: '',
+            confirmPassword: ''
+        },
+        mainData: {
+            email: '',
+            nickname: '',
+            phone: ''
+        }
+    }
 
     const [formState, setFormState] = useState<any>(defaultFormState)
     const [formErrors, setFormErrors] = useState<any>({})
@@ -46,9 +59,21 @@ export const ProfileSettings = () => {
         fetchData()
     }, [])
 
+    useEffect(() => {
+        if (profileInfo) {
+            setFormState((prev: any) => {
+                return {
+                    ...prev,
+                    mainData: profileInfo
+                }
+            })
+        }
+    }, [profileInfo])
+
     const fetchData = async () => {
         setLoader(true)
 
+        await dispatch(getProfileInfo(token))
         await dispatch(getNicknameVisibility(token))
         await dispatch(getAvatar(token))
 
@@ -61,7 +86,10 @@ export const ProfileSettings = () => {
                 setFormState((prev: any) => {
                     return {
                         ...prev,
-                        oldPassword: value
+                        passwordData: {
+                            ...prev.mainData,
+                            oldPassword: value
+                        }
                     }
                 })
                 break;
@@ -69,7 +97,10 @@ export const ProfileSettings = () => {
                 setFormState((prev: any) => {
                     return {
                         ...prev,
-                        password: value
+                        passwordData: {
+                            ...prev.mainData,
+                            password: value
+                        }
                     }
                 })
                 break;
@@ -77,7 +108,43 @@ export const ProfileSettings = () => {
                 setFormState((prev: any) => {
                     return {
                         ...prev,
-                        confirmPassword: value
+                        passwordData: {
+                            ...prev.mainData,
+                            confirmPassword: value
+                        }
+                    }
+                })
+                break;
+            case 'email':
+                setFormState((prev: any) => {
+                    return {
+                        ...prev,
+                        mainData: {
+                            ...prev.mainData,
+                            email: value
+                        }
+                    }
+                })
+                break;
+            case 'nickname':
+                setFormState((prev: any) => {
+                    return {
+                        ...prev,
+                        mainData: {
+                            ...prev.mainData,
+                            nickname: value
+                        }
+                    }
+                })
+                break;
+            case 'phone':
+                setFormState((prev: any) => {
+                    return {
+                        ...prev,
+                        mainData: {
+                            ...prev.mainData,
+                            phone: value
+                        }
                     }
                 })
                 break;
@@ -87,8 +154,26 @@ export const ProfileSettings = () => {
     const handleSubmit = async (type: string) => {
         setLoader(true)
 
-        if (type === 'password') {
-            await dispatch(changePassword(token, {...formState}))
+        // if (type === 'password') {
+        //     await dispatch(changePassword(token, {...formState, email: profileInfo.email}))
+        // }
+
+        if (type === 'main') {
+
+            if (profileInfo.email !== formState.mainData.email) {
+                await dispatch(changeEmail(token, formState.mainData.email))
+            }
+
+            if (profileInfo.nickname !== formState.mainData.nickname) {
+                await dispatch(changeNickname(token, {nickname: formState.mainData.nickname, hide: nicknameVisibility}))
+            }
+
+            // if (profileInfo.phone !== formState.mainData.phone) {
+            //     await dispatch(changeEmail(token, formState.mainData.phone))
+            // }
+
+            await dispatch(getProfileInfo(token))
+
         }
 
         setLoader(false)
@@ -97,7 +182,7 @@ export const ProfileSettings = () => {
     const changeNicknameVisibility = async (hide: boolean) => {
         setLoader(true)
 
-        await dispatch(changeNickname(token, {nickname, hide}))
+        await dispatch(changeNickname(token, {nickname: formState.mainData.nickname, hide}))
         await dispatch(getNicknameVisibility(token))
 
         setLoader(false)
@@ -137,10 +222,11 @@ export const ProfileSettings = () => {
                         </div>
                         <div className="user-card__info">
                             <div className="user-card__info_name">
-                                {nickname}
+                                {profileInfo.nickname}
                             </div>
                             <div className="user-card__info_balance">
-                                {`balance`}
+                                {$t(`${currency === 'btc' ? btc || 0 : usd.toFixed(1) || 0} `)}
+                                {getTicker(currency)}
                             </div>
                         </div>
                     </div>
@@ -160,22 +246,22 @@ export const ProfileSettings = () => {
                         title={'Email'}
                         placeholder={'Email'}
                         type={'text'}
-                        value={''}
-                        disabled
+                        value={formState.mainData.email || ''}
+                        onChange={(value) => formChangeHandler(value, 'email')}
                     />
                     <Input
                         title={'Nickname'}
                         placeholder={'Nickname'}
                         type={'text'}
-                        value={''}
-                        disabled
+                        value={formState.mainData.nickname || ''}
+                        onChange={(value) => formChangeHandler(value, 'nickname')}
                     />
                     <Input
                         title={'Phone'}
                         placeholder={'Phone'}
                         type={'text'}
-                        value={''}
-                        disabled
+                        value={formState.mainData.phone || ''}
+                        onChange={(value) => formChangeHandler(value, 'phone')}
                     />
                 </div>
                 <Button primary onClick={() => handleSubmit('main')}>
@@ -188,21 +274,21 @@ export const ProfileSettings = () => {
                         title={'Current password'}
                         placeholder={'Current password'}
                         type={'password'}
-                        value={formState.oldPassword}
+                        value={formState.passwordData.oldPassword}
                         onChange={(value) => formChangeHandler(value, 'old-password')}
                     />
                     <Input
                         title={'New password'}
                         placeholder={'New password'}
                         type={'password'}
-                        value={formState.password}
+                        value={formState.passwordData.password}
                         onChange={(value) => formChangeHandler(value, 'password')}
                     />
                     <Input
                         title={'Confirm password'}
                         placeholder={'Confirm password'}
                         type={'password'}
-                        value={formState.confirmPassword}
+                        value={formState.passwordData.confirmPassword}
                         onChange={(value) => formChangeHandler(value, 'confirm-password')}
                     />
                 </div>

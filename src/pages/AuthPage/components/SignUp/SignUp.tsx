@@ -151,10 +151,11 @@ export const SignUp = () => {
                 </div>
               </Checkbox>
 
-              <div className={'errors-shower'}>
-                {$t(errors?.registration)}
-              </div>
-
+              {errors.length ?
+                  <div className={'errors-shower'}>
+                    {$t(errors?.registration)}
+                  </div> : null
+              }
               <div className="auth-page__buttons">
                 <Button primary onClick={handleSubmit}>
                   {$t('Sign Up')}

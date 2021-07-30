@@ -1,3 +1,4 @@
 export interface IResult {
-  type: string
+  type: string,
+  noTitle?: boolean
 }

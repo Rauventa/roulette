@@ -2,11 +2,31 @@ import {updateErrorHandler} from "../Errors/ErrorActions";
 import {axiosClient} from "../../../utils/axiosClient";
 import {
     GET_AVATAR,
-    GET_NICKNAME_VISIBILITY,
+    GET_NICKNAME_VISIBILITY, GET_PROFILE_INFO, GET_REFERRAL_LINK,
     GET_REFERRALS,
     GET_REFERRALS_STATISTIC,
     GET_USER_STATS
 } from "../actionTypes";
+
+export function getProfileInfo(token) {
+    return async dispatch => {
+        try {
+            const response = await axiosClient.get('/Profile/GetProfileInfo', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.data?.errors?.length) {
+                dispatch(updateErrorHandler(response.data?.errors[0], response.data.status))
+            } else {
+                dispatch(getProfileInfoSuccess(response.data.payload))
+            }
+        } catch (e) {
+            dispatch(updateErrorHandler('Cannot load profile info', e.response?.status || null))
+        }
+    }
+}
 
 export function getAvatar(token) {
     return async dispatch => {
@@ -80,7 +100,7 @@ export function getNicknameVisibility(token) {
                 dispatch(getNicknameVisibilitySuccess(response.data.payload))
             }
         } catch (e) {
-            dispatch(updateErrorHandler('Cannot load nickname visibility', e.response?.status || null))
+            dispatch(updateErrorHandler('Cannot load nickname params', e.response?.status || null))
         }
     }
 }
@@ -151,7 +171,7 @@ export function getReferrals(token) {
             if (response.data?.errors?.length) {
                 dispatch(updateErrorHandler(response.data?.errors[0], response.data.status))
             } else {
-                dispatch(getReferralsSuccess(response.data.payload))
+                dispatch(getReferralsSuccess(response.data.payload.data, response.data.payload.count))
             }
 
         } catch (e) {
@@ -184,6 +204,33 @@ export function getReferralsStatistic(token, owner) {
     }
 }
 
+export function getReferralLink(token) {
+    return async dispatch => {
+        try {
+            const response = await axiosClient.get('/Profile/GetReferalNumber', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+
+            if (response.data?.errors?.length) {
+                dispatch(updateErrorHandler(response.data?.errors[0], response.data.status))
+            } else {
+                dispatch(getReferralLinkSuccess(response.data.payload))
+            }
+        } catch (e) {
+            dispatch(updateErrorHandler('Cannot load referral link', e.response?.status || null))
+        }
+    }
+}
+
+export function getProfileInfoSuccess(profileInfo) {
+    return {
+        type: GET_PROFILE_INFO,
+        profileInfo
+    }
+}
+
 export function getAvatarSuccess(avatar) {
     return {
         type: GET_AVATAR,
@@ -198,10 +245,11 @@ export function getUserStatsSuccess(statistic) {
     }
 }
 
-export function getReferralsSuccess(referrals) {
+export function getReferralsSuccess(referrals, referralsCount) {
     return {
         type: GET_REFERRALS,
-        referrals
+        referrals,
+        referralsCount
     }
 }
 
@@ -216,5 +264,12 @@ export function getNicknameVisibilitySuccess(nicknameVisibility) {
     return {
         type: GET_NICKNAME_VISIBILITY,
         nicknameVisibility
+    }
+}
+
+export function getReferralLinkSuccess(referralLink) {
+    return {
+        type: GET_REFERRAL_LINK,
+        referralLink
     }
 }

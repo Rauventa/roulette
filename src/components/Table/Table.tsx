@@ -8,6 +8,7 @@ interface TableProps {
     data: any,
     columns: any,
     noPagination?: boolean,
+    pageSize?: number,
     noHeader?: boolean,
     onPaginationClick?: (pageIndex: any) => void,
 }
@@ -16,6 +17,7 @@ export const Table = ({
     data,
     columns,
     noPagination,
+    pageSize,
     noHeader,
     onPaginationClick
 }: TableProps) => {
@@ -34,7 +36,7 @@ export const Table = ({
         nextPage,
         previousPage,
         state: { pageIndex },
-    } = useTable({ columns, data, initialState: { pageIndex: 0, pageSize: 20 }}, usePagination)
+    } = useTable({ columns, data, initialState: { pageIndex: 0, pageSize: pageSize || 20 }}, usePagination)
 
     const paginationClickHandler = (index: number, iterator: string) => {
 

@@ -11,6 +11,8 @@ interface InputProps {
   name?: string,
   disabled?: boolean,
   errors?: any,
+  icon?: any,
+  onCopy?: (copied: any) => void,
   onChange?: (e: string) => void
 }
 
@@ -23,6 +25,8 @@ export const Input = ({
   name,
   disabled,
   errors,
+  icon,
+  onCopy,
   onChange
 }: InputProps) => {
 
@@ -32,9 +36,19 @@ export const Input = ({
     defaultClass+= ' input-disabled'
   }
 
+  // if (icon) {
+  //
+  // }
+
   const handleChange = (value: any) => {
     if (onChange) {
       onChange(value)
+    }
+  }
+
+  const handleCopy = () => {
+    if (onCopy) {
+      onCopy(value)
     }
   }
 
@@ -45,8 +59,13 @@ export const Input = ({
           {$t(title)}
         </div> : null
       }
+      {icon ?
+          <div className={'input-group__icon'} onClick={handleCopy}>
+            {icon}
+          </div> : null
+      }
       <input
-        className={`${defaultClass} ${className ? className : ''}`}
+        className={`${defaultClass} ${className || ''}`}
         placeholder={$t(placeholder)}
         type={type}
         name={name}

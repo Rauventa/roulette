@@ -1,10 +1,28 @@
 .input-group {
+  position: relative;
 
   &__title {
     color: rgba(255, 255, 255, 0.6);
     font-size: 14px;
     font-weight: 500;
     margin-bottom: 10px;
+  }
+
+  &__icon {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    z-index: 100;
+
+    svg, img {
+      width: 25px;
+      transition: ease-in-out .3s;
+
+      &:hover {
+        transform: scale(1.07);
+        cursor: pointer;
+      }
+    }
   }
 
   &__errors {

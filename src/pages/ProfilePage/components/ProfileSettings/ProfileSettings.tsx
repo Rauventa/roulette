@@ -238,6 +238,15 @@ export const ProfileSettings = () => {
                             Hide my nickname
                         </Checkbox>
                     </div>
+                    {/*<div>*/}
+                    {/*    <Input*/}
+                    {/*        title={'Nickname'}*/}
+                    {/*        placeholder={'Nickname'}*/}
+                    {/*        type={'text'}*/}
+                    {/*        value={formState.mainData.nickname || ''}*/}
+                    {/*        onChange={(value) => formChangeHandler(value, 'nickname')}*/}
+                    {/*    />*/}
+                    {/*</div>*/}
                 </div>
             </Card>
             <Card title={'Main'}>

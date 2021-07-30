@@ -12,6 +12,7 @@ import {getTicker} from "../../../../lib/tickers";
 import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../../../components/Spinner/Spinner";
 import {config} from "../../../../config/config";
+import {ReactComponent as ReferralIcon} from "./img/ref_pic.svg";
 import DefaultIcon from "../../../../containers/DiceResults/img/default.png";
 import dateformat from "dateformat";
 
@@ -54,6 +55,10 @@ export const ProfileReferral = () => {
       await dispatch(getReferralLink(token))
 
       setLoader(false)
+    }
+
+    const copyReferralLinkHandler = (value: string) => {
+        navigator.clipboard.writeText(`https://${value}`)
     }
 
     const referralsColumns = [
@@ -148,11 +153,14 @@ export const ProfileReferral = () => {
                         title={'Referral link'}
                         placeholder={'hello'}
                         type={'text'}
+                        icon={<ReferralIcon />}
                         value={`${config.referralPrefix}${link}`}
+                        onCopy={(value) => copyReferralLinkHandler(value)}
                     />
                 </Card>
                 <Card title={`Referrals ${referralsCount}`}>
                     <Table
+                        className={'ids-table'}
                         data={referrals}
                         columns={referralsColumns}
                     />

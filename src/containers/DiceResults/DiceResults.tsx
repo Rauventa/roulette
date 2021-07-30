@@ -18,6 +18,8 @@ import {IResult} from "../../interfaces/results/IResult";
 import {currencyValueChanger} from "../../lib/numberRefractor";
 import {getTicker} from "../../lib/tickers";
 import { config } from '../../config/config';
+import {Modal} from "../../components/Modal/Modal";
+import {closeModalHandler, openModalHandler} from "../../store/actions/Modal/modalActions";
 
 export const DiceResults = ({
   type,
@@ -34,12 +36,9 @@ export const DiceResults = ({
 
   const currency = useSelector((state: any) => state.balanceReducer.currency)
   const rate = useSelector((state: any) => state.balanceReducer.rate)
-
-  const [historyType, setHistoryType] = useState<string>(type)
-  const [loader, setLoader] = useState<boolean>(false)
-
   const data = useSelector((state: any) => state.diceReducer.history).map((item: any) => {
     return {
+      ...item,
       name: item.userName,
       icon: item.userAvatarUrl,
       game: item.gameNumber,
@@ -53,6 +52,9 @@ export const DiceResults = ({
       hash: item.hash,
     }
   })
+
+  const [historyType, setHistoryType] = useState<string>(type)
+  const [loader, setLoader] = useState<boolean>(false)
 
   const changeHistoryType = async (type: string) => {
 
@@ -74,6 +76,7 @@ export const DiceResults = ({
 
     setLoader(false)
   }
+
 
   const columns = [
     {
@@ -145,7 +148,7 @@ export const DiceResults = ({
       Header: '',
       accessor: 'actions',
       Cell: ({row: {original}}: any) => (
-          <div>
+          <div className={'table-actions'}>
             <InfoIcon />
           </div>
       )
@@ -157,6 +160,15 @@ export const DiceResults = ({
       className={'history-card'}
       title={!noTitle ? 'Games History' : ''}
     >
+
+      {/*<CSSTransition in={modal} timeout={500} unmountOnExit classNames="my-node">*/}
+      {/*  <Modal*/}
+      {/*      title={'Dice result'}*/}
+      {/*      type={'lll'}*/}
+      {/*      formState={result}*/}
+      {/*      onClose={modalCloseHandler}*/}
+      {/*  />*/}
+      {/*</CSSTransition>*/}
 
       <CSSTransition in={loader} timeout={500} unmountOnExit classNames="my-node">
         <Spinner />

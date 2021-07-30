@@ -148,7 +148,7 @@ export const HiloResults = ({
             Header: '',
             accessor: 'actions',
             Cell: ({row: {original}}: any) => (
-                <div>
+                <div className={'table-actions'}>
                     <InfoIcon />
                 </div>
             )

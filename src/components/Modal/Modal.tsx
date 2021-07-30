@@ -3,7 +3,6 @@ import { $t } from '../../lib/i18n';
 import { Button } from '../Button/Button';
 import './Modal.scss'
 import {useSelector} from "react-redux";
-import {stat} from "fs";
 import {currencyValueChanger} from "../../lib/numberRefractor";
 import {getTicker} from "../../lib/tickers";
 

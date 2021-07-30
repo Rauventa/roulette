@@ -5,6 +5,7 @@ import { useTable, usePagination } from 'react-table'
 import {Button} from "../Button/Button";
 
 interface TableProps {
+    className?: string,
     data: any,
     columns: any,
     noPagination?: boolean,
@@ -14,6 +15,7 @@ interface TableProps {
 }
 
 export const Table = ({
+    className,
     data,
     columns,
     noPagination,
@@ -63,7 +65,7 @@ export const Table = ({
 
     return (
         <div>
-            <table {...getTableProps()} className={'table'}>
+            <table {...getTableProps()} className={`table ${className || ''}`}>
                 {!noHeader ?
                   <thead>
                   {headerGroups.map(headerGroup => (

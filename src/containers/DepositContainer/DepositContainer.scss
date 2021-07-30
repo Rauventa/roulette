@@ -18,7 +18,13 @@
     }
 
     .card {
-      width: calc(50% - 10px);
+      &:first-child {
+        width: calc(30% - 15px);
+      }
+
+      &:last-child {
+        width: calc(70% - 15px);
+      }
 
       .payment-options {
         width: 100%;
@@ -47,6 +53,13 @@
       .input {
         width: 100%;
       }
+    }
+  }
+
+  &__history {
+    margin-top: 30px;
+    .card {
+      width: 100% !important;
     }
   }
 }

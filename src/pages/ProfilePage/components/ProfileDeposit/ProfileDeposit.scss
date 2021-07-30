@@ -6,14 +6,4 @@
   .deposit-container {
     width: 100%;
   }
-
-  .card {
-    &:first-child {
-      width: calc(30% - 15px);
-    }
-
-    &:last-child {
-      width: calc(70% - 15px);
-    }
-  }
 }

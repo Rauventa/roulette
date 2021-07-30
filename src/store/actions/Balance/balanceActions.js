@@ -1,6 +1,7 @@
 import {axiosClient} from "../../../utils/axiosClient";
-import {CHANGE_CURRENCY, GET_BTC_BALANCE, GET_USD_BALANCE, GET_WALLETS} from "../actionTypes";
+import {CHANGE_CURRENCY, GET_BTC_BALANCE, GET_PAYMENT_HISTORY, GET_USD_BALANCE, GET_WALLETS} from "../actionTypes";
 import {updateErrorHandler} from "../Errors/ErrorActions";
+import {getDiceHistorySuccess} from "../Dice/diceActions";
 
 export function changeCurrency(ticker) {
     return {
@@ -105,9 +106,32 @@ export function createWithdraw(token, data) {
                 }
             })
 
-            console.log(response.data.payload)
         } catch (e) {
             dispatch(updateErrorHandler('Create withdraw error', e.response.status))
+        }
+    }
+}
+
+export function getPaymentHistory(token, data) {
+    return async dispatch => {
+        try {
+            const response = await axiosClient.get('/Payments/GetTransactionsHistory',{
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                params: {
+                    ...data
+                }
+            })
+
+            if (response.data?.errors?.length) {
+                dispatch(updateErrorHandler(response.data.errors[0], response.data.status))
+            } else {
+                dispatch(getPaymentHistorySuccess(response.data.payload.data))
+            }
+
+        } catch (e) {
+            dispatch(updateErrorHandler('Payment history load error', e.response.status))
         }
     }
 }
@@ -130,5 +154,12 @@ export function getWalletsSuccess(wallets) {
     return {
         type: GET_WALLETS,
         wallets
+    }
+}
+
+export function getPaymentHistorySuccess(history) {
+    return {
+        type: GET_PAYMENT_HISTORY,
+        history
     }
 }

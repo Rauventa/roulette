@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import './DepositContainer.scss';
 import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../components/Spinner/Spinner";
@@ -6,15 +6,46 @@ import {SelectDeposit} from "../../pages/DepositPage/components/SelectDeposit/Se
 import {ShowDeposit} from "../../pages/DepositPage/components/ShowDeposit/ShowDeposit";
 import {AuthContext} from "../../context/AuthContext";
 import {axiosClient} from "../../utils/axiosClient";
-import {PaymentHistory} from "../PaymentHistory/PaymentHistory";
+import {useDispatch, useSelector} from "react-redux";
+import { Table } from '../../components/Table/Table';
+import {getPaymentHistory} from "../../store/actions/Balance/balanceActions";
+import {config} from "../../config/config";
+import {toNormalDate} from "../../lib/dateHelper";
+import { Card } from '../../components/Card/Card';
+import {$t} from "../../lib/i18n";
+import {currencyValueChanger} from "../../lib/numberRefractor";
+import {getTicker} from "../../lib/tickers";
 
 export const DepositContainer = () => {
+
+  const {token} = useContext(AuthContext)
+
+  const dispatch = useDispatch()
+
+  const currency = useSelector((state: any) => state.balanceReducer.currency)
+  const rate = useSelector((state: any) => state.balanceReducer.rate)
+  const data = useSelector((state: any) => state.balanceReducer.history).map((item: any, index: number) => {
+    return {
+      ...item,
+      date: toNormalDate(item.createdAt)
+    }
+  })
 
   const [page, setPage] = useState<string>('select')
   const [code, setCode] = useState<string>('')
   const [loader, setLoader] = useState<boolean>(false)
 
-  const {token} = useContext(AuthContext)
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  const fetchData = async () => {
+    setLoader(true)
+
+    await dispatch(getPaymentHistory(token, {type: 'Unknown', ...config.historyLoadParams}))
+
+    setLoader(false)
+  }
 
   const handleChangePage = async (value: string) => {
 
@@ -36,6 +67,34 @@ export const DepositContainer = () => {
     setPage(value)
   }
 
+  const columns = [
+    {
+      Header: 'Date/Time',
+      accessor: 'date'
+    },
+    {
+      Header: 'Currency',
+      accessor: 'currency'
+    },
+    {
+      Header: 'Type',
+      accessor: 'type'
+    },
+    {
+      Header: 'Amount',
+      accessor: 'amount',
+      Cell: ({row: {original}}: any) => (
+          <div>
+            {$t(`${currencyValueChanger(currency, rate, original.amount)} ${getTicker(currency)}`)}
+          </div>
+      )
+    },
+    {
+      Header: 'Status',
+      accessor: 'status'
+    },
+  ]
+
   return (
     <div className={'deposit-container'}>
 
@@ -53,7 +112,14 @@ export const DepositContainer = () => {
         />
       }
 
-      <PaymentHistory />
+      <div className="deposit-container__history">
+        <Card>
+          <Table
+              data={data}
+              columns={columns}
+          />
+        </Card>
+      </div>
     </div>
   )
 }

@@ -8,7 +8,6 @@ import {closeModalHandler} from "../../../../store/actions/Modal/modalActions";
 import {getBalance} from "../../../../store/actions/Balance/balanceActions";
 import {AuthContext} from "../../../../context/AuthContext";
 import {Spinner} from "../../../../components/Spinner/Spinner";
-import {startDice} from "../../../../store/actions/Dice/diceActions";
 import {getHiloHistory, startHilo} from "../../../../store/actions/Hilo/hiloActions";
 import {useHistory} from "react-router-dom";
 import {getRating, getStats} from "../../../../store/actions/Stats/statsActions";

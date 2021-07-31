@@ -4,5 +4,6 @@ export const config = {
     historyLoadParams: {
         pageSize: 1000,
         pageNumber: 0
-    }
+    },
+    defaultQrCodeUrl: 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl='
 }

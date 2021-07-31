@@ -1,5 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
 import './DepositContainer.scss';
+
+import {ReactComponent as UpArrowIcon} from "./img/up-arrow.svg";
+import {ReactComponent as DownArrowIcon} from "./img/down-arrow.svg";
+
 import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../components/Spinner/Spinner";
 import {SelectDeposit} from "../../pages/DepositPage/components/SelectDeposit/SelectDeposit";
@@ -78,7 +82,19 @@ export const DepositContainer = () => {
     },
     {
       Header: 'Type',
-      accessor: 'type'
+      accessor: 'type',
+      Cell: ({row: {original}}: any) =>
+          original.type === 'deposit' ? (
+              <div className={`table-icon-block success`}>
+                <DownArrowIcon />
+                {original.type}
+              </div>
+          ) : (
+              <div className={`table-icon-block danger`}>
+                <UpArrowIcon />
+                {original.type}
+              </div>
+          )
     },
     {
       Header: 'Amount',

@@ -1,9 +1,9 @@
 import React from 'react';
-import QRCode from "react-qr-code";
 import {Button} from "../../../../components/Button/Button";
 import { $t } from '../../../../lib/i18n';
 import {Card} from "../../../../components/Card/Card";
 import {Input} from "../../../../components/Input/Input";
+import {config} from "../../../../config/config";
 
 interface ShowDepositProps {
   code: string,
@@ -41,9 +41,7 @@ export const ShowDeposit = ({
             disabled
           />
 
-          {code !== '' ?
-            <QRCode value={code} /> : null
-          }
+          <img src={`${config.defaultQrCodeUrl}${code}`} alt="qr-code"/>
 
           <div className={'deposit-container__content_buttons'}>
             <Button light onClick={handleSubmit}>

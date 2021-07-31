@@ -61,6 +61,18 @@
     }
   }
 
+  .table-icon-block {
+    display: flex;
+
+    svg {
+      width: 15px;
+    }
+
+    svg, span {
+      margin-right: 10px;
+    }
+  }
+
   &-actions {
     display: flex;
     align-items: center;
@@ -68,10 +80,26 @@
 
   .danger {
     color: #ff00aa;
+
+    svg, span {
+      color: #ff00aa;
+
+      path {
+        fill: #ff00aa;
+      }
+    }
   }
 
   .success {
     color: #00ffaa;
+
+    svg, span {
+      color: #00ffaa;
+
+      path {
+        fill: #00ffaa
+      }
+    }
   }
 
   .bold {

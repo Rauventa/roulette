@@ -24,6 +24,7 @@ import {Checkbox} from "../../../../components/Checkbox/Checkbox";
 import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../../../components/Spinner/Spinner";
 import {getTicker} from "../../../../lib/tickers";
+import {Switcher} from "../../../../components/Switcher/Switcher";
 
 export const ProfileSettings = () => {
 
@@ -48,7 +49,8 @@ export const ProfileSettings = () => {
             email: '',
             nickname: '',
             phone: ''
-        }
+        },
+        enable2Fa: false
     }
 
     const [formState, setFormState] = useState<any>(defaultFormState)
@@ -148,6 +150,14 @@ export const ProfileSettings = () => {
                     }
                 })
                 break;
+            case '2fa':
+                setFormState((prev: any) => {
+                    return {
+                        ...prev,
+                        enable2Fa: value
+                    }
+                })
+                break;
         }
     }
 
@@ -238,15 +248,6 @@ export const ProfileSettings = () => {
                             Hide my nickname
                         </Checkbox>
                     </div>
-                    {/*<div>*/}
-                    {/*    <Input*/}
-                    {/*        title={'Nickname'}*/}
-                    {/*        placeholder={'Nickname'}*/}
-                    {/*        type={'text'}*/}
-                    {/*        value={formState.mainData.nickname || ''}*/}
-                    {/*        onChange={(value) => formChangeHandler(value, 'nickname')}*/}
-                    {/*    />*/}
-                    {/*</div>*/}
                 </div>
             </Card>
             <Card title={'Main'}>
@@ -273,6 +274,16 @@ export const ProfileSettings = () => {
                         onChange={(value) => formChangeHandler(value, 'phone')}
                     />
                 </div>
+
+                <div className={'user-card__fa2'}>
+                    <Switcher
+                        className={'fa2-switcher'}
+                        title={'Enable 2FA'}
+                        checked={formState.enable2Fa}
+                        onChange={(value) => formChangeHandler(value, '2fa')}
+                    />
+                </div>
+
                 <Button primary onClick={() => handleSubmit('main')}>
                     {$t('Save')}
                 </Button>

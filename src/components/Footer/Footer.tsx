@@ -10,7 +10,7 @@ export const Footer = () => {
         {$t('© Bitcoin Roulette')}
       </NavLink>
       <NavLink to={'/'} exact className={'text-secondary'}>
-        {$t('Tab')}
+        {$t('Rules')}
       </NavLink>
       <NavLink to={'/'} exact className={'text-secondary'}>
         {$t('License agreement')}

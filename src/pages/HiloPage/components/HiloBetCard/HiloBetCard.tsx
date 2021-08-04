@@ -3,7 +3,7 @@ import {Button} from "../../../../components/Button/Button";
 import {$t} from "../../../../lib/i18n";
 import {useDispatch, useSelector} from "react-redux";
 import {CSSTransition} from "react-transition-group";
-import {Modal} from "../../../../components/Modal/Modal";
+import {OldModal} from "../../../../components/Modal/OldModal";
 import {closeModalHandler} from "../../../../store/actions/Modal/modalActions";
 import {getBalance} from "../../../../store/actions/Balance/balanceActions";
 import {AuthContext} from "../../../../context/AuthContext";
@@ -87,7 +87,7 @@ export const HiloBetCard = ({
   return (
     <>
       <CSSTransition in={modal} timeout={500} unmountOnExit classNames="my-node">
-        <Modal
+        <OldModal
           title={'Hilo result'}
           type={'hilo'}
           formState={result}

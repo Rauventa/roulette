@@ -18,7 +18,7 @@ import {IResult} from "../../interfaces/results/IResult";
 import {currencyValueChanger} from "../../lib/numberRefractor";
 import {getTicker} from "../../lib/tickers";
 import { config } from '../../config/config';
-import {Modal} from "../../components/Modal/Modal";
+import {OldModal} from "../../components/Modal/OldModal";
 import {closeModalHandler, openModalHandler} from "../../store/actions/Modal/modalActions";
 
 export const DiceResults = ({
@@ -162,7 +162,7 @@ export const DiceResults = ({
     >
 
       {/*<CSSTransition in={modal} timeout={500} unmountOnExit classNames="my-node">*/}
-      {/*  <Modal*/}
+      {/*  <OldModal*/}
       {/*      title={'Dice result'}*/}
       {/*      type={'lll'}*/}
       {/*      formState={result}*/}

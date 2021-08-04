@@ -4,7 +4,7 @@ import {Range} from "../../../../components/Range/Range";
 import {Button} from "../../../../components/Button/Button";
 import {getDiceHistory, startDice} from "../../../../store/actions/Dice/diceActions";
 import {CSSTransition} from "react-transition-group";
-import {Modal} from "../../../../components/Modal/Modal";
+import {OldModal} from "../../../../components/Modal/OldModal";
 import {getBalance} from "../../../../store/actions/Balance/balanceActions";
 import {AuthContext} from "../../../../context/AuthContext";
 import {useDispatch, useSelector} from "react-redux";
@@ -94,7 +94,7 @@ export const DiceBetCard = ({
   return (
     <>
       <CSSTransition in={modal} timeout={500} unmountOnExit classNames="my-node">
-        <Modal
+        <OldModal
           title={'Dice result'}
           type={'dice'}
           formState={result}

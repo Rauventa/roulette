@@ -1,8 +1,8 @@
 import {axiosClient} from "../../../utils/axiosClient";
 import {GET_DICE_HASH, GET_DICE_HISTORY, START_DICE_SUCCESS} from "../actionTypes";
-import {updateErrorHandler} from "../Errors/ErrorActions";
-import {openModalHandler} from "../Modal/modalActions";
-import {getRating, getStats} from "../Stats/statsActions";
+import {errorModalService} from "../../../services/modal/errorModalService";
+import {config} from "../../../config/config";
+import {gameModalService} from "../../../services/modal/gameModalService";
 
 export function getDiceHash(token) {
     return async dispatch => {
@@ -14,12 +14,12 @@ export function getDiceHash(token) {
             });
 
             if (!response) {
-                dispatch(updateErrorHandler('Cannot load hash', response.data.status))
+                errorModalService('Cannot load hash', response.data.status)
             } else {
                 dispatch(getDiceHashSuccess(response.data.payload.hash, response.data.payload.gameNumber))
             }
         } catch (e) {
-            dispatch(updateErrorHandler('Cannot load hash', e.response?.status || null))
+            errorModalService('Cannot load hash', e.response?.status || null)
         }
     }
 }
@@ -34,14 +34,14 @@ export function startDice(token, data, ownNumber, hash) {
             })
 
             if (response.data?.errors?.length) {
-                dispatch(updateErrorHandler(response.data.errors[0], response.data.status))
+                errorModalService(response.data.errors[0], response.data.status)
             } else {
                 dispatch(startDiceSuccess({...response.data.payload, ownNumber, lastHash: hash}))
-                dispatch(openModalHandler())
+                gameModalService('dice-game', {...response.data.payload, ownNumber, lastHash: hash})
             }
 
         } catch (e) {
-            dispatch(updateErrorHandler('Dice game load error', e.response.status))
+            errorModalService('Dice game load error', e.response.status)
         }
     }
 }
@@ -54,19 +54,18 @@ export function getDiceHistory(token, data) {
                     'Authorization': `Bearer ${token}`
                 },
                 params: {
-                    pageSize: data.pageSize,
-                    pageNumber: data.pageNumber,
+                    ...config.historyLoadParams,
                     onlyMe: data.onlyMe
                 }
             })
 
             if (response.data?.errors?.length) {
-                dispatch(updateErrorHandler(response.data.errors[0], response.data.status))
+                errorModalService(response.data.errors[0], response.data.status)
             } else {
                 dispatch(getDiceHistorySuccess(response.data.payload.data.reverse()))
             }
         } catch (e) {
-            dispatch(updateErrorHandler('Dice game load error', 500))
+            errorModalService('Dice game load error', 500)
         }
     }
 }

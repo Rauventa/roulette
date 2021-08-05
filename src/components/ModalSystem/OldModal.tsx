@@ -1,7 +1,7 @@
 import React from 'react';
 import { $t } from '../../lib/i18n';
 import { Button } from '../Button/Button';
-import './Modal.scss'
+import '../Modal/Modal.scss'
 import {useSelector} from "react-redux";
 import {currencyValueChanger} from "../../lib/numberRefractor";
 import {getTicker} from "../../lib/tickers";

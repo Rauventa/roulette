@@ -1,4 +1,3 @@
-import {updateErrorHandler} from "../Errors/ErrorActions";
 import {axiosClient} from "../../../utils/axiosClient";
 import {
     GET_AVATAR,
@@ -7,6 +6,7 @@ import {
     GET_REFERRALS_STATISTIC,
     GET_USER_STATS
 } from "../actionTypes";
+import {errorModalService} from "../../../services/modal/errorModalService";
 
 export function getProfileInfo(token) {
     return async dispatch => {
@@ -18,12 +18,12 @@ export function getProfileInfo(token) {
             });
 
             if (response.data?.errors?.length) {
-                dispatch(updateErrorHandler(response.data?.errors[0], response.data.status))
+                errorModalService(response.data?.errors[0], response.data.status)
             } else {
                 dispatch(getProfileInfoSuccess(response.data.payload))
             }
         } catch (e) {
-            dispatch(updateErrorHandler('Cannot load profile info', e.response?.status || null))
+            errorModalService('Cannot load profile info', e.response?.status || null)
         }
     }
 }
@@ -38,12 +38,12 @@ export function getAvatar(token) {
             });
 
             if (response.data?.errors?.length) {
-                dispatch(updateErrorHandler(response.data?.errors[0], response.data.status))
+                errorModalService(response.data?.errors[0], response.data.status)
             } else {
                 dispatch(getAvatarSuccess(response.data.payload))
             }
         } catch (e) {
-            dispatch(updateErrorHandler('Cannot load avatar', e.response?.status || null))
+            errorModalService('Cannot load avatar', e.response?.status || null)
         }
     }
 }
@@ -58,10 +58,10 @@ export function uploadAvatar(token, data) {
             });
 
             if (!response) {
-                dispatch(updateErrorHandler('Upload avatar error', response.data.status))
+                errorModalService('Upload avatar error', response.data.status)
             }
         } catch (e) {
-            dispatch(updateErrorHandler('Cannot upload avatar', e.response?.status || null))
+            errorModalService('Cannot upload avatar', e.response?.status || null)
         }
     }
 }
@@ -76,12 +76,12 @@ export function getUserStats(token) {
             });
 
             if (response.data?.errors?.length) {
-                dispatch(updateErrorHandler(response.data?.errors[0], response.data.status))
+                errorModalService(response.data?.errors[0], response.data.status)
             } else {
                 dispatch(getUserStatsSuccess(response.data.payload))
             }
         } catch (e) {
-            dispatch(updateErrorHandler('Cannot load user statistics', e.response?.status || null))
+            errorModalService('Cannot load user statistics', e.response?.status || null)
         }
     }
 }
@@ -95,12 +95,12 @@ export function getNicknameVisibility(token) {
             });
 
             if (response.data?.errors?.length) {
-                dispatch(updateErrorHandler(response.data?.errors[0], response.data.status))
+                errorModalService(response.data?.errors[0], response.data.status)
             } else {
                 dispatch(getNicknameVisibilitySuccess(response.data.payload))
             }
         } catch (e) {
-            dispatch(updateErrorHandler('Cannot load nickname params', e.response?.status || null))
+            errorModalService('Cannot load nickname params', e.response?.status || null)
         }
     }
 }
@@ -115,10 +115,10 @@ export function changeNickname(token, data) {
             });
 
             if (response.data?.errors?.length) {
-                dispatch(updateErrorHandler(response.data?.errors[0], response.data.status))
+                errorModalService(response.data?.errors[0], response.data.status)
             }
         } catch (e) {
-            dispatch(updateErrorHandler('Cannot change nickname', e.response?.status || null))
+            errorModalService('Cannot change nickname', e.response?.status || null)
         }
     }
 }
@@ -133,10 +133,10 @@ export function changeEmail(token, data) {
             });
 
             if (response.data?.errors?.length) {
-                dispatch(updateErrorHandler(response.data?.errors[0], response.data.status))
+                errorModalService(response.data?.errors[0], response.data.status)
             }
         } catch (e) {
-            dispatch(updateErrorHandler('Cannot change email', e.response?.status || null))
+            errorModalService('Cannot change email', e.response?.status || null)
         }
     }
 }
@@ -151,10 +151,10 @@ export function changePassword(token, data) {
             });
 
             if (response.data?.errors?.length) {
-                dispatch(updateErrorHandler(response.data?.errors[0], response.data.status))
+                errorModalService(response.data?.errors[0], response.data.status)
             }
         } catch (e) {
-            dispatch(updateErrorHandler('Cannot change email', e.response?.status || null))
+            errorModalService('Cannot change email', e.response?.status || null)
         }
     }
 }
@@ -169,13 +169,13 @@ export function getReferrals(token) {
             })
 
             if (response.data?.errors?.length) {
-                dispatch(updateErrorHandler(response.data?.errors[0], response.data.status))
+                errorModalService(response.data?.errors[0], response.data.status)
             } else {
-                dispatch(getReferralsSuccess(response.data.payload.data, response.data.payload.count))
+                getReferralsSuccess(response.data.payload.data, response.data.payload.count)
             }
 
         } catch (e) {
-            dispatch(updateErrorHandler('Cannot load referrals', e.response?.status || null))
+            errorModalService('Cannot load referrals', e.response?.status || null)
         }
     }
 }
@@ -193,13 +193,13 @@ export function getReferralsStatistic(token, owner) {
             })
 
             if (response.data?.errors?.length) {
-                dispatch(updateErrorHandler(response.data?.errors[0], response.data.status))
+                errorModalService(response.data?.errors[0], response.data.status)
             } else {
                 dispatch(getReferralsStatisticSuccess(response.data.payload))
             }
 
         } catch (e) {
-            dispatch(updateErrorHandler('Cannot load referrals statistics', e.response?.status || null))
+            errorModalService('Cannot load referrals statistics', e.response?.status || null)
         }
     }
 }
@@ -214,12 +214,12 @@ export function getReferralLink(token) {
             })
 
             if (response.data?.errors?.length) {
-                dispatch(updateErrorHandler(response.data?.errors[0], response.data.status))
+                errorModalService(response.data?.errors[0], response.data.status)
             } else {
                 dispatch(getReferralLinkSuccess(response.data.payload))
             }
         } catch (e) {
-            dispatch(updateErrorHandler('Cannot load referral link', e.response?.status || null))
+            errorModalService('Cannot load referral link', e.response?.status || null)
         }
     }
 }

@@ -11,6 +11,18 @@
   align-items: center;
 }
 
+.success {
+  .modal__title {
+    color: #00ffaa;
+  }
+}
+
+.danger {
+  .modal__title {
+    color: #ff00aa;
+  }
+}
+
 .modal {
   padding: 20px;
   border-radius: 20px;
@@ -21,14 +33,6 @@
   &__title {
     font-size: 36px;
     font-weight: 500;
-  }
-
-  .success {
-    color: #ff8800;
-  }
-
-  .danger {
-    color: #e12d81;
   }
 
   &__content {

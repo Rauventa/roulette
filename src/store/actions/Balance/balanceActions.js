@@ -1,7 +1,6 @@
 import {axiosClient} from "../../../utils/axiosClient";
 import {CHANGE_CURRENCY, GET_BTC_BALANCE, GET_PAYMENT_HISTORY, GET_USD_BALANCE, GET_WALLETS} from "../actionTypes";
-import {updateErrorHandler} from "../Errors/ErrorActions";
-import {getDiceHistorySuccess} from "../Dice/diceActions";
+import {errorModalService} from "../../../services/modal/errorModalService";
 
 export function changeCurrency(ticker) {
     return {
@@ -26,7 +25,7 @@ export function getBalance(token, rate) {
             dispatch(getUsdBalance(usdValue))
 
         } catch (e) {
-            dispatch(updateErrorHandler('Balance load error', e.response?.status || null))
+            errorModalService('Balance load error', e.response?.status || null)
         }
     }
 }
@@ -41,13 +40,13 @@ export function createWallet(token, data) {
             })
 
             if (response.data?.errors?.length) {
-                dispatch(updateErrorHandler(response.data?.errors[0], response.data.status))
+                errorModalService(response.data?.errors[0], response.data.status)
             } else {
                 return response.data.success
             }
 
         } catch (e) {
-            dispatch(updateErrorHandler('Wallet create error', e.response?.status || null))
+            errorModalService('Wallet create error', e.response?.status || null)
         }
     }
 }
@@ -62,13 +61,13 @@ export function getWallets(token) {
             })
 
             if (response.data?.errors?.length) {
-                dispatch(updateErrorHandler('Wallets load error', response.data.status))
+                errorModalService('Wallets load error', response.data.status)
             } else {
                 dispatch(getWalletsSuccess(response.data.payload))
             }
 
         } catch (e) {
-            dispatch(updateErrorHandler('Wallets load error', e.response?.status || null))
+            errorModalService('Wallets load error', e.response?.status || null)
         }
     }
 }
@@ -86,13 +85,13 @@ export function deleteWallet(token, data) {
             })
 
             if (response.data?.errors?.length) {
-                dispatch(updateErrorHandler(response.data?.errors[0], response.data.status))
+                errorModalService(response.data?.errors[0], response.data.status)
             } else {
                 return response.data.success
             }
 
         } catch (e) {
-            dispatch(updateErrorHandler('Delete wallet error', e.response?.status || null))
+            errorModalService('Delete wallet error', e.response?.status || null)
         }
     }
 }
@@ -107,7 +106,7 @@ export function createWithdraw(token, data) {
             })
 
         } catch (e) {
-            dispatch(updateErrorHandler('Create withdraw error', e.response.status))
+            errorModalService('Create withdraw error', e.response.status)
         }
     }
 }
@@ -125,13 +124,13 @@ export function getPaymentHistory(token, data) {
             })
 
             if (response.data?.errors?.length) {
-                dispatch(updateErrorHandler(response.data.errors[0], response.data.status))
+                errorModalService(response.data.errors[0], response.data.status)
             } else {
                 dispatch(getPaymentHistorySuccess(response.data.payload.data))
             }
 
         } catch (e) {
-            dispatch(updateErrorHandler('Payment history load error', e.response.status))
+            errorModalService('Payment history load error', e.response.status)
         }
     }
 }

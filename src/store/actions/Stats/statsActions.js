@@ -1,6 +1,6 @@
 import {axiosClient} from "../../../utils/axiosClient";
-import {updateErrorHandler} from "../Errors/ErrorActions";
 import {GET_RATING, GET_STATS} from "../actionTypes";
+import {errorModalService} from "../../../services/modal/errorModalService";
 
 export function getStats(token) {
     return async dispatch => {
@@ -12,12 +12,12 @@ export function getStats(token) {
             })
 
             if (response.data?.errors?.length) {
-                dispatch(updateErrorHandler(response.data.errors[0], response.data.status))
+                errorModalService(response.data.errors[0], response.data.status)
             } else {
                 dispatch(getStatsSuccess(response.data.payload))
             }
         } catch (e) {
-            dispatch(updateErrorHandler('Stats load error', e.response?.status || null))
+            errorModalService('Stats load error', e.response?.status || null)
         }
     }
 }
@@ -39,12 +39,12 @@ export function getRating(token) {
             })
 
             if (response.data?.errors?.length) {
-                dispatch(updateErrorHandler(response.data.errors[0], response.data.status))
+                errorModalService(response.data.errors[0], response.data.status)
             } else {
                 dispatch(getRatingSuccess(response.data.payload))
             }
         } catch (e) {
-            dispatch(updateErrorHandler('Rating load error', e.response?.status || null))
+            errorModalService('Rating load error', e.response?.status || null)
         }
     }
 }

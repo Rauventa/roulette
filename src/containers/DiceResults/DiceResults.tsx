@@ -18,8 +18,7 @@ import {IResult} from "../../interfaces/results/IResult";
 import {currencyValueChanger} from "../../lib/numberRefractor";
 import {getTicker} from "../../lib/tickers";
 import { config } from '../../config/config';
-import {OldModal} from "../../components/Modal/OldModal";
-import {closeModalHandler, openModalHandler} from "../../store/actions/Modal/modalActions";
+import {gameModalService} from "../../services/modal/gameModalService";
 
 export const DiceResults = ({
   type,
@@ -77,6 +76,9 @@ export const DiceResults = ({
     setLoader(false)
   }
 
+  const getGameModal = (data: any) => {
+    gameModalService('dice-game', {...data, reopen: true})
+  }
 
   const columns = [
     {
@@ -148,7 +150,7 @@ export const DiceResults = ({
       Header: '',
       accessor: 'actions',
       Cell: ({row: {original}}: any) => (
-          <div className={'table-actions'}>
+          <div className={'table-actions'} onClick={() => getGameModal(original)}>
             <InfoIcon />
           </div>
       )

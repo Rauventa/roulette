@@ -3,14 +3,14 @@ import {Button} from "../../../../components/Button/Button";
 import {$t} from "../../../../lib/i18n";
 import {useDispatch, useSelector} from "react-redux";
 import {CSSTransition} from "react-transition-group";
-import {OldModal} from "../../../../components/Modal/OldModal";
-import {closeModalHandler} from "../../../../store/actions/Modal/modalActions";
+import {OldModal} from "../../../../components/ModalSystem/OldModal";
 import {getBalance} from "../../../../store/actions/Balance/balanceActions";
 import {AuthContext} from "../../../../context/AuthContext";
 import {Spinner} from "../../../../components/Spinner/Spinner";
 import {getHiloHistory, startHilo} from "../../../../store/actions/Hilo/hiloActions";
 import {useHistory} from "react-router-dom";
 import {getRating, getStats} from "../../../../store/actions/Stats/statsActions";
+import {config} from "../../../../config/config";
 
 interface HiloBetCardProps {
   bet: number;
@@ -39,14 +39,12 @@ export const HiloBetCard = ({
 
   const hash = useSelector((state: any) => state.hiloReducer.hash)
 
-  const modal = useSelector((state: any) => state.modalReducer.modal)
-
   const makeBetHandler = async (type: string) => {
 
     if (!isAuth) {
       history.push('/login')
     } else {
-      setLoader(true)
+      // setLoader(true)
 
       let betWithCurrency = currency === 'btc' ? bet : (bet / rate).toFixed(8)
 
@@ -60,7 +58,9 @@ export const HiloBetCard = ({
             hash
         ))
 
-        dispatch(getHiloHistory(token, {pageSize: 100000, pageNumber: 0}))
+        await dispatch(getBalance(token, rate))
+
+        await dispatch(getHiloHistory(token, config.historyLoadParams))
 
         await dispatch(getStats(token))
         await dispatch(getRating(token))
@@ -72,28 +72,17 @@ export const HiloBetCard = ({
     }
   }
 
-  const modalCloseHandler = async () => {
-    dispatch(closeModalHandler())
-    setLoader(true)
-
-    try {
-      await dispatch(getBalance(token, rate))
-    } catch (e) {
-      console.log(e)
-    }
-    setLoader(false)
-  }
 
   return (
     <>
-      <CSSTransition in={modal} timeout={500} unmountOnExit classNames="my-node">
-        <OldModal
-          title={'Hilo result'}
-          type={'hilo'}
-          formState={result}
-          onClose={modalCloseHandler}
-        />
-      </CSSTransition>
+      {/*<CSSTransition in={modal} timeout={500} unmountOnExit classNames="my-node">*/}
+      {/*  <OldModal*/}
+      {/*    title={'Hilo result'}*/}
+      {/*    type={'hilo'}*/}
+      {/*    formState={result}*/}
+      {/*    onClose={modalCloseHandler}*/}
+      {/*  />*/}
+      {/*</CSSTransition>*/}
 
       <CSSTransition in={loader} timeout={500} unmountOnExit classNames="my-node">
         <Spinner />

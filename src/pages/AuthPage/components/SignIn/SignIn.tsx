@@ -14,7 +14,7 @@ import '../../AuthPage.scss'
 import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../../../components/Spinner/Spinner";
 import {useDispatch} from "react-redux";
-import {updateErrorHandler} from "../../../../store/actions/Errors/ErrorActions";
+import {errorModalService} from "../../../../services/modal/errorModalService";
 
 export const SignIn = () => {
 
@@ -80,7 +80,7 @@ export const SignIn = () => {
 
       } catch (e) {
         setErrors({login: 'Authorization failed'})
-        dispatch(updateErrorHandler('Login error', e.response?.status || null))
+        errorModalService('Login error', e.response?.status || null)
       }
     } else {
       setErrors(errors)

@@ -17,6 +17,7 @@ import {IResult} from "../../interfaces/results/IResult";
 import {currencyValueChanger} from "../../lib/numberRefractor";
 import {getTicker} from "../../lib/tickers";
 import {config} from "../../config/config";
+import {gameModalService} from "../../services/modal/gameModalService";
 
 export const HiloResults = ({
   type,
@@ -39,6 +40,7 @@ export const HiloResults = ({
 
     const data = useSelector((state: any) => state.hiloReducer.history).map((item: any) => {
         return {
+            ...item,
             name: item.userName,
             icon: item.userAvatarUrl,
             game: item.gameNumber,
@@ -71,6 +73,12 @@ export const HiloResults = ({
         }
 
         setLoader(false)
+    }
+
+    const getGameModal = (data: any) => {
+
+        console.log(data)
+        gameModalService('hilo-game', {...data, reopen: true})
     }
 
     const columns = [
@@ -148,7 +156,7 @@ export const HiloResults = ({
             Header: '',
             accessor: 'actions',
             Cell: ({row: {original}}: any) => (
-                <div className={'table-actions'}>
+              <div className={'table-actions'} onClick={() => getGameModal(original)}>
                     <InfoIcon />
                 </div>
             )

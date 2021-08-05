@@ -12,8 +12,8 @@ import {axiosClient} from "../../../../utils/axiosClient";
 import {inputValidator} from "../../../../lib/validator";
 import {AuthContext} from "../../../../context/AuthContext";
 import '../../AuthPage.scss'
-import {updateErrorHandler} from "../../../../store/actions/Errors/ErrorActions";
 import {useDispatch} from "react-redux";
+import {errorModalService} from "../../../../services/modal/errorModalService";
 
 export const SignUp = () => {
 
@@ -98,7 +98,7 @@ export const SignUp = () => {
 
       } catch (e) {
         setErrors({registration: 'Registration failed'})
-        dispatch(updateErrorHandler('Registration error', e.response?.status || null))
+        errorModalService('Registration error', e.response?.status || null)
       }
     } else {
       setErrors(errors)

@@ -4,14 +4,13 @@ import {Range} from "../../../../components/Range/Range";
 import {Button} from "../../../../components/Button/Button";
 import {getDiceHistory, startDice} from "../../../../store/actions/Dice/diceActions";
 import {CSSTransition} from "react-transition-group";
-import {OldModal} from "../../../../components/Modal/OldModal";
-import {getBalance} from "../../../../store/actions/Balance/balanceActions";
 import {AuthContext} from "../../../../context/AuthContext";
 import {useDispatch, useSelector} from "react-redux";
 import {Spinner} from "../../../../components/Spinner/Spinner";
-import {closeModalHandler, openModalHandler} from "../../../../store/actions/Modal/modalActions";
 import {useHistory} from "react-router-dom";
 import {getRating, getStats} from "../../../../store/actions/Stats/statsActions";
+import {config} from "../../../../config/config";
+import {getBalance} from "../../../../store/actions/Balance/balanceActions";
 
 interface DiceBetCardProps {
   bet: number;
@@ -32,13 +31,10 @@ export const DiceBetCard = ({
 
   const dispatch = useDispatch()
 
-  const result = useSelector((state: any) => state.diceReducer.result)
   const rate = useSelector((state: any) => state.balanceReducer.rate)
   const currency = useSelector((state: any) => state.balanceReducer.currency)
 
   const hash = useSelector((state: any) => state.diceReducer.hash)
-
-  const modal = useSelector((state: any) => state.modalReducer.modal)
 
   const rangeUpdate = (value: number) => {
     setRange(value)
@@ -51,7 +47,7 @@ export const DiceBetCard = ({
     if (!isAuth) {
       history.push('/login')
     } else {
-      setLoader(true)
+      // setLoader(true)
 
       let betWithCurrency = currency === 'btc' ? bet : (bet / rate).toFixed(8)
 
@@ -67,40 +63,42 @@ export const DiceBetCard = ({
             )
         )
 
-        await dispatch(getDiceHistory(token, {pageSize: 100000, pageNumber: 0}))
+        await dispatch(getBalance(token, rate))
+
+        await dispatch(getDiceHistory(token, config.historyLoadParams))
 
         await dispatch(getStats(token))
         await dispatch(getRating(token))
 
-        setLoader(false)
+        // setLoader(false)
       } catch (e) {
         console.log(e)
       }
     }
   }
 
-  const modalCloseHandler = async () => {
-    dispatch(closeModalHandler())
-    setLoader(true)
-
-    try {
-      await dispatch(getBalance(token, rate))
-    } catch (e) {
-      console.log(e)
-    }
-    setLoader(false)
-  }
+  // const modalCloseHandler = async () => {
+  //   // dispatch(closeModalHandler())
+  //   setLoader(true)
+  //
+  //   try {
+  //     await dispatch(getBalance(token, rate))
+  //   } catch (e) {
+  //     console.log(e)
+  //   }
+  //   setLoader(false)
+  // }
 
   return (
     <>
-      <CSSTransition in={modal} timeout={500} unmountOnExit classNames="my-node">
-        <OldModal
-          title={'Dice result'}
-          type={'dice'}
-          formState={result}
-          onClose={modalCloseHandler}
-        />
-      </CSSTransition>
+      {/*<CSSTransition in={modal} timeout={500} unmountOnExit classNames="my-node">*/}
+      {/*  <OldModal*/}
+      {/*    title={'Dice result'}*/}
+      {/*    type={'dice'}*/}
+      {/*    formState={result}*/}
+      {/*    onClose={modalCloseHandler}*/}
+      {/*  />*/}
+      {/*</CSSTransition>*/}
 
       <CSSTransition in={loader} timeout={500} unmountOnExit classNames="my-node">
         <Spinner />

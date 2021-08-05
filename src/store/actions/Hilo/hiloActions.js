@@ -1,7 +1,8 @@
 import {axiosClient} from "../../../utils/axiosClient";
-import {updateErrorHandler} from "../Errors/ErrorActions";
 import {GET_HILO_HASH, GET_HILO_HISTORY, START_HILO_SUCCESS} from "../actionTypes";
-import {openModalHandler} from "../Modal/modalActions";
+import {config} from "../../../config/config";
+import {errorModalService} from "../../../services/modal/errorModalService";
+import {gameModalService} from "../../../services/modal/gameModalService";
 
 export function getHiloHash(token) {
     return async dispatch => {
@@ -13,13 +14,13 @@ export function getHiloHash(token) {
             });
 
             if (!response) {
-                dispatch(updateErrorHandler('Cannot load hash', response.data.status))
+                errorModalService('Cannot load hash', response.data.status)
             } else {
                 dispatch(getHiloHashSuccess(response.data.payload.hash, response.data.payload.gameNumber))
             }
         } catch (e) {
             console.log(e)
-            dispatch(updateErrorHandler('Cannot load hash', e.response?.status || null))
+            errorModalService('Cannot load hash', e.response?.status || null)
         }
     }
 }
@@ -34,13 +35,13 @@ export function startHilo(token, data, hash) {
             })
 
             if (response.data?.errors?.length) {
-                dispatch(updateErrorHandler(response.data.errors[0], response.data.status))
+                errorModalService(response.data.errors[0], response.data.status)
             } else {
                 dispatch(startHiloSuccess({...response.data.payload, lastHash: hash}))
-                dispatch(openModalHandler())
+                gameModalService('hilo-game', {...response.data.payload, lastHash: hash})
             }
         } catch (e) {
-            dispatch(updateErrorHandler('Hilo game load error', e.response?.status || null))
+            errorModalService('Hilo game load error', e.response?.status || null)
         }
     }
 }
@@ -53,16 +54,14 @@ export function getHiloHistory(token, data) {
                     'Authorization': `Bearer ${token}`
                 },
                 params: {
-                    pageSize: data.pageSize,
-                    pageNumber: data.pageNumber
+                    ...config.historyLoadParams,
+                    onlyMe: data.onlyMe
                 }
             })
 
-            //TODO - response error log
-
             dispatch(getHiloHistorySuccess(response.data.payload.data.reverse()))
         } catch (e) {
-            dispatch(updateErrorHandler('Dice game load error', 500))
+            errorModalService('Dice game load error', 500)
         }
     }
 }

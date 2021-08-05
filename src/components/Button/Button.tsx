@@ -12,6 +12,9 @@ interface ButtonProps {
   onClick?: () => void,
 
   href?: any,
+  defaultLink?: boolean,
+
+  target?: string,
 
   className?: string,
 
@@ -26,6 +29,8 @@ export const Button = ({
   disabled,
   onClick,
   href,
+  target,
+  defaultLink,
   className,
   children
 }: ButtonProps) => {
@@ -58,7 +63,17 @@ export const Button = ({
     classDefault+= ' btn-disabled'
   }
 
-  if (href) {
+  if (defaultLink) {
+    return (
+      <a
+        href={href}
+        target={target ? target : '_self'}
+        className={`${classDefault} ${className ? className : ''}`}
+      >
+        {children}
+      </a>
+    )
+  } else if (href) {
     return (
       <NavLink
         to={href}

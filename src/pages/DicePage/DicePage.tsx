@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
 import './DicePage.scss'
-import {UserCard} from "../../components/UserCard/UserCard";
 import {BetCard} from "../../components/BetCard/BetCard";
 import {GameCard} from "../../components/GameCard/GameCard";
 import {useDispatch, useSelector} from "react-redux";
@@ -12,8 +11,6 @@ import {Spinner} from "../../components/Spinner/Spinner";
 import {StatsRow} from "../../components/StatsRow/StatsRow";
 
 export const DicePage = () => {
-
-  const currency = useSelector((state: any) => state.balanceReducer.currency)
 
   const defaultFormState = {
     range: 50,
@@ -41,6 +38,8 @@ export const DicePage = () => {
       setLoader(false)
     }
   }
+
+  console.log(gameNumber)
 
   useEffect(() => {
     fetchData()

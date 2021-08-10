@@ -18,8 +18,6 @@ export const UserWallets = () => {
 
   const wallets = useSelector((state: any) => state.balanceReducer.wallets)
 
-  console.log(wallets)
-
   const dispatch = useDispatch()
 
   const currencyOptions = [

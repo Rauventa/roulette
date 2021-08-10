@@ -1,7 +1,7 @@
 import {
     CHANGE_CURRENCY,
-    GET_BTC_BALANCE,
-    GET_PAYMENT_HISTORY,
+    GET_BTC_BALANCE, GET_CURRENT_RATE,
+    GET_PAYMENT_HISTORY, GET_PAYMENT_PROOF,
     GET_USD_BALANCE,
     GET_WALLETS
 } from "../../actions/actionTypes";
@@ -12,7 +12,8 @@ const initialState = {
     balanceUsd: null,
     wallets: [],
     history: [],
-    rate: 31555.5
+    rate: null,
+    proofData: []
 };
 
 export default function balanceReducer(state = initialState, action) {
@@ -26,6 +27,11 @@ export default function balanceReducer(state = initialState, action) {
             return {
                 ...state,
                 balanceBtc: action.balanceBtc
+            }
+        case GET_CURRENT_RATE:
+            return {
+                ...state,
+                rate: action.rate
             }
         case GET_USD_BALANCE:
             return {
@@ -41,6 +47,11 @@ export default function balanceReducer(state = initialState, action) {
             return {
                 ...state,
                 history: action.history
+            }
+        case GET_PAYMENT_PROOF:
+            return {
+                ...state,
+                proofData: action.proofData
             }
         default:
             return state

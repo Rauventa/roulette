@@ -36,7 +36,7 @@ export const Modal = ({
         <div className="modal__title">
           {title ? $t(title) : null}
         </div>
-        <div>
+        <div className={'modal__content'}>
           {children}
         </div>
         <div className="modal__buttons">

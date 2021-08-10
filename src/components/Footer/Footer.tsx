@@ -15,7 +15,7 @@ export const Footer = () => {
       <NavLink to={'/'} exact className={'text-secondary'}>
         {$t('License agreement')}
       </NavLink>
-      <NavLink to={'/'} exact className={'text-secondary'}>
+      <NavLink to={'/payment-proof'} exact className={'text-secondary'}>
         {$t('Payment proof')}
       </NavLink>
     </footer>

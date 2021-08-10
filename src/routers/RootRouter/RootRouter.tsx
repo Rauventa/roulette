@@ -8,9 +8,10 @@ import { SignIn } from '../../pages/AuthPage/components/SignIn/SignIn';
 import {SignUp} from "../../pages/AuthPage/components/SignUp/SignUp";
 import {HiloPage} from "../../pages/HiloPage/HiloPage";
 import {AuthContext} from "../../context/AuthContext";
-import {CabinetPage} from "../../pages/CabinetPage/CabinetPage";
 import {RatingPage} from "../../pages/RatingPage/RatingPage";
 import {ProfilePage} from "../../pages/ProfilePage/ProfilePage";
+import {PaymentProofPage} from "../../pages/PaymentProofPage/PaymentProofPage";
+import {FaucetPage} from "../../pages/FaucetPage/FaucetPage";
 
 export const RootRouter = () => {
 
@@ -28,21 +29,24 @@ export const RootRouter = () => {
                 <Route path={'/hilo'}>
                     <HiloPage />
                 </Route>
+                <Route path={'/faucet'}>
+                  <FaucetPage />
+                </Route>
                 <Route path={'/deposit'}>
                     <DepositPage />
                 </Route>
                 <Route path={'/withdraw'}>
                     <WithdrawPage />
                 </Route>
-                {/*<Route path={'/cabinet'}>*/}
-                {/*  <CabinetPage />*/}
-                {/*</Route>*/}
                 <Route path={'/rating'}>
                     <RatingPage />
                 </Route>
-              <Route path={'/profile'}>
-                <ProfilePage />
-              </Route>
+                <Route path={'/profile'}>
+                  <ProfilePage />
+                </Route>
+                <Route path={'/payment-proof'}>
+                  <PaymentProofPage />
+                </Route>
             </Switch>
         )
     } else {
@@ -62,6 +66,9 @@ export const RootRouter = () => {
                 </Route>
                 <Route path={'/hilo'}>
                     <HiloPage />
+                </Route>
+                <Route path={'/faucet'}>
+                  <FaucetPage />
                 </Route>
                 <Route path={'/rating'}>
                     <RatingPage />

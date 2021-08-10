@@ -137,6 +137,9 @@ export const Header = () => {
                 <NavLink to={'/hilo'} className={'header__nav_items-all--item'}>
                   {$t('HiLo')}
                 </NavLink>
+                <NavLink to={'/faucet'} className={'header__nav_items-all--item'}>
+                  {$t('Free BTC')}
+                </NavLink>
               </div> : null
           }
         </div>

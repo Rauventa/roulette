@@ -7,10 +7,10 @@ import {CSSTransition} from "react-transition-group";
 import {AuthContext} from "../../../../context/AuthContext";
 import {useDispatch, useSelector} from "react-redux";
 import {Spinner} from "../../../../components/Spinner/Spinner";
-import {useHistory} from "react-router-dom";
 import {getRating, getStats} from "../../../../store/actions/Stats/statsActions";
 import {config} from "../../../../config/config";
 import {getBalance} from "../../../../store/actions/Balance/balanceActions";
+import {modalService} from "../../../../services/modal/modalService";
 
 interface DiceBetCardProps {
   bet: number;
@@ -24,8 +24,6 @@ export const DiceBetCard = ({
 
   const [range, setRange] = useState<number>(50)
   const [loader, setLoader] = useState<boolean>(false)
-
-  const history = useHistory()
 
   const {token, isAuth} = useContext(AuthContext)
 
@@ -45,7 +43,22 @@ export const DiceBetCard = ({
   const makeBetHandler = async () => {
 
     if (!isAuth) {
-      history.push('/login')
+      modalService('info', 'Login please to start playing', {
+        title: 'Unauthorized',
+        buttons: [
+          {
+            value: false,
+            text: 'Login',
+            primary: true,
+            to: '/login'
+          },
+          {
+            value: false,
+            text: 'Close',
+            light: true,
+          }
+        ]
+      })
     } else {
       // setLoader(true)
 
@@ -77,29 +90,8 @@ export const DiceBetCard = ({
     }
   }
 
-  // const modalCloseHandler = async () => {
-  //   // dispatch(closeModalHandler())
-  //   setLoader(true)
-  //
-  //   try {
-  //     await dispatch(getBalance(token, rate))
-  //   } catch (e) {
-  //     console.log(e)
-  //   }
-  //   setLoader(false)
-  // }
-
   return (
     <>
-      {/*<CSSTransition in={modal} timeout={500} unmountOnExit classNames="my-node">*/}
-      {/*  <OldModal*/}
-      {/*    title={'Dice result'}*/}
-      {/*    type={'dice'}*/}
-      {/*    formState={result}*/}
-      {/*    onClose={modalCloseHandler}*/}
-      {/*  />*/}
-      {/*</CSSTransition>*/}
-
       <CSSTransition in={loader} timeout={500} unmountOnExit classNames="my-node">
         <Spinner />
       </CSSTransition>

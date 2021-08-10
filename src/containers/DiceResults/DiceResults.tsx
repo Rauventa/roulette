@@ -63,11 +63,11 @@ export const DiceResults = ({
 
     try {
       if (type === 'all') {
-        await dispatch(getDiceHistory(token, {pageSize: 100000, pageNumber: 0, onlyMe: false}))
+        await dispatch(getDiceHistory(token, {...config.historyLoadParams, onlyMe: false}))
       }
 
       if (type === 'me') {
-        await dispatch(getDiceHistory(token, {pageSize: 100000, pageNumber: 0, onlyMe: true}))
+        await dispatch(getDiceHistory(token, {...config.historyLoadParams, onlyMe: true}))
       }
     } catch (e) {
       console.log(e)

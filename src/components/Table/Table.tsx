@@ -3,6 +3,7 @@ import React from 'react';
 import './Table.scss';
 import { useTable, usePagination } from 'react-table'
 import {Button} from "../Button/Button";
+import {$t} from "../../lib/i18n";
 
 interface TableProps {
     className?: string,
@@ -11,6 +12,7 @@ interface TableProps {
     noPagination?: boolean,
     pageSize?: number,
     noHeader?: boolean,
+    noContentMessage?: string,
     onPaginationClick?: (pageIndex: any) => void,
 }
 
@@ -21,6 +23,7 @@ export const Table = ({
     noPagination,
     pageSize,
     noHeader,
+    noContentMessage,
     onPaginationClick
 }: TableProps) => {
 
@@ -64,34 +67,40 @@ export const Table = ({
     }
 
     return (
-        <div>
-            <table {...getTableProps()} className={`table ${className || ''}`}>
-                {!noHeader ?
-                  <thead>
-                  {headerGroups.map(headerGroup => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map(column => (
-                          <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-                        ))}
-                    </tr>
-                  ))}
-                  </thead> : null
-                }
-                <tbody {...getTableBodyProps()}>
-                    {page.map((row, i) => {
-                        prepareRow(row)
-                        return (
-                            <tr {...row.getRowProps()}>
-                                {row.cells.map(cell => {
-                                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                                })}
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
+        <div className={'table-backdrop'}>
+            {data.length ?
+              <table {...getTableProps()} className={`table ${className || ''}`}>
+                  {!noHeader ?
+                    <thead>
+                    {headerGroups.map(headerGroup => (
+                      <tr {...headerGroup.getHeaderGroupProps()}>
+                          {headerGroup.headers.map(column => (
+                            <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                          ))}
+                      </tr>
+                    ))}
+                    </thead> : null
+                  }
+                  <tbody {...getTableBodyProps()}>
+                  {page.map((row, i) => {
+                      prepareRow(row)
+                      return (
+                        <tr {...row.getRowProps()}>
+                            {row.cells.map(cell => {
+                                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                            })}
+                        </tr>
+                      )
+                  })}
+                  </tbody>
+              </table>
+              :
+              <div className={'table-no-data text-secondary'}>
+                  {$t(noContentMessage || 'Empty here')}
+              </div>
+            }
 
-            {!noPagination && pageCount !== 1 ?
+            {!noPagination && pageCount > 1 ?
                 <div className="pagination">
                     <Button dark onClick={() => paginationClickHandler(pageIndex - 1, 'start')} disabled={!canPreviousPage}>
                         {'<<'}

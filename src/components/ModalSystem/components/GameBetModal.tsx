@@ -62,7 +62,15 @@ export const GameBetModal = ({
       onResolve={handleShow}
       buttons={buttons}
     >
-      <div className="modal__content status-modal">
+      <>
+        <div className="status-modal__item">
+          <div className="status-modal__item_title">
+            {$t('Game number')}
+          </div>
+          <div className="status-modal__item_value">
+            {$t(`${formState.game || formState.gameNumber}`)}
+          </div>
+        </div>
         <div className="status-modal__item">
           <div className="status-modal__item_title">
             {$t('Your bet')}
@@ -119,7 +127,7 @@ export const GameBetModal = ({
             {$t(`Proof - ${proofLine}`)}
           </div>
         </div>
-      </div>
+      </>
     </Modal>
   )
 }

@@ -23,7 +23,7 @@ export const GameCard = ({
   const currency = useSelector((state: any) => state.balanceReducer.currency)
 
   return (
-    <Card className={'game-card'} title={`Game ${gameNumber ? `# ${gameNumber}` : ''}`}>
+    <Card className={'game-card'} title={`Game ${gameNumber ? `${gameNumber}` : ''}`}>
       <div className={'game-card__subtitle'}>
         <div className="card__subtitle_left">
           {$t('Fair Game')}

@@ -1,4 +1,9 @@
 .withdraw-page {
+  width: 100%;
+
+  .card {
+    width: 100% !important;
+  }
 
   &__content {
     margin-bottom: 40px;

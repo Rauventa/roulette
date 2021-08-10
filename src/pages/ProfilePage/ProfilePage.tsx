@@ -8,6 +8,7 @@ import {ProfileDeposit} from "./components/ProfileDeposit/ProfileDeposit";
 import {ProfileReferral} from "./components/ProfileReferral/ProfileReferral";
 import {UserWallets} from "./components/UserWallets/UserWallets";
 import {UserStats} from "../../containers/UserStats/UserStats";
+import {WithdrawPage} from "../WithdrawPage/WithdrawPage";
 
 export const ProfilePage = () => {
 
@@ -25,6 +26,10 @@ export const ProfilePage = () => {
         {
             title: 'Deposit',
             iterator: 'deposit'
+        },
+        {
+          title: 'Withdraw',
+          iterator: 'withdraw'
         },
         {
             title: 'Wallets',
@@ -75,6 +80,10 @@ export const ProfilePage = () => {
             {page === 'deposit' ?
                 <ProfileDeposit /> : null
             }
+
+          {page === 'withdraw' ?
+            <WithdrawPage /> : null
+          }
 
             {page === 'wallets' ?
                 <UserWallets /> : null

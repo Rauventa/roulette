@@ -47,8 +47,6 @@ export const WithdrawPage = () => {
     fetchData()
   }, []);
 
-  console.log(walletsOptions)
-
   const withDrawHandler = () => {
 
     const currentWallet = wallets?.find((item: any) => item.id === wallet.id)
@@ -68,10 +66,6 @@ export const WithdrawPage = () => {
       <CSSTransition in={loader} timeout={500} unmountOnExit classNames="my-node">
         <Spinner />
       </CSSTransition>
-
-      <div className="page-title">
-        {$t('Withdraw')}
-      </div>
 
       <Card>
         <div className={'withdraw-page__content'}>

@@ -158,7 +158,7 @@ export const ProfileReferral = () => {
                         onCopy={(value) => copyReferralLinkHandler(value)}
                     />
                 </Card>
-                <Card title={`Referrals ${referralsCount}`}>
+                <Card title={`Referrals ${referralsCount || 0}`}>
                     <Table
                         className={'ids-table'}
                         data={referrals}

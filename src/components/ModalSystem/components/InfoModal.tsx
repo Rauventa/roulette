@@ -1,9 +1,27 @@
 import React from 'react';
+import { IModal } from '../../../interfaces/modal/IModal';
+import {$t} from "../../../lib/i18n";
+import {Modal} from "../../Modal/Modal";
 
-export const InfoModal = () => {
+export const InfoModal = ({
+  message,
+  formState,
+  onClose
+}: IModal) => {
+
+  const handleShow = (value: boolean) => {
+    onClose(value)
+  }
+
   return (
-    <div>
-      <h1>Info modal</h1>
-    </div>
+    <Modal
+      title={formState.title}
+      onResolve={handleShow}
+      buttons={formState.buttons}
+    >
+      <div>
+        {$t(message)}
+      </div>
+    </Modal>
   )
 }

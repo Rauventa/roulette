@@ -1,0 +1,38 @@
+.timeline {
+  width: 100%;
+  position: relative;
+  margin-bottom: 40px;
+
+  &__backdrop {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 100px;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+
+    &_name, &_time {
+      z-index: 100;
+      position: relative;
+      font-size: 14px;
+      font-weight: 500;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  &__bar {
+    width: 55%;
+    background: linear-gradient(90deg, #E12D81, #F55C45, #FF8800);
+    border-radius: 100px;
+    padding: 12px 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transition: all .3s;
+
+    &_overflow {
+      opacity: 0;
+      font-size: 14px;
+    }
+  }
+}

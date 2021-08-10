@@ -80,7 +80,13 @@
     }
   }
 
+  &__formRow {
+    margin-bottom: 20px;
+  }
+
   &__nickname {
+    margin-bottom: 20px;
+
     .checkbox {
       margin-bottom: 0;
     }

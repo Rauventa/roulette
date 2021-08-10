@@ -18,7 +18,8 @@ export default function hiloReducer(state = initialState, action) {
             return {
                 ...state,
                 result: action.result,
-                hash: action.result.hashForNextGame
+                hash: action.result.hashForNextGame,
+                gameNumber: action.result.gameNumber + 1
             }
         case GET_HILO_HISTORY:
             return {

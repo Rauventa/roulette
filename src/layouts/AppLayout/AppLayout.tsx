@@ -3,6 +3,7 @@ import './AppLayout.scss';
 import { Header } from '../../components/Header/Header';
 import { Footer } from '../../components/Footer/Footer';
 import Container from "react-modal-promise";
+import {ApiLoader} from "../../HOC/ApiLoader/ApiLoader";
 
 interface AppLayoutProps {
   children: React.ReactNode
@@ -13,17 +14,19 @@ export const AppLayout = ({
 }: AppLayoutProps) => {
 
   return (
-    <div className={'layout'}>
-      <div className="layout__container">
-        <Header />
-        <div className="layout__modal">
-          <Container />
+    <ApiLoader>
+      <div className={'layout'}>
+        <div className="layout__container">
+          <Header />
+          <div className="layout__modal">
+            <Container />
+          </div>
+          <div className="layout__content">
+            {children}
+          </div>
+          <Footer />
         </div>
-        <div className="layout__content">
-          {children}
-        </div>
-        <Footer />
       </div>
-    </div>
+    </ApiLoader>
   )
 }

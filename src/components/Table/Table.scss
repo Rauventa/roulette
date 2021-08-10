@@ -61,6 +61,16 @@
     }
   }
 
+  .table-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    svg, img {
+      width: 20px;
+    }
+  }
+
   .table-icon-block {
     display: flex;
 

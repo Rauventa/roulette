@@ -3,6 +3,7 @@ import { createModal } from "react-modal-promise";
 import {ErrorModal} from "./components/ErrorModal";
 import {UnauthorizedModal} from "./components/UnauthorizedModal";
 import {GameBetModal} from "./components/GameBetModal";
+import { InfoModal } from './components/InfoModal';
 
 interface ModalSystemProps {
   type: string,
@@ -40,6 +41,13 @@ const ModalSystem: any = ({
         {type === 'error' ?
           <ErrorModal
             message={message}
+            onClose={handleClose}
+          /> : null
+        }
+        {type === 'info' ?
+          <InfoModal
+            message={message}
+            formState={formState}
             onClose={handleClose}
           /> : null
         }

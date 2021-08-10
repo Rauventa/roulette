@@ -3,14 +3,13 @@ import {Button} from "../../../../components/Button/Button";
 import {$t} from "../../../../lib/i18n";
 import {useDispatch, useSelector} from "react-redux";
 import {CSSTransition} from "react-transition-group";
-import {OldModal} from "../../../../components/ModalSystem/OldModal";
 import {getBalance} from "../../../../store/actions/Balance/balanceActions";
 import {AuthContext} from "../../../../context/AuthContext";
 import {Spinner} from "../../../../components/Spinner/Spinner";
 import {getHiloHistory, startHilo} from "../../../../store/actions/Hilo/hiloActions";
-import {useHistory} from "react-router-dom";
 import {getRating, getStats} from "../../../../store/actions/Stats/statsActions";
 import {config} from "../../../../config/config";
+import {modalService} from "../../../../services/modal/modalService";
 
 interface HiloBetCardProps {
   bet: number;
@@ -25,15 +24,12 @@ export const HiloBetCard = ({
     moreRange: 52
   }
 
-  const history = useHistory()
-
   const {token, isAuth} = useContext(AuthContext)
 
   const [loader, setLoader] = useState<boolean>(false)
 
   const dispatch = useDispatch()
 
-  const result = useSelector((state: any) => state.hiloReducer.result)
   const rate = useSelector((state: any) => state.balanceReducer.rate)
   const currency = useSelector((state: any) => state.balanceReducer.currency)
 
@@ -42,7 +38,22 @@ export const HiloBetCard = ({
   const makeBetHandler = async (type: string) => {
 
     if (!isAuth) {
-      history.push('/login')
+      modalService('info', 'Login please to start playing', {
+        title: 'Unauthorized',
+        buttons: [
+          {
+            value: false,
+            text: 'Login',
+            primary: true,
+            to: '/login'
+          },
+          {
+            value: false,
+            text: 'Close',
+            light: true,
+          }
+        ]
+      })
     } else {
       // setLoader(true)
 

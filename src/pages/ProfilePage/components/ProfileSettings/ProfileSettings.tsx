@@ -89,7 +89,7 @@ export const ProfileSettings = () => {
                     return {
                         ...prev,
                         passwordData: {
-                            ...prev.mainData,
+                            ...prev.passwordData,
                             oldPassword: value
                         }
                     }
@@ -100,7 +100,7 @@ export const ProfileSettings = () => {
                     return {
                         ...prev,
                         passwordData: {
-                            ...prev.mainData,
+                            ...prev.passwordData,
                             password: value
                         }
                     }
@@ -111,7 +111,7 @@ export const ProfileSettings = () => {
                     return {
                         ...prev,
                         passwordData: {
-                            ...prev.mainData,
+                            ...prev.passwordData,
                             confirmPassword: value
                         }
                     }
@@ -164,9 +164,11 @@ export const ProfileSettings = () => {
     const handleSubmit = async (type: string) => {
         setLoader(true)
 
-        // if (type === 'password') {
-        //     await dispatch(changePassword(token, {...formState, email: profileInfo.email}))
-        // }
+        if (type === 'password') {
+            await dispatch(changePassword(token, {...formState.passwordData, email: profileInfo.email}))
+
+            //TODO - message of success password change
+        }
 
         if (type === 'main') {
 
@@ -240,14 +242,26 @@ export const ProfileSettings = () => {
                             </div>
                         </div>
                     </div>
+                    <div className={'user-card__formRow'}>
+                        <Input
+                          title={'Change nickname'}
+                          placeholder={'Nickname'}
+                          type={'text'}
+                          value={formState.mainData.nickname || ''}
+                          onChange={(value) => formChangeHandler(value, 'nickname')}
+                        />
+                    </div>
                     <div className="user-card__nickname">
                         <Checkbox
                             checked={nicknameVisibility}
                             onChange={(value) => changeNicknameVisibility(value)}
                         >
-                            Hide my nickname
+                            {$t('Hide my nickname')}
                         </Checkbox>
                     </div>
+                    <Button primary onClick={() => handleSubmit('main')}>
+                        {$t('Save')}
+                    </Button>
                 </div>
             </Card>
             <Card title={'Main'}>

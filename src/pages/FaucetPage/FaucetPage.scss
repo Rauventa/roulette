@@ -1,3 +1,17 @@
 .faucet-page {
 
+  &__content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+
+    &_left {
+      width: calc(40% - 20px);
+    }
+
+    &_right {
+      width: calc(60% - 20px)
+    }
+  }
 }

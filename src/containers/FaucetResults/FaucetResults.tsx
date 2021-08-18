@@ -7,6 +7,8 @@ import {config} from "../../config/config";
 import DefaultIcon from "../DiceResults/img/default.png";
 import {$t} from "../../lib/i18n";
 import {Card} from "../../components/Card/Card";
+import {currencyValueChanger} from "../../lib/numberRefractor";
+import {getTicker} from "../../lib/tickers";
 
 export const FaucetResults = () => {
 
@@ -23,6 +25,8 @@ export const FaucetResults = () => {
   }, []);
 
   const data = useSelector((state: any) => state.faucetReducer.history)
+  const currency = useSelector((state: any) => state.balanceReducer.currency)
+  const rate = useSelector((state: any) => state.balanceReducer.rate)
 
   const columns = React.useMemo(() => [
     {
@@ -49,7 +53,12 @@ export const FaucetResults = () => {
     },
     {
       Header: 'Gain',
-      accessor: 'gain'
+      accessor: 'gain',
+      Cell: ({row: {original}} : any) => (
+        <div>
+          {$t(`${currencyValueChanger(currency, rate, original.gain)} ${getTicker(currency)}`)}
+        </div>
+      )
     },
     {
       Header: 'Win number',

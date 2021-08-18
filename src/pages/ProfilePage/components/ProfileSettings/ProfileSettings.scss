@@ -92,9 +92,21 @@
     }
   }
 
-  &__fa2 {
-    .fa2-switcher {
-      margin-bottom: 20px;
+  //&__fa2 {
+  //  .fa2-switcher {
+  //    margin-bottom: 20px;
+  //  }
+  //}
+}
+
+.main {
+  width: calc(33% - 20px);
+
+  .card {
+    width: 100% !important;
+
+    &:not(:last-child) {
+      margin-bottom: 40px;
     }
   }
 }

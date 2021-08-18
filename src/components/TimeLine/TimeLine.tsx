@@ -3,27 +3,27 @@ import {$t} from '../../lib/i18n';
 import './TimeLine.scss';
 
 interface TimeLineProps {
-  progress: number
+  seconds: number
 }
 
 export const TimeLine = ({
-  progress
+  seconds
 }: TimeLineProps) => {
 
-  const [width, setWidth] = useState<any>(50)
-  const [time, setTime] = useState<any>(0)
+  const [width, setWidth] = useState<any>(1)
+  const [time, setTime] = useState<any>(seconds)
 
-  // const interval: any = useRef(null)
-  //
-  // interval.current = setInterval(() => {
-  //   setTime(time + 1)
-  // }, 1000)
-  //
-  // useEffect(() => {
-  //   // if (time >= 60) {
-  //   //   clearInterval(interval.current)
-  //   // }
-  // }, []);
+  useEffect(() => {
+    const myInterval = setInterval(() => {
+      if (time > 0) {
+        setTime(time - 1);
+        setWidth(width + (100 - width)/time)
+      }
+    }, 1000)
+    return () => {
+      clearInterval(myInterval);
+    };
+  });
 
   return (
     <div className={'timeline'}>

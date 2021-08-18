@@ -34,7 +34,7 @@ export const StatsRowItem = ({
                  <span className={'stats-row__item_text-title--dollar'}>
                    {$t(`${getTicker(currency, {shortTickers: true})}`)}
                  </span>
-              {$t(`${toDotThs(currencyValueChanger(currency, rate, value))}`)}
+              {$t(`${toDotThs(currencyValueChanger(currency, rate, value, {shortTicker: true}))}`)}
             </div>
             <div className="stats-row__item_text-subtitle">
               {$t('Top jackpot')}
@@ -142,7 +142,7 @@ export const StatsRowItem = ({
               <span className={'stats-row__item_text-title--dollar'}>
                 {$t(`${getTicker(currency, {shortTickers: true})}`)}
               </span>
-              {$t(`${toDotThs(currencyValueChanger(currency, rate, value))}`)}
+              {$t(`${toDotThs(currencyValueChanger(currency, rate, value, {shortTicker: true}))}`)}
             </div>
             <div className="stats-row__item_text-subtitle">
               {$t('Won total')}

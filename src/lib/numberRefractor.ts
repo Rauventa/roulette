@@ -39,7 +39,7 @@ export const currencyValueChanger = (currency: string, rate: number, value: numb
     }
 
     if (params.shortTicker && currency === 'btc') {
-      output = Number(output.toFixed(4))
+      output = Number(output.toFixed(3))
     }
 
   }

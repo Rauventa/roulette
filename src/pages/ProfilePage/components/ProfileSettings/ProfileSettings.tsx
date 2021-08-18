@@ -170,6 +170,12 @@ export const ProfileSettings = () => {
             //TODO - message of success password change
         }
 
+        if (type === 'email') {
+            if (profileInfo.email !== formState.mainData.email) {
+                await dispatch(changeEmail(token, {newEmail: formState.mainData.email}))
+            }
+        }
+
         if (type === 'main') {
 
             if (profileInfo.email !== formState.mainData.email) {
@@ -264,44 +270,88 @@ export const ProfileSettings = () => {
                     </Button>
                 </div>
             </Card>
-            <Card title={'Main'}>
-                <div className={'input-group'}>
-                    <Input
-                        title={'Email'}
-                        placeholder={'Email'}
-                        type={'text'}
-                        value={formState.mainData.email || ''}
-                        onChange={(value) => formChangeHandler(value, 'email')}
-                    />
-                    <Input
-                        title={'Nickname'}
-                        placeholder={'Nickname'}
-                        type={'text'}
-                        value={formState.mainData.nickname || ''}
-                        onChange={(value) => formChangeHandler(value, 'nickname')}
-                    />
-                    <Input
-                        title={'Phone'}
-                        placeholder={'Phone'}
-                        type={'text'}
-                        value={formState.mainData.phone || ''}
-                        onChange={(value) => formChangeHandler(value, 'phone')}
-                    />
-                </div>
+            <div className={'main'}>
+                <Card>
+                    <div className={'input-group'}>
+                        <Input
+                          title={'Email'}
+                          placeholder={'Email'}
+                          type={'text'}
+                          value={formState.mainData.email || ''}
+                          onChange={(value) => formChangeHandler(value, 'email')}
+                        />
+                    </div>
+                    {profileInfo.email !== formState.mainData.email ?
+                      <Button primary onClick={() => handleSubmit('email')}>
+                          {$t('Save')}
+                      </Button> : null
+                    }
+                </Card>
+                <Card>
+                    <div className={'input-group'}>
+                        <Input
+                          title={'Phone'}
+                          placeholder={'Phone'}
+                          type={'text'}
+                          value={formState.mainData.phone || ''}
+                          onChange={(value) => formChangeHandler(value, 'phone')}
+                        />
+                    </div>
+                    {profileInfo.phone !== formState.mainData.phone ?
+                      <Button primary onClick={() => handleSubmit('phone')}>
+                          {$t('Save')}
+                      </Button> : null
+                    }
+                </Card>
+                <Card>
+                    <div className={'user-card__fa2'}>
+                        <Switcher
+                          className={'fa2-switcher'}
+                          title={'Enable 2FA'}
+                          checked={formState.enable2Fa}
+                          onChange={(value) => formChangeHandler(value, '2fa')}
+                        />
+                    </div>
+                </Card>
+            </div>
+            {/*<Card title={'Main'}>*/}
+            {/*    <div className={'input-group'}>*/}
+            {/*        <Input*/}
+            {/*            title={'Email'}*/}
+            {/*            placeholder={'Email'}*/}
+            {/*            type={'text'}*/}
+            {/*            value={formState.mainData.email || ''}*/}
+            {/*            onChange={(value) => formChangeHandler(value, 'email')}*/}
+            {/*        />*/}
+            {/*        <Input*/}
+            {/*            title={'Nickname'}*/}
+            {/*            placeholder={'Nickname'}*/}
+            {/*            type={'text'}*/}
+            {/*            value={formState.mainData.nickname || ''}*/}
+            {/*            onChange={(value) => formChangeHandler(value, 'nickname')}*/}
+            {/*        />*/}
+            {/*        <Input*/}
+            {/*            title={'Phone'}*/}
+            {/*            placeholder={'Phone'}*/}
+            {/*            type={'text'}*/}
+            {/*            value={formState.mainData.phone || ''}*/}
+            {/*            onChange={(value) => formChangeHandler(value, 'phone')}*/}
+            {/*        />*/}
+            {/*    </div>*/}
 
-                <div className={'user-card__fa2'}>
-                    <Switcher
-                        className={'fa2-switcher'}
-                        title={'Enable 2FA'}
-                        checked={formState.enable2Fa}
-                        onChange={(value) => formChangeHandler(value, '2fa')}
-                    />
-                </div>
+            {/*    <div className={'user-card__fa2'}>*/}
+            {/*        <Switcher*/}
+            {/*            className={'fa2-switcher'}*/}
+            {/*            title={'Enable 2FA'}*/}
+            {/*            checked={formState.enable2Fa}*/}
+            {/*            onChange={(value) => formChangeHandler(value, '2fa')}*/}
+            {/*        />*/}
+            {/*    </div>*/}
 
-                <Button primary onClick={() => handleSubmit('main')}>
-                    {$t('Save')}
-                </Button>
-            </Card>
+            {/*    <Button primary onClick={() => handleSubmit('main')}>*/}
+            {/*        {$t('Save')}*/}
+            {/*    </Button>*/}
+            {/*</Card>*/}
             <Card title={'Change password'}>
                 <div className={'input-group'}>
                     <Input

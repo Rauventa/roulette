@@ -1,7 +1,7 @@
 import React, {useContext, useEffect} from 'react';
 import './FaucetWins.scss';
 import {useDispatch, useSelector} from "react-redux";
-import {getFaucetWins, rollFaucet} from "../../../store/actions/Faucet/faucetActions";
+import {getFaucetTimeout, getFaucetWins, rollFaucet} from "../../../store/actions/Faucet/faucetActions";
 import {AuthContext} from "../../../context/AuthContext";
 import {Card} from "../../../components/Card/Card";
 import {Table} from "../../../components/Table/Table";

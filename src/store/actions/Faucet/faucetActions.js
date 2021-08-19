@@ -77,12 +77,10 @@ export function rollFaucet(token) {
                 }
             })
 
-            console.log(response.data)
-
             if (response?.data?.errors?.length) {
-                errorModalService(response.data.errors[0], response.data.status)
+                errorModalService('You cannot play yet. Wait please', null)
             } else {
-
+                dispatch(getFaucetTimeout(token))
             }
 
         } catch (e) {

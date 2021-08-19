@@ -33,7 +33,6 @@ export const FaucetPage = () => {
       />
 
       <div className="faucet-page__content">
-
         <div className="faucet-page__content_left">
           <FaucetWins />
         </div>

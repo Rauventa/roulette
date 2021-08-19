@@ -5,5 +5,5 @@ export const errorModalService = (message: string, status: number) => {
     return showModal({type: 'unauthorized', message: `You are not authorized`})
   }
 
-  return showModal({type: 'error', message: `${message} with status ${status}`})
+  return showModal({type: 'error', message: `${message} ${status ? `with status ${status}` : ''}`})
 }

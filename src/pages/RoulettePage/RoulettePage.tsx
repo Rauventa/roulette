@@ -1,4 +1,5 @@
 import React from 'react';
+import './RoulettePage.scss';
 import { $t } from '../../lib/i18n';
 
 export const RoulettePage = () => {

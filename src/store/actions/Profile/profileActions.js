@@ -7,6 +7,7 @@ import {
     GET_USER_STATS
 } from "../actionTypes";
 import {errorModalService} from "../../../services/modal/errorModalService";
+import {modalService} from "../../../services/modal/modalService";
 
 export function getProfileInfo(token) {
     return async dispatch => {
@@ -124,7 +125,7 @@ export function changeNickname(token, data) {
 }
 
 export function changeEmail(token, data) {
-    return async dispatch => {
+    return async () => {
         try {
             const response = await axiosClient.put('/Profile/ChangeEmail', data, {
                 headers: {
@@ -132,11 +133,43 @@ export function changeEmail(token, data) {
                 }
             });
 
-            console.log(response.data)
-
             if (response.data?.errors?.length) {
                 errorModalService(response.data?.errors[0], response.data.status)
             }
+
+        } catch (e) {
+            errorModalService('Cannot change email', e.response?.status || null)
+        }
+    }
+}
+
+export function confirmEmail(token, data) {
+
+    console.log(data)
+
+    return async () => {
+        try {
+            const response = await axiosClient.patch('/Profile/ConfirmEmail', data, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.data?.errors?.length) {
+                errorModalService(response.data?.errors[0], response.data.status)
+            } else {
+                modalService('info', 'Email changed successfully', {
+                    title: 'Success',
+                    buttons: [
+                        {
+                            value: false,
+                            text: 'Close',
+                            light: true
+                        }
+                    ]
+                })
+            }
+
         } catch (e) {
             errorModalService('Cannot change email', e.response?.status || null)
         }

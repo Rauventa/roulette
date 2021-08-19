@@ -13,7 +13,7 @@ import {ReactComponent as PenIcon} from "./img/pen.svg";
 import {useDispatch, useSelector} from "react-redux";
 import {
     changeEmail,
-    changeNickname, changePassword,
+    changeNickname, changePassword, confirmEmail,
     getAvatar,
     getNicknameVisibility, getProfileInfo,
     uploadAvatar
@@ -50,7 +50,9 @@ export const ProfileSettings = () => {
             nickname: '',
             phone: ''
         },
-        enable2Fa: false
+        enable2Fa: false,
+        emailCode: '',
+        phoneCode: ''
     }
 
     const [formState, setFormState] = useState<any>(defaultFormState)
@@ -158,6 +160,22 @@ export const ProfileSettings = () => {
                     }
                 })
                 break;
+            case 'emailCode':
+                setFormState((prev: any) => {
+                    return {
+                        ...prev,
+                        emailCode: value
+                    }
+                })
+                break;
+            case 'phoneCode':
+                setFormState((prev: any) => {
+                    return {
+                        ...prev,
+                        phoneCode: value
+                    }
+                })
+                break;
         }
     }
 
@@ -216,6 +234,19 @@ export const ProfileSettings = () => {
         await dispatch(getAvatar(token))
 
         setLoader(false)
+    }
+
+    useEffect(() => {
+      if (formState.emailCode.length === 6) {
+          confirmEmailHandler()
+      }
+    }, [formState]);
+
+    const confirmEmailHandler = async () => {
+        await dispatch(confirmEmail(token, {
+            email: formState.mainData.email,
+            code: formState.emailCode
+        }))
     }
 
     return (
@@ -279,6 +310,14 @@ export const ProfileSettings = () => {
                           type={'text'}
                           value={formState.mainData.email || ''}
                           onChange={(value) => formChangeHandler(value, 'email')}
+                        />
+                    </div>
+                    <div className={'input-group'}>
+                        <Input
+                          placeholder={'Code'}
+                          type={'text'}
+                          value={formState.emailCode}
+                          onChange={(value) => formChangeHandler(value, 'emailCode')}
                         />
                     </div>
                     {profileInfo.email !== formState.mainData.email ?

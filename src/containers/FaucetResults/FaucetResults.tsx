@@ -71,6 +71,7 @@ export const FaucetResults = () => {
       <Table
         data={data}
         columns={columns}
+        pageSize={10}
       />
     </Card>
   )

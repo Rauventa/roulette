@@ -10,7 +10,13 @@ import {currencyValueChanger} from "../../../lib/numberRefractor";
 import {getTicker} from "../../../lib/tickers";
 import { Button } from '../../../components/Button/Button';
 
-export const FaucetWins = () => {
+interface FaucetWinsProps {
+  onRoll: (value: string) => void
+}
+
+export const FaucetWins = ({
+  onRoll
+}: FaucetWinsProps) => {
 
   const {token} = useContext(AuthContext)
 
@@ -30,7 +36,13 @@ export const FaucetWins = () => {
   }
 
   const handleSubmit = async () => {
-    await dispatch(rollFaucet(token))
+
+    onRoll('rolling')
+
+    setTimeout(async () => {
+      await dispatch(rollFaucet(token, currency, rate))
+      onRoll('')
+    }, 3000)
   }
 
   useEffect(() => {

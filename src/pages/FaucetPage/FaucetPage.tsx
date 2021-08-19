@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import './FaucetPage.scss'
 import {StatsRow} from "../../components/StatsRow/StatsRow";
 import {FaucetResults} from "../../containers/FaucetResults/FaucetResults";
@@ -7,6 +7,7 @@ import {FaucetWins} from "./components/FaucetWins";
 import {useDispatch, useSelector} from "react-redux";
 import {AuthContext} from "../../context/AuthContext";
 import {getFaucetTimeout} from "../../store/actions/Faucet/faucetActions";
+import {Twist} from "../../components/Twist/Twist";
 
 export const FaucetPage = () => {
 
@@ -15,10 +16,15 @@ export const FaucetPage = () => {
   const dispatch = useDispatch()
 
   const timeout = useSelector((state: any) => state.faucetReducer.timeout)
+  const number = useSelector((state: any) => state.faucetReducer.winNumber)
+
+  const [animation, setAnimation] = useState<string>('')
 
   const fetchData = async () => {
     await dispatch(getFaucetTimeout(token))
   }
+
+  console.log(timeout, number)
 
   useEffect(() => {
     fetchData()
@@ -34,7 +40,13 @@ export const FaucetPage = () => {
 
       <div className="faucet-page__content">
         <div className="faucet-page__content_left">
-          <FaucetWins />
+          <Twist
+            className={animation}
+            value={number}
+          />
+          <FaucetWins
+            onRoll={(value: string) => setAnimation(value)}
+          />
         </div>
 
         <div className="faucet-page__content_right">

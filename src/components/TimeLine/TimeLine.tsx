@@ -15,13 +15,14 @@ export const TimeLine = ({
   const [time, setTime] = useState<any>(0)
 
   useEffect(() => {
-
     setTime(seconds)
 
     if (seconds === 0) {
       setWidth(100)
+    } else {
+      setWidth(1)
     }
-  }, []);
+  }, [seconds]);
 
   useEffect(() => {
     const myInterval = setInterval(() => {
@@ -42,7 +43,7 @@ export const TimeLine = ({
           {$t('Start')}
         </div>
         <div className="timeline__backdrop_time">
-          {$t(dateFromSeconds(time))}
+          {$t(time === 0 ? '' : dateFromSeconds(time))}
         </div>
       </div>
       <div

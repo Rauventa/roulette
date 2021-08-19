@@ -1,9 +1,10 @@
-import {GET_FAUCET_HISTORY, GET_FAUCET_TIMEOUT, GET_FAUCET_WINS} from "../../actions/actionTypes";
+import {GET_FAUCET_HISTORY, GET_FAUCET_TIMEOUT, GET_FAUCET_WINS, ROLL_FAUCET} from "../../actions/actionTypes";
 
 const initialState = {
     history: [],
     wins: [],
-    timeout: 0
+    timeout: 0,
+    winNumber: 9999
 }
 
 export default function faucetReducer(state = initialState, action) {
@@ -22,6 +23,11 @@ export default function faucetReducer(state = initialState, action) {
             return {
                 ...state,
                 timeout: action.timeout
+            }
+        case ROLL_FAUCET:
+            return {
+                ...state,
+                winNumber: action.winNumber
             }
         default:
             return state

@@ -1,0 +1,43 @@
+.twist {
+  display: flex;
+  justify-content: center;
+
+  &__container {
+    display: flex;
+
+    &_item {
+      padding: 10px 25px;
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.02);
+      font-family: 'Averta', sans-serif;
+      font-size: 48px;
+      font-weight: bold;
+
+      &:not(:last-child) {
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.rolling {
+  animation: blinkingText 0.8s infinite;
+}
+
+@keyframes blinkingText {
+  0% {
+    color: #fff;
+  }
+  49% {
+    color: #fff;
+  }
+  60% {
+    color: transparent;
+  }
+  99% {
+    color: transparent;
+  }
+  100% {
+    color: #fff;
+  }
+}

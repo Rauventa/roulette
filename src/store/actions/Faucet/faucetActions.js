@@ -1,6 +1,10 @@
 import {errorModalService} from "../../../services/modal/errorModalService";
 import {axiosClient} from "../../../utils/axiosClient";
-import {GET_FAUCET_HISTORY, GET_FAUCET_TIMEOUT, GET_FAUCET_WINS} from "../actionTypes";
+import {GET_FAUCET_HISTORY, GET_FAUCET_TIMEOUT, GET_FAUCET_WINS, ROLL_FAUCET} from "../actionTypes";
+import {modalService} from "../../../services/modal/modalService";
+import {currencyValueChanger} from "../../../lib/numberRefractor";
+import {getTicker} from "../../../lib/tickers";
+import {getBalance} from "../Balance/balanceActions";
 
 export function getFaucetHistory(token) {
     return async dispatch => {
@@ -53,6 +57,8 @@ export function getFaucetTimeout(token) {
                 }
             })
 
+            console.log(response.data.payload)
+
             if (response?.data?.errors?.length) {
                 errorModalService(response.data.errors[0], response.data.status)
             } else {
@@ -68,7 +74,7 @@ export function getFaucetTimeout(token) {
     }
 }
 
-export function rollFaucet(token) {
+export function rollFaucet(token, currency, rate) {
     return async dispatch => {
         try {
             const response = await axiosClient.post('/Faucet/Roll', null, {
@@ -80,7 +86,23 @@ export function rollFaucet(token) {
             if (response?.data?.errors?.length) {
                 errorModalService('You cannot play yet. Wait please', null)
             } else {
-                dispatch(getFaucetTimeout(token))
+
+                dispatch(rollFaucetSuccess(response.data.payload.winNumber))
+
+                await modalService('info', `Gain is ${currencyValueChanger(currency, rate, response.data.payload?.gain)} ${getTicker(currency)}`, {
+                    title: `You rolled ${response.data.payload?.winNumber}`,
+                    buttons: [
+                        {
+                            value: true,
+                            text: 'Close',
+                            light: true
+                        }
+                    ]
+                }).then(() => {
+                    dispatch(getFaucetTimeout(token))
+                    dispatch(getFaucetHistory(token))
+                    dispatch(getBalance(token, rate))
+                })
             }
 
         } catch (e) {
@@ -107,5 +129,12 @@ export function getFaucetTimeoutSuccess(timeout) {
     return {
         type: GET_FAUCET_TIMEOUT,
         timeout
+    }
+}
+
+export function rollFaucetSuccess(winNumber) {
+    return {
+        type: ROLL_FAUCET,
+        winNumber
     }
 }

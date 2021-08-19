@@ -8,6 +8,10 @@
 
     &_left {
       width: calc(40% - 20px);
+
+      .twist {
+        margin-bottom: 40px;
+      }
     }
 
     &_right {

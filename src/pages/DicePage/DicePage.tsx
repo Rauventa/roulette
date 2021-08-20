@@ -39,8 +39,6 @@ export const DicePage = () => {
     }
   }
 
-  console.log(gameNumber)
-
   useEffect(() => {
     fetchData()
   }, [token]);

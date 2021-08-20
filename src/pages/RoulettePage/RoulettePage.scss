@@ -1,3 +1,8 @@
 .roulette {
-  
+
+  &__content {
+    .card {
+      width: calc(50% - 20px);
+    }
+  }
 }

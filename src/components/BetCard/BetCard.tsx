@@ -6,11 +6,12 @@ import {ReactComponent as PlusIcon} from "./img/plus.svg";
 import {DiceBetCard} from "../../pages/DicePage/components/DIceBetCard/DiceBetCard";
 import {HiloBetCard} from "../../pages/HiloPage/components/HiloBetCard/HiloBetCard";
 import {useSelector} from "react-redux";
+import {RouletteBetCard} from "../../pages/RoulettePage/components/RouletteBetCard/RouletteBetCard";
 
 interface BetCardProps {
   formState: any;
   type: string,
-  handleChange: (value: any, iterator: string) => void;
+  handleChange: (value: any, iterator?: any) => void;
 }
 
 export const BetCard = ({
@@ -57,6 +58,12 @@ export const BetCard = ({
     }
   }
 
+  const changeMultipleCounter = (value: number) => {
+    setBet(value)
+
+    handleChange(value)
+  }
+
   const changeInputBetValue = (e: any) => {
     setBet(Number(e.target.value))
 
@@ -79,6 +86,12 @@ export const BetCard = ({
           <PlusIcon />
         </div>
       </div>
+      {type === 'roulette' ?
+        <RouletteBetCard
+          bet={bet}
+          handleChange={changeMultipleCounter}
+        /> : null
+      }
       {type === 'dice' ?
         <DiceBetCard
           changeRangeHandler={changeRangeHandler}

@@ -28,7 +28,7 @@ export const FaucetResults = () => {
   const currency = useSelector((state: any) => state.balanceReducer.currency)
   const rate = useSelector((state: any) => state.balanceReducer.rate)
 
-  const columns = React.useMemo(() => [
+  const columns = [
     {
       Header: 'Name',
       accessor: 'userName',
@@ -63,8 +63,8 @@ export const FaucetResults = () => {
     {
       Header: 'Win number',
       accessor: 'winNumber'
-    },
-  ], [])
+    }
+  ]
 
   return (
     <Card title={'History'}>

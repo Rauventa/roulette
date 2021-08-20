@@ -49,7 +49,7 @@ export const FaucetWins = ({
     fetchData()
   }, []);
 
-  const columns = React.useMemo(() => [
+  const columns = [
     {
       Header: 'Lucky Number',
       accessor: 'number',
@@ -62,8 +62,8 @@ export const FaucetWins = ({
           {$t(`${currencyValueChanger(currency, rate, original.payout)} ${getTicker(currency)}`)}
         </div>
       )
-    },
-  ], [])
+    }
+  ]
 
   return (
     <Card className={'faucet-wins-card'}>

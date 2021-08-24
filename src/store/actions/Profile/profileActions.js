@@ -126,10 +126,12 @@ export function changeNickname(token, data) {
 
 export function changeEmail(token, data) {
     return async () => {
+
+        console.log(data)
         try {
             const response = await axiosClient.put('/Profile/ChangeEmail', data, {
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${token}`,
                 }
             });
 
@@ -154,6 +156,8 @@ export function confirmEmail(token, data) {
                     'Authorization': `Bearer ${token}`
                 }
             });
+
+            console.log(response.data.payload)
 
             if (response.data?.errors?.length) {
                 errorModalService(response.data?.errors[0], response.data.status)

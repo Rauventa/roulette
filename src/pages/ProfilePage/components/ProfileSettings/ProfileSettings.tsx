@@ -188,11 +188,11 @@ export const ProfileSettings = () => {
             //TODO - message of success password change
         }
 
-        if (type === 'email') {
-            if (profileInfo.email !== formState.mainData.email) {
-                await dispatch(changeEmail(token, {newEmail: formState.mainData.email}))
-            }
-        }
+        // if (type === 'email') {
+        //     if (profileInfo.email !== formState.mainData.email) {
+        //         await dispatch(changeEmail(token, formState.mainData.email))
+        //     }
+        // }
 
         if (type === 'main') {
 

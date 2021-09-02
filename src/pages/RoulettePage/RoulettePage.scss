@@ -1,8 +1,49 @@
 .roulette {
 
+  &__config {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+
+    &_types {
+      width: calc(40% - 20px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .input-group {
+        width: calc(50% - 20px);
+      }
+    }
+
+    &_timer {
+      width: calc(60% - 20px);
+
+      .timeline {
+        margin-bottom: 0;
+
+        &__backdrop, &__bar {
+          padding: 17px 20px;
+        }
+      }
+    }
+  }
+
   &__content {
+    display: flex;
+    justify-content: space-between;
+
     .card {
       width: calc(50% - 20px);
+
+      &__content {
+        height: 100%;
+      }
     }
+  }
+
+  &__players {
+    margin-bottom: 40px;
   }
 }

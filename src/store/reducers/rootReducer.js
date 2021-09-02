@@ -5,6 +5,7 @@ import hiloReducer from "./Hilo/hiloReducer";
 import statsReducer from "./Stats/statsReducer";
 import profileReducer from "./Profile/profileReducer";
 import faucetReducer from "./Faucet/faucetReducer";
+import rouletteReducer from "./Roulette/rouletteReducer";
 
 export default combineReducers({
     balanceReducer: balanceReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
     hiloReducer: hiloReducer,
     statsReducer: statsReducer,
     profileReducer: profileReducer,
-    faucetReducer: faucetReducer
+    faucetReducer: faucetReducer,
+    rouletteReducer: rouletteReducer
 })

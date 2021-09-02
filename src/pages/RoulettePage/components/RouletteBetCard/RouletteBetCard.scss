@@ -1,4 +1,13 @@
 .roulette-bet-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+
+  &__data {
+
+  }
+
   &__bets {
     display: flex;
     align-items: center;
@@ -30,5 +39,9 @@
         border: 1px solid rgba(255,136,0,0.7);
       }
     }
+  }
+
+  &_buttons {
+
   }
 }

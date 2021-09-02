@@ -4,6 +4,7 @@ const initialState = {
     hash: '',
     result: {},
     history: [],
+    gameNumber: 0
 };
 
 export default function hiloReducer(state = initialState, action) {

@@ -45,7 +45,7 @@ export const TimeLine = ({
           {$t('Start')}
         </div>
         <div className="timeline__backdrop_text">
-          {$t(text)}
+          {$t(time !== 0 ? text : '')}
         </div>
         <div className="timeline__backdrop_time">
           {$t(time === 0 ? '' : dateFromSeconds(time))}

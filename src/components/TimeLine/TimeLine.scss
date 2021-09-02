@@ -10,6 +10,13 @@
     display: flex;
     justify-content: space-between;
 
+    &_text {
+      font-size: 14px;
+      font-weight: 500;
+      position: relative;
+      z-index: 100;
+    }
+
     &_name, &_time {
       z-index: 100;
       position: relative;

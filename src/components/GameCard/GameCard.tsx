@@ -5,9 +5,11 @@ import {$t} from "../../lib/i18n";
 import {DiceGameCard} from "../../pages/DicePage/components/DIceGameCard/DiceGameCard";
 import {HiloGameCard} from "../../pages/HiloPage/components/HiloGameCard/HiloGameCard";
 import {useSelector} from "react-redux";
+import {RouletteGameCard} from "../../pages/RoulettePage/components/RouletteGameCard/RouletteGameCard";
 
 interface GameCardProps {
   formState: any,
+  pot?: number,
   hash: string,
   gameNumber: number,
   type: string
@@ -15,12 +17,14 @@ interface GameCardProps {
 
 export const GameCard = ({
   formState,
+  pot,
   hash,
   gameNumber,
   type
 }: GameCardProps) => {
 
   const currency = useSelector((state: any) => state.balanceReducer.currency)
+  const rate = useSelector((state: any) => state.balanceReducer.rate)
 
   return (
     <Card className={'game-card'} title={`Game ${gameNumber ? `${gameNumber}` : ''}`}>
@@ -42,6 +46,13 @@ export const GameCard = ({
         <HiloGameCard
           formState={formState}
           currency={currency}
+        /> : null
+      }
+      {type === 'roulette' ?
+        <RouletteGameCard
+          pot={pot}
+          currency={currency}
+          rate={rate}
         /> : null
       }
     </Card>

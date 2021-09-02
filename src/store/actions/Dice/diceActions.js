@@ -19,7 +19,7 @@ export function getDiceHash(token) {
                 dispatch(getDiceHashSuccess(response.data.payload.hash, response.data.payload.gameNumber))
             }
         } catch (e) {
-            errorModalService('Cannot load hash', e.response?.status || null)
+            errorModalService('Cannot load hash', e.response?.status || 404)
         }
     }
 }

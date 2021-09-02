@@ -73,7 +73,7 @@ export const SignIn = () => {
               data.nickname
           )
 
-          history.push('/dice')
+          history.push('/')
         } else {
           setErrors({login: 'Authorization failed'})
         }

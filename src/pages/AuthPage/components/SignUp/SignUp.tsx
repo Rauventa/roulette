@@ -87,7 +87,7 @@ export const SignUp = () => {
               data.userId,
               data.nickname
           )
-          history.push('/dice')
+          history.push('/')
         } else {
           if (response.data.errors[0] === 'Email Already Taken Error') {
             setErrors({registration: 'This email is already taken'})

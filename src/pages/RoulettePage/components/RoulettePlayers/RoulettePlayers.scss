@@ -3,4 +3,35 @@
     display: flex;
     justify-content: space-between;
   }
+
+  &__item {
+    width: calc(12.5% - 20px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+    &_avatar {
+      margin-bottom: 5px;
+
+      img {
+        width: 48px;
+        height: 48px;
+        border-radius: 100px;
+      }
+    }
+
+    &_name {
+      margin-bottom: 5px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    &_chance {
+      font-family: 'Averta';
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.6);
+    }
+  }
 }

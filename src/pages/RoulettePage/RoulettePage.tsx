@@ -62,8 +62,6 @@ export const RoulettePage = () => {
 
   const gameData = useSelector((state: any) => state.rouletteReducer.gameData)
 
-  console.log(gameData)
-
   const handleChange = (value: any) => {
     setFormState((prevState: any) => {
       return {
@@ -131,7 +129,9 @@ export const RoulettePage = () => {
       </div>
 
       <div className="roulette__players">
-        <RoulettePlayers />
+        <RoulettePlayers
+            gameData={gameData}
+        />
       </div>
 
       <div className="roulette__bets">

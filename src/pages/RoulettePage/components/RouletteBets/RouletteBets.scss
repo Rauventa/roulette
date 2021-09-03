@@ -1,0 +1,66 @@
+.roulette-bets-card {
+  .card__content {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  &__item {
+    width: calc(33% - 10px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.02);
+    border-radius: 16px;
+    padding: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+
+    &:nth-child(3n+3) {
+      margin-right: 0;
+    }
+
+    &:nth-child(-n+3) {
+      margin-top: 0;
+    }
+
+    &_main {
+      display: flex;
+      align-items: center;
+
+      &-avatar {
+        margin-right: 10px;
+
+        img {
+          width: 48px;
+          height: 48px;
+          border-radius: 100px;
+        }
+      }
+
+      &-name {
+        font-size: 16px;
+        font-weight: 500;
+      }
+    }
+
+    &_bet {
+      font-family: 'Averta', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    &_name {
+      margin-bottom: 5px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    &_chance {
+      font-family: 'Averta', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.6);
+    }
+  }
+}

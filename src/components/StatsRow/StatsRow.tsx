@@ -1,6 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
-
-import { HubConnectionBuilder } from '@microsoft/signalr';
+import React, {useContext, useEffect} from 'react';
 
 import {StatsRowItem} from "./StatsRowItem/StatsRowItem";
 import './StatsRow.scss'
@@ -9,32 +7,6 @@ import {getStats} from "../../store/actions/Stats/statsActions";
 import {AuthContext} from "../../context/AuthContext";
 
 export const StatsRow = () => {
-
-  const [connection, setConnection] = useState<any>(null)
-
-  console.log(connection)
-
-  useEffect(() => {
-    const newConnection: any = new HubConnectionBuilder()
-      .withUrl('https://gbtc-b.azurewebsites.net/wssstats')
-      .withAutomaticReconnect()
-      .build();
-
-    setConnection(newConnection);
-  }, []);
-
-  useEffect(() => {
-    if (connection) {
-      connection.start()
-        .then((result: any) => {
-          console.log(result)
-          connection.on('StatisticsUpdated', (newStatistics: any) => {
-            console.log(newStatistics)
-          });
-        })
-        .catch((e: any) => console.log('Connection failed: ', e));
-    }
-  }, [connection]);
 
   const dispatch = useDispatch()
 

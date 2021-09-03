@@ -135,7 +135,9 @@ export const RoulettePage = () => {
       </div>
 
       <div className="roulette__bets">
-        <RouletteBets />
+        <RouletteBets
+          gameData={gameData}
+        />
       </div>
     </div>
   )

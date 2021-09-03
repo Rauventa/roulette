@@ -2,6 +2,7 @@ import React from 'react';
 import './RoulettePlayers.scss';
 import {Card} from "../../../../components/Card/Card";
 import {config} from "../../../../config/config";
+import DefaultIcon from "../../../../containers/DiceResults/img/default.png";
 
 interface RoulettePlayersProps {
   gameData: any
@@ -25,7 +26,10 @@ export const RoulettePlayers = ({
         return (
           <div className={'roulette-players-card__item'} key={index}>
             <div className={'roulette-players-card__item_avatar'}>
-              <img src={`${config.apiPhotoPrefixUrl}/${item.avatarUrl}`} alt="user icon"/>
+              {item.avatarUrl ?
+                <img src={`${config.apiPhotoPrefixUrl}/${item.avatarUrl}`} alt="user icon"/> :
+                <img src={DefaultIcon} alt="user icon"/>
+              }
             </div>
             <div className={'roulette-players-card__item_name'}>
               {item.name}

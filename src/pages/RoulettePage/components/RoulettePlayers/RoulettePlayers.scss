@@ -1,7 +1,8 @@
 .roulette-players-card {
   .card__content {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: center;
   }
 
   &__item {

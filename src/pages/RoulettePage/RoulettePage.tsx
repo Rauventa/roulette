@@ -11,12 +11,64 @@ import {getRouletteGame} from "../../store/actions/Roulette/rouletteActions";
 import {AuthContext} from "../../context/AuthContext";
 import {RouletteBets} from "./components/RouletteBets/RouletteBets";
 import {RoulettePlayers} from "./components/RoulettePlayers/RoulettePlayers";
+import {HubConnectionBuilder} from "@microsoft/signalr";
+import * as SignalR from "@aspnet/signalr";
 
 export const RoulettePage = () => {
 
   const defaultFormState = {
     betValue: 0.0001
   }
+
+  const [connection, setConnection] = useState<any>(null)
+  const [data, setData] = useState<any>([])
+
+  console.log(connection)
+
+  useEffect(() => {
+    const newConnection = new HubConnectionBuilder()
+      .withUrl("https://gbtc-b.azurewebsites.net/wssroulette", {
+        withCredentials: false,
+        skipNegotiation: true,
+        transport: SignalR.HttpTransportType.WebSockets
+      })
+      .configureLogging({
+        log: function (logLevel, message) {
+          // console.log(new Date().toISOString() + ": " + message);
+        }
+      })
+      .withAutomaticReconnect()
+      .build();
+
+    setConnection(newConnection);
+  }, []);
+
+  useEffect(() => {
+
+    console.log('useeffect updated')
+
+    if (connection) {
+
+      console.log('connection get')
+
+      connection.start()
+        .then((result: any) => {
+          console.log('result data payload', result)
+          connection.on('NewBetAdded', (payload: any) => {
+            console.log('New bet' ,payload)
+            setData(payload)
+          });
+
+          connection.on('RouletteGameResult', (payload: any) => {
+            console.log('Game result' ,payload)
+            setData(payload)
+          });
+        })
+        .catch((e: any) => console.log('Connection failed: ', e));
+    }
+  }, [connection]);
+
+  console.log(data)
 
   const dispatch = useDispatch()
 

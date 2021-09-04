@@ -23,6 +23,27 @@ export function getRouletteGame(token, data) {
     }
 }
 
+// export function updateRouletteGame(token, data) {
+//     return async dispatch => {
+//         try {
+//             const response = await axiosClient.get('/Roulette/GetActiveGame', {
+//                 headers: {
+//                     'Authorization': `Bearer ${token}`
+//                 },
+//                 params: {...data}
+//             });
+//
+//             if (response.data?.errors?.length) {
+//                 errorModalService(response.data.errors[0], response.data.status)
+//             } else {
+//                 dispatch(getRouletteGameSuccess(response.data.payload))
+//             }
+//         } catch (e) {
+//             errorModalService('Cannot load roulette game', e.response?.status || 404)
+//         }
+//     }
+// }
+
 export function makeRouletteBet(token, data) {
     return async () => {
         try {

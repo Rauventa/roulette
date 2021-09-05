@@ -29,7 +29,7 @@ export const RouletteBetCard = ({
     await dispatch(makeRouletteBet(token, {
       gameType: "Max10Bets",
       duration: "Minute",
-      bet: 8
+      bet: 50
     }))
   }
 

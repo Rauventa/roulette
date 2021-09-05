@@ -1,12 +1,13 @@
 import {useEffect, useState} from "react";
 import {HubConnectionBuilder} from "@microsoft/signalr";
 import * as SignalR from "@aspnet/signalr";
+import {useDispatch} from "react-redux";
+import { updateStats } from "../store/actions/Stats/statsActions";
 
 export const useStats = () => {
   const [connection, setConnection] = useState<any>(null)
-  const [stats, setStats] = useState<any>([])
 
-  console.log(connection)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const newConnection = new HubConnectionBuilder()
@@ -15,11 +16,11 @@ export const useStats = () => {
         skipNegotiation: true,
         transport: SignalR.HttpTransportType.WebSockets
       })
-      .configureLogging({
-        log: function (logLevel, message) {
-          // console.log(new Date().toISOString() + ": " + message);
-        }
-      })
+      // .configureLogging({
+      //   log: function (logLevel, message) {
+      //     // console.log(new Date().toISOString() + ": " + message);
+      //   }
+      // })
       .withAutomaticReconnect()
       .build();
 
@@ -29,14 +30,12 @@ export const useStats = () => {
   useEffect(() => {
     if (connection) {
       connection.start()
-        .then((result: any) => {
+        .then(() => {
           connection.on('StatisticsUpdated', (newStatistics: any) => {
-            setStats(newStatistics)
+            dispatch(updateStats(newStatistics))
           });
         })
         .catch((e: any) => console.log('Connection failed: ', e));
     }
   }, [connection]);
-
-  return stats
 }

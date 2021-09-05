@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import {useDispatch} from "react-redux";
 import {getCurrentRate} from "../../store/actions/Balance/balanceActions";
+import {useStats} from "../../hooks/useStats.hook";
+import { useRoulette } from '../../hooks/useRoulette.hook';
+// import {useRoulette} from "../../hooks/useRoulette.hook";
 
 interface ApiLoaderProps {
   children: any
@@ -29,6 +32,12 @@ export const ApiLoader = ({
   setInterval(async () => {
     fetchData()
   }, getRateTimeout)
+
+  // socket stats updating
+  useStats()
+
+  //socket roulette updating
+  useRoulette()
 
   return children
 }

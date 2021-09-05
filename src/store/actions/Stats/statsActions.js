@@ -1,5 +1,5 @@
 import {axiosClient} from "../../../utils/axiosClient";
-import {GET_RATING, GET_STATS} from "../actionTypes";
+import {GET_RATING, GET_STATS, UPDATE_STATS} from "../actionTypes";
 import {errorModalService} from "../../../services/modal/errorModalService";
 
 export function getStats(token) {
@@ -25,6 +25,13 @@ export function getStats(token) {
 export function getStatsSuccess(stats) {
     return {
         type: GET_STATS,
+        stats
+    }
+}
+
+export function updateStats(stats) {
+    return {
+        type: UPDATE_STATS,
         stats
     }
 }

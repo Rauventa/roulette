@@ -12,8 +12,6 @@ export const RoulettePlayers = ({
     gameData,
 }: RoulettePlayersProps) => {
 
-  console.log(gameData)
-
   const defaultPlayers = [1, 2, 3, 4, 5, 6, 7, 8]
 
   return (

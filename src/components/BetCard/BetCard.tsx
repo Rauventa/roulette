@@ -88,6 +88,7 @@ export const BetCard = ({
       </div>
       {type === 'roulette' ?
         <RouletteBetCard
+          formState={formState}
           bet={bet}
           handleChange={changeMultipleCounter}
         /> : null

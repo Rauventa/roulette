@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
 import './RoulettePage.scss';
-import { $t } from '../../lib/i18n';
 import {StatsRow} from "../../components/StatsRow/StatsRow";
 import {BetCard} from "../../components/BetCard/BetCard";
 import {GameCard} from "../../components/GameCard/GameCard";
@@ -118,7 +117,7 @@ export const RoulettePage = () => {
 
       <div className="roulette__content">
         <BetCard
-          formState={formState}
+          formState={{...formState, gameMode, gameType}}
           type={'roulette'}
           handleChange={handleChange}
         />

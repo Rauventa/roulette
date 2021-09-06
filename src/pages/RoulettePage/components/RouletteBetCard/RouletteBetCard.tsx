@@ -7,11 +7,13 @@ import {makeRouletteBet} from "../../../../store/actions/Roulette/rouletteAction
 import {AuthContext} from "../../../../context/AuthContext";
 
 interface RouletteBetCardProps {
+  formState: any,
   bet: number,
   handleChange: (value: number) => void
 }
 
 export const RouletteBetCard = ({
+  formState,
   bet,
   handleChange
 }: RouletteBetCardProps) => {
@@ -20,18 +22,19 @@ export const RouletteBetCard = ({
 
   const dispatch = useDispatch()
 
-  const rate = useSelector((state: any) => state.balanceReducer.rate)
   const currency = useSelector((state: any) => state.balanceReducer.currency)
 
   const betValues = [1, 2, 5, 10, 25, 50, 75, 100]
 
   const handleSubmit = async () => {
     await dispatch(makeRouletteBet(token, {
-      gameType: "Max10Bets",
-      duration: "Minute",
-      bet: 5
+      gameType: formState.gameMode.value,
+      duration: formState.gameType.value,
+      bet
     }))
   }
+
+  //TODO - неправильно счиатется размер ставки при нажатии на ++, к тому же добавить очищение ставки - нужно добавить размер минимальной ставки
 
   return (
     <div className={'roulette-bet-card'}>

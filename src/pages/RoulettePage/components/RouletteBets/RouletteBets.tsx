@@ -17,6 +17,8 @@ export const RouletteBets = ({
   gameData
 }: RouletteBetsProps) => {
 
+  console.log(gameData)
+
   const currency = useSelector((state: any) => state.balanceReducer.currency)
   const rate = useSelector((state: any) => state.balanceReducer.rate)
 
@@ -33,8 +35,13 @@ export const RouletteBets = ({
                   <img src={DefaultIcon} alt="user icon"/>
                 }
               </div>
-              <div className="roulette-bets-card__item_main-name">
-                {item.user.name}
+              <div className="roulette-bets-card__item_main-content">
+                <div className="roulette-bets-card__item_main-content--name">
+                  {item.user.name}
+                </div>
+                <div className="roulette-bets-card__item_main-content--range">
+                  Tickets {item.ticketFrom} - {item.ticketTo}
+                </div>
               </div>
             </div>
             <div className="roulette-bets-card__item_bet">

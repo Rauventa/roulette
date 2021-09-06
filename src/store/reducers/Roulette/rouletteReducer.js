@@ -2,6 +2,7 @@ import {GET_ROULETTE_GAME, GET_ROULETTE_RESULT, UPDATE_ROULETTE} from "../../act
 
 const initialState = {
     gameData: {},
+    hash: '',
     result: {}
 };
 
@@ -10,7 +11,9 @@ export default function rouletteReducer(state = initialState, action) {
         case GET_ROULETTE_GAME:
             return {
                 ...state,
-                gameData: action.gameData
+                gameData: action.gameData,
+                hash: action.gameData.hash,
+                gameNumber: action.gameData.gameNumber
             }
         case UPDATE_ROULETTE:
             return {

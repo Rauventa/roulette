@@ -9,6 +9,7 @@ import {RouletteGameCard} from "../../pages/RoulettePage/components/RouletteGame
 
 interface GameCardProps {
   formState: any,
+  gameData?: any,
   pot?: number,
   hash: string,
   gameNumber: number,
@@ -17,6 +18,7 @@ interface GameCardProps {
 
 export const GameCard = ({
   formState,
+  gameData,
   pot,
   hash,
   gameNumber,
@@ -52,6 +54,7 @@ export const GameCard = ({
         <RouletteGameCard
           pot={pot}
           currency={currency}
+          gameData={gameData}
           rate={rate}
         /> : null
       }

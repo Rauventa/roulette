@@ -5,6 +5,7 @@ import {getTicker} from "../../../../lib/tickers";
 
 interface RouletteGameCardProps {
   pot?: number,
+  gameData?: any,
   currency: string,
   rate: any
 }
@@ -12,8 +13,10 @@ interface RouletteGameCardProps {
 export const RouletteGameCard = ({
   pot,
   currency,
+  gameData,
   rate
 }: RouletteGameCardProps) => {
+
   return (
     <div className={'game-card__counter'}>
       <div className="game-card__counter_value">
@@ -31,7 +34,7 @@ export const RouletteGameCard = ({
       </div>
       <div className="game-card__counter_percent">
         <div className="game-card__counter_percent-value">
-          {$t(`12 / 60`)}
+          {$t(`${gameData?.bets?.length} / 60`)}
         </div>
         <div className="game-card__counter_percent-info">
           {$t('Total Bets')}

@@ -62,6 +62,8 @@ export const RoulettePage = () => {
   }
 
   const gameData = useSelector((state: any) => state.rouletteReducer.gameData)
+  const hash = useSelector((state: any) => state.rouletteReducer.hash)
+  const gameNumber = useSelector((state: any) => state.rouletteReducer.gameNumber)
   const result = useSelector((state: any) => state.rouletteReducer.result)
 
   const handleChange = (value: any) => {
@@ -124,8 +126,9 @@ export const RoulettePage = () => {
         <GameCard
           formState={formState}
           pot={gameData?.bank}
-          hash={gameData.hash}
-          gameNumber={gameData.gameNumber}
+          hash={hash}
+          gameNumber={gameNumber}
+          gameData={gameData}
           type={'roulette'}
         />
       </div>

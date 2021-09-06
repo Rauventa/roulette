@@ -1,0 +1,70 @@
+$animationSpeed: 10s;
+
+@keyframes spinOut {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-250px * 7))}
+}
+
+.roulette-spinner {
+  background: #2a2a41;
+  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, .125);
+  height: 150px;
+  overflow:hidden;
+  position: relative;
+  width: 100%;
+  padding: 0 20px;
+  border-radius: 24px;
+  margin: auto auto 40px;
+
+  &::before,
+  &::after {
+    background: linear-gradient(to right, rgba(42, 42, 65, 1) 0%, rgba(42, 42, 65, 0.08) 100%);
+    content: "";
+    height: 150px;
+    position: absolute;
+    width: 400px;
+    z-index: 2;
+  }
+
+  &::after {
+    right: 0;
+    top: 0;
+    transform: rotateZ(180deg);
+  }
+
+  &::before {
+    left: 0;
+    top: 0;
+  }
+
+  &__crossbar {
+    position: absolute;
+    left: 50%;
+    margin: auto;
+    width: 2px;
+    height: 150px;
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+
+  &__track {
+    animation: spinOut $animationSpeed ease-in-out;
+    animation-play-state:running;
+    animation-fill-mode: forwards;
+    display: flex;
+    width: calc(250px * 2);
+
+    &_item {
+      height: 150px;
+      width: 250px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0 25px;
+
+      .roulette-players-card__item_name {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

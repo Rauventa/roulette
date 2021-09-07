@@ -29,7 +29,7 @@ export const RouletteBetCard = ({
 
   const handleSubmit = async () => {
 
-    await dispatch(loaderVisibilityHandler(true))
+    dispatch(loaderVisibilityHandler(true))
 
     await dispatch(makeRouletteBet(token, {
       gameType: formState.gameMode.value,
@@ -37,7 +37,7 @@ export const RouletteBetCard = ({
       bet
     }))
 
-    await dispatch(loaderVisibilityHandler(false))
+    dispatch(loaderVisibilityHandler(false))
   }
 
   //TODO - неправильно счиатется размер ставки при нажатии на ++, к тому же добавить очищение ставки - нужно добавить размер минимальной ставки

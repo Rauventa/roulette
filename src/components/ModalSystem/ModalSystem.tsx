@@ -4,7 +4,7 @@ import {ErrorModal} from "./components/ErrorModal";
 import {UnauthorizedModal} from "./components/UnauthorizedModal";
 import {GameBetModal} from "./components/GameBetModal";
 import { InfoModal } from './components/InfoModal';
-import {RouletteBetModal} from "./components/RouletteBetModal";
+import {RouletteBetModal} from "./components/RouletteBetModal/RouletteBetModal";
 
 interface ModalSystemProps {
   type: string,

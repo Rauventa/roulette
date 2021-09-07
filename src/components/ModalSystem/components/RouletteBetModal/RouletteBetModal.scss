@@ -1,0 +1,173 @@
+.roulette-modal {
+  padding: 40px;
+  min-width: 525px;
+
+  .modal__title {
+
+    &_main {
+      font-size: 24px;
+      line-height: 24px;
+      font-weight: 500;
+    }
+    &_additional {
+      font-family: 'Averta', sans-serif;
+      color: rgba(255,255,255, 0.6);
+      font-size: 20px;
+      line-height: 24px;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+
+    &_item {
+      width: 100%;
+      display: flex;
+
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+
+      &-title, &-value {
+        font-size: 14px;
+      }
+
+      &-title {
+        width: calc(30% - 10px);
+      }
+
+      &-value {
+        width: calc(70% - 10px);
+        color: rgba(255,255,255, 0.6);
+      }
+    }
+  }
+
+  &__stats {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 30px;
+
+    &_pot, &_players, &_count {
+      padding: 15px;
+
+      &-value {
+        font-family: 'Averta', sans-serif;
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      &-title {
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+
+    &_pot {
+      width: 50%;
+      background-color: rgba(255, 136, 0, 0.03);
+      border-radius: 12px 0 0 12px;
+      color: #ff8800;
+
+      &-value {
+        &--currency {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 14px;
+          color: rgba(255, 136, 0, 0.6);
+          letter-spacing: 1px;
+          margin-left: 7px;
+        }
+      }
+    }
+
+    &_players {
+      width: calc(25% - 10px);
+      background-color: rgba(245, 92, 69, 0.03);
+      color: #f55c45;
+    }
+
+    &_count {
+      width: 25%;
+      background-color: rgba(225, 45, 129, 0.03);
+      color: #E12D81;
+      border-radius: 0 12px 12px 0;
+    }
+  }
+
+  &__players {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &_item {
+      width: 100%;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.02);
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &-number {
+        font-family: 'Averta', sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      &-player {
+        display: flex;
+        align-items: center;
+
+        &--avatar {
+          margin-right: 10px;
+
+          img {
+            width: 48px;
+            height: 48px;
+            border-radius: 100px;
+          }
+        }
+
+        &--data {
+          display: flex;
+          flex-direction: column;
+
+          &_name {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 5px;
+          }
+
+          &_tickets {
+            color: rgba(255, 255, 255, 0.6);
+            font-family: 'Averta', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+          }
+        }
+      }
+
+      &-bet {
+        display: flex;
+        flex-direction: column;
+
+        &--value {
+          font-family: 'Averta', sans-serif;
+          font-size: 18px;
+          font-weight: 600;
+        }
+
+        &--chance {
+          color: rgba(255, 255, 255, 0.6);
+          font-family: 'Averta', sans-serif;
+          font-size: 14px;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}

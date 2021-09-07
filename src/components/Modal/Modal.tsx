@@ -8,6 +8,7 @@ interface ModalProps {
   className?: string,
   children?: any,
   title: string,
+  subtitle?: string,
   buttons: any,
   onResolve: (value: boolean) => void
 }
@@ -16,6 +17,7 @@ export const Modal = ({
   className,
   children,
   title,
+  subtitle,
   buttons,
   onResolve
 }: ModalProps) => {
@@ -34,7 +36,12 @@ export const Modal = ({
     <div className={'modal-overflow'}>
       <div className={`modal ${className || ''}`}>
         <div className="modal__title">
-          {title ? $t(title) : null}
+          <div className="modal__title_main">
+            {title ? $t(title) : null}
+          </div>
+          <div className="modal__title_additional">
+            {subtitle ? $t(subtitle) : null}
+          </div>
         </div>
         <div className={'modal__content'}>
           {children}

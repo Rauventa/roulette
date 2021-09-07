@@ -12,6 +12,7 @@ import {RouletteBets} from "./components/RouletteBets/RouletteBets";
 import {RoulettePlayers} from "./components/RoulettePlayers/RoulettePlayers";
 import {RouletteSpinner} from "./components/RouletteSpinner/RouletteSpinner";
 import {loaderVisibilityHandler} from "../../store/actions/Application/applicationActions";
+import {gameModalService} from "../../services/modal/gameModalService";
 
 export const RoulettePage = () => {
 
@@ -58,6 +59,7 @@ export const RoulettePage = () => {
   }, []);
 
   const fetchData = async () => {
+    await gameModalService('roulette', {})
     await dispatch(getRouletteGame(token, {gameType: gameMode.value, durationInMinutes: gameType.value}))
     await dispatch(getMinOrder(token))
   }

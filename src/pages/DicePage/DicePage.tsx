@@ -14,7 +14,7 @@ export const DicePage = () => {
 
   const defaultFormState = {
     range: 50,
-    betValue: 0.0001
+    betValue: 0.00001
   }
 
   const [formState, setFormState] = useState<any>(defaultFormState)

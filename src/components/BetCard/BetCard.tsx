@@ -22,12 +22,12 @@ export const BetCard = ({
 
   const currency = useSelector((state: any) => state.balanceReducer.currency)
 
-  const [bet, setBet] = useState<number>(0.0001)
+  const [bet, setBet] = useState<number>(0.00001)
 
   useEffect(() => {
     if (currency === 'btc') {
-      setBet(0.0001)
-      handleChange(0.0001, 'bet')
+      setBet(0.00001)
+      handleChange(0.00001, 'bet')
     } else {
       setBet(10)
       handleChange(10, 'bet')
@@ -40,11 +40,11 @@ export const BetCard = ({
 
   const changeBetHandler = (iterator: string) => {
 
-    const defaultStepValue = currency === 'btc' ? 0.0001 : 1;
+    const defaultStepValue = currency === 'btc' ? 0.00001 : 1;
 
     switch (iterator) {
       case 'minus':
-        if (bet > 0.0001) {
+        if (bet > 0.00001) {
           setBet(bet - defaultStepValue)
 
           handleChange(bet - defaultStepValue, 'bet')
@@ -79,7 +79,7 @@ export const BetCard = ({
         <input
           className={'bet-card__counter_value'}
           type="text"
-          value={currency === 'btc' ? bet?.toFixed(4) : bet}
+          value={currency === 'btc' ? bet?.toFixed(5) : bet}
           onChange={changeInputBetValue}
         />
         <div className="bet-card__counter_plus" onClick={() => changeBetHandler('plus')}>

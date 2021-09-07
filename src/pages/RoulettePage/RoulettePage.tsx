@@ -6,7 +6,7 @@ import {GameCard} from "../../components/GameCard/GameCard";
 import {TimeLine} from "../../components/TimeLine/TimeLine";
 import {Select} from "../../components/Select/Select";
 import {useDispatch, useSelector} from "react-redux";
-import {getRouletteGame} from "../../store/actions/Roulette/rouletteActions";
+import {getMinOrder, getRouletteGame} from "../../store/actions/Roulette/rouletteActions";
 import {AuthContext} from "../../context/AuthContext";
 import {RouletteBets} from "./components/RouletteBets/RouletteBets";
 import {RoulettePlayers} from "./components/RoulettePlayers/RoulettePlayers";
@@ -15,7 +15,7 @@ import {RouletteSpinner} from "./components/RouletteSpinner/RouletteSpinner";
 export const RoulettePage = () => {
 
   const defaultFormState = {
-    betValue: 0.0001
+    betValue: 0.00001
   }
 
   const dispatch = useDispatch()
@@ -58,12 +58,23 @@ export const RoulettePage = () => {
 
   const fetchData = async () => {
     await dispatch(getRouletteGame(token, {gameType: gameMode.value, durationInMinutes: gameType.value}))
+    await dispatch(getMinOrder(token))
   }
 
   const gameData = useSelector((state: any) => state.rouletteReducer.gameData)
   const hash = useSelector((state: any) => state.rouletteReducer.hash)
   const gameNumber = useSelector((state: any) => state.rouletteReducer.gameNumber)
   const result = useSelector((state: any) => state.rouletteReducer.result)
+  // const minOrder = useSelector((state: any) => state.rouletteReducer.minOrder)
+
+  // useEffect(() => {
+  //   setFormState((prevState: any) => {
+  //     return {
+  //       ...prevState,
+  //       betValue: minOrder
+  //     }
+  //   })
+  // }, [minOrder]);
 
   const handleChange = (value: any) => {
     setFormState((prevState: any) => {
@@ -73,6 +84,8 @@ export const RoulettePage = () => {
       }
     })
   }
+
+  console.log(formState)
 
   const changeConfigHandler = async (data: any, type: string) => {
     switch (type) {

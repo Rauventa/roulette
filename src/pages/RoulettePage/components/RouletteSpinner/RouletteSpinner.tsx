@@ -3,6 +3,8 @@ import './RouletteSpinner.scss'
 import {config} from "../../../../config/config";
 import DefaultIcon from "../../../../containers/DiceResults/img/default.png";
 
+import {ReactComponent as ArrowIcon} from "./img/arrow-top.svg";
+
 interface RouletteSpinnerProps {
   gameData: any,
   result: any
@@ -33,7 +35,10 @@ export const RouletteSpinner = ({
 
   return (
     <div className={'roulette-spinner'}>
-      <div className="roulette-spinner__crossbar" />
+      <div className="roulette-spinner__crossbar">
+        <ArrowIcon className={'roulette-spinner__crossbar_top'} />
+        <ArrowIcon className={'roulette-spinner__crossbar_bottom'} />
+      </div>
       <div className={'roulette-spinner__track'}>
         {spinnerData.map((item: any, index: number) => {
           return (

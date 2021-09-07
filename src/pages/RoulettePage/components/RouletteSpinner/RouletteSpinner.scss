@@ -40,10 +40,26 @@ $animationSpeed: 10s;
   &__crossbar {
     position: absolute;
     left: 50%;
-    margin: auto;
-    width: 2px;
+    transform: translate(-50%);
+    padding: 3px 0;
     height: 150px;
-    background-color: rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    &_top {
+      transform: rotate(180deg);
+    }
+
+    svg {
+      width: 20px;
+      height: auto;
+
+     path {
+       fill: rgba(255, 255, 255, 0.15);
+     }
+    }
   }
 
   &__track {

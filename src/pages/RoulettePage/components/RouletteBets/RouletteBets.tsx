@@ -17,8 +17,6 @@ export const RouletteBets = ({
   gameData
 }: RouletteBetsProps) => {
 
-  console.log(gameData)
-
   const currency = useSelector((state: any) => state.balanceReducer.currency)
   const rate = useSelector((state: any) => state.balanceReducer.rate)
 

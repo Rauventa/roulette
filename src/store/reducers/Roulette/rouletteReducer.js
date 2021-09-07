@@ -1,9 +1,10 @@
-import {GET_ROULETTE_GAME, GET_ROULETTE_RESULT, UPDATE_ROULETTE} from "../../actions/actionTypes";
+import {GET_MIN_ORDER, GET_ROULETTE_GAME, GET_ROULETTE_RESULT, UPDATE_ROULETTE} from "../../actions/actionTypes";
 
 const initialState = {
     gameData: {},
     hash: '',
-    result: {}
+    result: {},
+    minOrder: 0
 };
 
 export default function rouletteReducer(state = initialState, action) {
@@ -24,6 +25,11 @@ export default function rouletteReducer(state = initialState, action) {
             return {
                 ...state,
                 result: action.result
+            }
+        case GET_MIN_ORDER:
+            return {
+                ...state,
+                minOrder: action.minOrder
             }
         default:
             return state

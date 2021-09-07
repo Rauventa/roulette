@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
 import './HiloPage.scss';
-import {UserCard} from "../../components/UserCard/UserCard";
 import {GameCard} from "../../components/GameCard/GameCard";
 import {BetCard} from "../../components/BetCard/BetCard";
 import {useDispatch, useSelector} from "react-redux";
@@ -14,7 +13,7 @@ import {StatsRow} from "../../components/StatsRow/StatsRow";
 export const HiloPage = () => {
 
   const defaultFormState = {
-    betValue: 0.0001,
+    betValue: 0.00001,
   }
 
   const [formState, setFormState] = useState<any>(defaultFormState)

@@ -6,8 +6,10 @@ import statsReducer from "./Stats/statsReducer";
 import profileReducer from "./Profile/profileReducer";
 import faucetReducer from "./Faucet/faucetReducer";
 import rouletteReducer from "./Roulette/rouletteReducer";
+import applicationReducer from "./Application/applicationReducer";
 
 export default combineReducers({
+    applicationReducer: applicationReducer,
     balanceReducer: balanceReducer,
     diceReducer: diceReducer,
     hiloReducer: hiloReducer,

@@ -11,6 +11,7 @@ import {AuthContext} from "../../context/AuthContext";
 import {RouletteBets} from "./components/RouletteBets/RouletteBets";
 import {RoulettePlayers} from "./components/RoulettePlayers/RoulettePlayers";
 import {RouletteSpinner} from "./components/RouletteSpinner/RouletteSpinner";
+import {loaderVisibilityHandler} from "../../store/actions/Application/applicationActions";
 
 export const RoulettePage = () => {
 
@@ -76,6 +77,8 @@ export const RoulettePage = () => {
   //   })
   // }, [minOrder]);
 
+  console.log(result)
+
   const handleChange = (value: any) => {
     setFormState((prevState: any) => {
       return {
@@ -84,8 +87,6 @@ export const RoulettePage = () => {
       }
     })
   }
-
-  console.log(formState)
 
   const changeConfigHandler = async (data: any, type: string) => {
     switch (type) {
@@ -103,6 +104,8 @@ export const RoulettePage = () => {
         break;
     }
   }
+
+  console.log(result)
 
   return (
     <div className={'roulette'}>

@@ -5,6 +5,7 @@ import {$t} from "../../../../lib/i18n";
 import {useDispatch, useSelector} from "react-redux";
 import {makeRouletteBet} from "../../../../store/actions/Roulette/rouletteActions";
 import {AuthContext} from "../../../../context/AuthContext";
+import {loaderVisibilityHandler} from "../../../../store/actions/Application/applicationActions";
 
 interface RouletteBetCardProps {
   formState: any,
@@ -27,11 +28,16 @@ export const RouletteBetCard = ({
   const betValues = [1, 2, 5, 10, 25, 50, 75, 100]
 
   const handleSubmit = async () => {
+
+    await dispatch(loaderVisibilityHandler(true))
+
     await dispatch(makeRouletteBet(token, {
       gameType: formState.gameMode.value,
       duration: formState.gameType.value,
       bet
     }))
+
+    await dispatch(loaderVisibilityHandler(false))
   }
 
   //TODO - неправильно счиатется размер ставки при нажатии на ++, к тому же добавить очищение ставки - нужно добавить размер минимальной ставки
@@ -42,7 +48,7 @@ export const RouletteBetCard = ({
         <div className="roulette-bet-card__bets">
           {betValues.map((item: number, index: number) => {
             return (
-              <div key={index+item} className={'roulette-bet-card__bets_bet'} onClick={() => handleChange(bet + item*bet)}>
+              <div key={index+item} className={'roulette-bet-card__bets_bet'} onClick={() => handleChange(bet + item*0.00001)}>
                 {$t(item)}
               </div>
             )

@@ -4,6 +4,9 @@ import { Header } from '../../components/Header/Header';
 import { Footer } from '../../components/Footer/Footer';
 import Container from "react-modal-promise";
 import {ApiLoader} from "../../HOC/ApiLoader/ApiLoader";
+import {Spinner} from "../../components/Spinner/Spinner";
+import {CSSTransition} from "react-transition-group";
+import {useSelector} from "react-redux";
 
 interface AppLayoutProps {
   children: React.ReactNode
@@ -13,10 +16,17 @@ export const AppLayout = ({
   children,
 }: AppLayoutProps) => {
 
+  const loader = useSelector((state: any) => state.applicationReducer.loader)
+
   return (
     <ApiLoader>
       <div className={'layout'}>
         <div className="layout__container">
+
+          <CSSTransition in={loader} timeout={300} unmountOnExit classNames="my-node">
+            <Spinner />
+          </CSSTransition>
+
           <Header />
           <div className="layout__modal">
             <Container />

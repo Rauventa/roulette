@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createModal } from "react-modal-promise";
 import {ErrorModal} from "./components/ErrorModal";
 import {UnauthorizedModal} from "./components/UnauthorizedModal";
@@ -21,6 +21,16 @@ const ModalSystem: any = ({
   onResolve,
   onReject
 }: ModalSystemProps) => {
+
+  //Disable body overflow when modal is open
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    }
+  }, []);
 
     const handleClose = (value: boolean) => {
 

@@ -54,12 +54,13 @@ export const RoulettePage = () => {
   const [gameMode, setGameMode] = useState<any>(gameModeOptions[0])
   const [gameType, setGameType] = useState<any>(gameTypeOptions[0])
 
+  const animationRouletteDuration = 10000
+
   useEffect(() => {
     fetchData()
   }, []);
 
   const fetchData = async () => {
-    await gameModalService('roulette', {})
     await dispatch(getRouletteGame(token, {gameType: gameMode.value, durationInMinutes: gameType.value}))
     await dispatch(getMinOrder(token))
   }
@@ -79,7 +80,13 @@ export const RoulettePage = () => {
   //   })
   // }, [minOrder]);
 
-  console.log(result)
+  useEffect(() => {
+    if (result.hash) {
+      setTimeout(async () => {
+        await gameModalService('roulette', {...result, gameMode: `${gameMode.label}, ${gameType.label}`})
+      }, animationRouletteDuration)
+    }
+  }, [result]);
 
   const handleChange = (value: any) => {
     setFormState((prevState: any) => {

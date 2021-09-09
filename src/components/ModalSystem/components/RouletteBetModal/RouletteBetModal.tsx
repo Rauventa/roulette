@@ -32,7 +32,7 @@ export const RouletteBetModal = ({
     let buttons: any = [
         {
             value: true,
-            text: 'Start new game',
+            text: 'Close',
             primary: true
         },
         {
@@ -57,18 +57,18 @@ export const RouletteBetModal = ({
                 <div className={'roulette-modal__info'}>
                     <div className="roulette-modal__info_item">
                         <div className="roulette-modal__info_item-title">
-                            {$t('Fair Game')}
-                        </div>
-                        <div className="roulette-modal__info_item-value">
-                            {$t(formState.hash)}
-                        </div>
-                    </div>
-                    <div className="roulette-modal__info_item">
-                        <div className="roulette-modal__info_item-title">
                             {$t('Mode')}
                         </div>
                         <div className="roulette-modal__info_item-value">
                             {$t(`${formState.gameMode}`)}
+                        </div>
+                    </div>
+                    <div className="roulette-modal__info_item">
+                        <div className="roulette-modal__info_item-title">
+                            {$t('Fair Game')}
+                        </div>
+                        <div className="roulette-modal__info_item-value">
+                            {$t(formState.hash)}
                         </div>
                     </div>
                 </div>

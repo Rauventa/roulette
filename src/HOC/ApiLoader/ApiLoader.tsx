@@ -3,6 +3,7 @@ import {useDispatch} from "react-redux";
 import {getCurrentRate} from "../../store/actions/Balance/balanceActions";
 import {useStats} from "../../hooks/useStats.hook";
 import { useRoulette } from '../../hooks/useRoulette.hook';
+import {useFaucet} from "../../hooks/useFaucet.hook";
 // import {useRoulette} from "../../hooks/useRoulette.hook";
 
 interface ApiLoaderProps {
@@ -35,6 +36,9 @@ export const ApiLoader = ({
 
   // socket stats updating
   useStats()
+
+  //socket faucet updating
+  useFaucet()
 
   //socket roulette updating
   useRoulette()

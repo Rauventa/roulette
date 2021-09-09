@@ -28,6 +28,8 @@ export const FaucetResults = () => {
   const currency = useSelector((state: any) => state.balanceReducer.currency)
   const rate = useSelector((state: any) => state.balanceReducer.rate)
 
+  console.log(data)
+
   const columns = [
     {
       Header: 'Name',

@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {makeRouletteBet} from "../../../../store/actions/Roulette/rouletteActions";
 import {AuthContext} from "../../../../context/AuthContext";
 import {loaderVisibilityHandler} from "../../../../store/actions/Application/applicationActions";
+import {getBalance} from "../../../../store/actions/Balance/balanceActions";
 
 interface RouletteBetCardProps {
   formState: any,
@@ -24,6 +25,7 @@ export const RouletteBetCard = ({
   const dispatch = useDispatch()
 
   const currency = useSelector((state: any) => state.balanceReducer.currency)
+  const rate = useSelector((state: any) => state.balanceReducer.rate)
 
   const betValues = [1, 2, 5, 10, 25, 50, 75, 100]
 
@@ -37,10 +39,10 @@ export const RouletteBetCard = ({
       bet
     }))
 
+    await dispatch(getBalance(token, rate))
+
     dispatch(loaderVisibilityHandler(false))
   }
-
-  //TODO - неправильно счиатется размер ставки при нажатии на ++, к тому же добавить очищение ставки - нужно добавить размер минимальной ставки
 
   return (
     <div className={'roulette-bet-card'}>

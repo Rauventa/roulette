@@ -4,6 +4,8 @@ import { Button } from '../Button/Button';
 import {useHistory} from "react-router-dom";
 import { $t } from '../../lib/i18n';
 
+import {ReactComponent as CloseIcon} from "./img/closePic.svg";
+
 interface ModalProps {
   className?: string,
   children?: any,
@@ -35,6 +37,9 @@ export const Modal = ({
   return (
     <div className={'modal-overflow'}>
       <div className={`modal ${className || ''}`}>
+        <div className="modal__close" onClick={() => handleResolve(false)}>
+          <CloseIcon />
+        </div>
         <div className="modal__title">
           <div className="modal__title_main">
             {title ? $t(title) : null}

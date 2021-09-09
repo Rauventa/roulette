@@ -6,13 +6,19 @@ import {GameCard} from "../../components/GameCard/GameCard";
 import {TimeLine} from "../../components/TimeLine/TimeLine";
 import {Select} from "../../components/Select/Select";
 import {useDispatch, useSelector} from "react-redux";
-import {getMinOrder, getRouletteGame} from "../../store/actions/Roulette/rouletteActions";
+import {
+  getMinOrder,
+  getRouletteGame,
+  getRouletteResult,
+  updateRouletteGame
+} from "../../store/actions/Roulette/rouletteActions";
 import {AuthContext} from "../../context/AuthContext";
 import {RouletteBets} from "./components/RouletteBets/RouletteBets";
 import {RoulettePlayers} from "./components/RoulettePlayers/RoulettePlayers";
 import {RouletteSpinner} from "./components/RouletteSpinner/RouletteSpinner";
 import {loaderVisibilityHandler} from "../../store/actions/Application/applicationActions";
 import {gameModalService} from "../../services/modal/gameModalService";
+import { getBalance } from '../../store/actions/Balance/balanceActions';
 
 export const RoulettePage = () => {
 
@@ -69,6 +75,8 @@ export const RoulettePage = () => {
   const hash = useSelector((state: any) => state.rouletteReducer.hash)
   const gameNumber = useSelector((state: any) => state.rouletteReducer.gameNumber)
   const result = useSelector((state: any) => state.rouletteReducer.result)
+  const rate = useSelector((state: any) => state.balanceReducer.rate)
+
   // const minOrder = useSelector((state: any) => state.rouletteReducer.minOrder)
 
   // useEffect(() => {
@@ -83,7 +91,18 @@ export const RoulettePage = () => {
   useEffect(() => {
     if (result.hash) {
       setTimeout(async () => {
-        await gameModalService('roulette', {...result, gameMode: `${gameMode.label}, ${gameType.label}`})
+        await gameModalService('roulette', {...result, gameMode: `${gameMode.label}, ${gameType.label}`}).then(async (res: any) => {
+
+          dispatch(loaderVisibilityHandler(true))
+
+          if (res.status) {
+            dispatch(getRouletteResult({}))
+            dispatch(updateRouletteGame({}))
+            await dispatch(getBalance(token, rate))
+          }
+
+          dispatch(loaderVisibilityHandler(false))
+        })
       }, animationRouletteDuration)
     }
   }, [result]);

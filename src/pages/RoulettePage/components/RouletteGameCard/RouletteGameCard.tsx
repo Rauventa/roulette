@@ -34,7 +34,7 @@ export const RouletteGameCard = ({
       </div>
       <div className="game-card__counter_percent">
         <div className="game-card__counter_percent-value">
-          {$t(`${gameData?.bets?.length} / 60`)}
+          {$t(`${gameData?.bets?.length || 0} / 60`)}
         </div>
         <div className="game-card__counter_percent-info">
           {$t('Total Bets')}

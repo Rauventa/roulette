@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './RouletteBetModal.scss';
 import {Modal} from "../../../Modal/Modal";
 import {IModal} from "../../../../interfaces/modal/IModal";
@@ -9,12 +9,14 @@ import {useSelector} from "react-redux";
 import {config} from "../../../../config/config";
 import DefaultIcon from "../../../../containers/DiceResults/img/default.png";
 
+import {ReactComponent as InfoIcon} from "./img/info.svg";
+
 export const RouletteBetModal = ({
   formState,
   onClose,
 }: IModal) => {
 
-    console.log(formState)
+    const [additional, setAdditional] = useState<boolean>(false)
 
     const currency = useSelector((state: any) => state.balanceReducer.currency)
     const rate = useSelector((state: any) => state.balanceReducer.rate)
@@ -45,6 +47,10 @@ export const RouletteBetModal = ({
         }
     ]
 
+    const showAdditional = () => {
+        setAdditional(!additional)
+    }
+
     return (
         <Modal
             className={'roulette-modal'}
@@ -69,8 +75,39 @@ export const RouletteBetModal = ({
                         </div>
                         <div className="roulette-modal__info_item-value">
                             {$t(formState.hash)}
+                            <InfoIcon
+                              onClick={showAdditional}
+                            />
                         </div>
                     </div>
+                    {additional ?
+                      <>
+                          <div className="roulette-modal__info_item">
+                              <div className="roulette-modal__info_item-title">
+                                  {$t('Number')}
+                              </div>
+                              <div className="roulette-modal__info_item-value">
+                                  {$t(formState.hiddenNumber)}
+                              </div>
+                          </div>
+                          <div className="roulette-modal__info_item">
+                              <div className="roulette-modal__info_item-title">
+                                  {$t('Salt')}
+                              </div>
+                              <div className="roulette-modal__info_item-value">
+                                  {$t(formState.salt)}
+                              </div>
+                          </div>
+                          {/*<div className="roulette-modal__info_item">*/}
+                          {/*    <div className="roulette-modal__info_item-title">*/}
+                          {/*        {$t('Win ticket')}*/}
+                          {/*    </div>*/}
+                          {/*    <div className="roulette-modal__info_item-value">*/}
+                          {/*        {$t(`${formState.bank} * ${formState.hiddenNumber} = ${formState.bank * formState.hiddenNumber}`)}*/}
+                          {/*    </div>*/}
+                          {/*</div>*/}
+                      </> : null
+                    }
                 </div>
                 <div className={'roulette-modal__stats'}>
                     <div className="roulette-modal__stats_pot">

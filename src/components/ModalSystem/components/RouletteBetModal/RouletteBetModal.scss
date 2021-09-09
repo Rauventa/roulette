@@ -1,6 +1,6 @@
 .roulette-modal {
   padding: 40px;
-  width: 550px;
+  width: 620px;
 
   .modal__title {
 
@@ -8,12 +8,15 @@
       font-size: 24px;
       line-height: 24px;
       font-weight: 500;
+      width: calc(30% - 10px);
     }
+
     &_additional {
       font-family: 'Averta', sans-serif;
       color: rgba(255,255,255, 0.6);
       font-size: 20px;
       line-height: 24px;
+      width: calc(70% - 10px);
     }
   }
 
@@ -28,6 +31,42 @@
 
       &:not(:last-child) {
         margin-bottom: 10px;
+      }
+
+      &:nth-child(2) {
+        flex-direction: column;
+
+        .roulette-modal__info_item-title {
+          width: 100%;
+          margin-bottom: 5px;
+        }
+
+        .roulette-modal__info_item-value {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          overflow-x: auto;
+
+          svg {
+            margin-left: 5px;
+            width: 20px;
+            height: 20px;
+
+            path {
+              transition: ease-in-out .3s;
+            }
+
+            &:hover {
+              cursor: pointer;
+
+              path {
+                &:last-child {
+                  fill: rgba(255,255,255, 0.35);
+                }
+              }
+            }
+          }
+        }
       }
 
       &-title, &-value {

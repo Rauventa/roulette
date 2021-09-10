@@ -17,6 +17,7 @@ i18n
           'You are guest': 'You are guest',
           'Dice': 'Dice',
           '© Bitcoin Roulette': '© Bitcoin Roulette',
+          'Game': 'Game',
           'License agreement': 'License agreement',
           'License agreements': 'License agreements',
           'Payment proof': 'Payment proof',
@@ -60,8 +61,6 @@ i18n
           'Fair Game': 'Fair Game',
 
           //dice page
-          'Game': 'Game',
-          'Fair Game': 'Fair Game',
           'Possible win': 'Possible win',
           'Probability of Winning': 'Probability of Winning',
           'Make a Bet': 'Make a Bet',
@@ -113,8 +112,8 @@ i18n
           'Top Jackpot': 'Топ Джекпот',
 
           //TODO - Russian
-          'Games Today': 'Игры сегодня',
-          'Games Total': 'Всего Игр',
+          'Games today': 'Игры сегодня',
+          'Games total': 'Всего Игр',
           'Paid total': 'Всего выплат',
           'Won total': 'Всего выигрышей',
           'Top Lack': 'Максимальная удача',

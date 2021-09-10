@@ -10,6 +10,8 @@ export const ErrorModal = ({
 
   const handleShow = (value: boolean) => {
     onClose(value)
+
+    window.location.reload()
   }
 
   return (

@@ -12,6 +12,7 @@ import {RatingPage} from "../../pages/RatingPage/RatingPage";
 import {ProfilePage} from "../../pages/ProfilePage/ProfilePage";
 import {PaymentProofPage} from "../../pages/PaymentProofPage/PaymentProofPage";
 import {FaucetPage} from "../../pages/FaucetPage/FaucetPage";
+import {Page404} from "../../pages/Page404/Page404";
 
 export const RootRouter = () => {
 
@@ -47,6 +48,10 @@ export const RootRouter = () => {
                 <Route path={'/payment-proof'}>
                   <PaymentProofPage />
                 </Route>
+
+                <Route path='*' exact>
+                  <Page404 />
+                </Route>
             </Switch>
         )
     } else {
@@ -72,6 +77,10 @@ export const RootRouter = () => {
                 </Route>
                 <Route path={'/rating'}>
                     <RatingPage />
+                </Route>
+
+                <Route path='*' exact>
+                  <Page404 />
                 </Route>
             </Switch>
         )

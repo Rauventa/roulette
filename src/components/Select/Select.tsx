@@ -35,7 +35,7 @@ export const Select = ({
     <div className={'input-group'}>
       {title ?
         <div className="input-group__title">
-          {t(title)}
+          {t(`${title}`)}
         </div> : null
       }
 

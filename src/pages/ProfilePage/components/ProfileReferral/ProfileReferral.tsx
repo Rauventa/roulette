@@ -165,6 +165,7 @@ export const ProfileReferral = () => {
                         className={'ids-table'}
                         data={referrals}
                         columns={referralsColumns}
+                        noContentMessage={'No referrals'}
                     />
                 </Card>
             </div>
@@ -173,6 +174,7 @@ export const ProfileReferral = () => {
                     <Table
                         data={referralStats}
                         columns={referralStatsColumns}
+                        noContentMessage={'No referrals'}
                     />
                 </Card>
             </div>

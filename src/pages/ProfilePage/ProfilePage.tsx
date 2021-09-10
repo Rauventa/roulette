@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
-import { t } from '../../lib/i18n';
 import './ProfilePage.scss'
-import {Button} from "../../components/Button/Button";
 import {ProfileSettings} from "./components/ProfileSettings/ProfileSettings";
 import {ProfileHistory} from "./components/ProfileHistory/ProfileHistory";
 import {ProfileDeposit} from "./components/ProfileDeposit/ProfileDeposit";
@@ -9,8 +7,11 @@ import {ProfileReferral} from "./components/ProfileReferral/ProfileReferral";
 import {UserWallets} from "./components/UserWallets/UserWallets";
 import {UserStats} from "../../containers/UserStats/UserStats";
 import {WithdrawPage} from "../WithdrawPage/WithdrawPage";
+import {useTranslation} from "react-i18next";
 
 export const ProfilePage = () => {
+
+  const {t} = useTranslation()
 
     const [page, setPage] = useState<string>('settings')
 
@@ -61,7 +62,7 @@ export const ProfilePage = () => {
                             className={`profile__header_tabs-tab ${item.iterator === page ? 'active' : ''}`}
                             onClick={() => changeTabHandler(item.iterator)}
                         >
-                            {t(item.title)}
+                            {t(`${item.title}`)}
                         </div>
                     )
                 })}
@@ -81,9 +82,9 @@ export const ProfilePage = () => {
                 <ProfileDeposit /> : null
             }
 
-          {page === 'withdraw' ?
-            <WithdrawPage /> : null
-          }
+            {page === 'withdraw' ?
+              <WithdrawPage /> : null
+            }
 
             {page === 'wallets' ?
                 <UserWallets /> : null

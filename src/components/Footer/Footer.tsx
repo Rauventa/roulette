@@ -1,9 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { t } from '../../lib/i18n';
 import './Footer.scss'
+import {useTranslation} from "react-i18next";
 
 export const Footer = () => {
+
+  const {t} = useTranslation()
+
   return (
     <footer className={'footer'}>
       <NavLink to={'/'} exact className={'text-secondary'}>

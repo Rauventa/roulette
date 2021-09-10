@@ -89,12 +89,12 @@ export const DepositContainer = () => {
           original.type === 'deposit' ? (
               <div className={`table-icon-block success`}>
                 <DownArrowIcon />
-                {original.type}
+                {t(`${original.type}`)}
               </div>
           ) : (
               <div className={`table-icon-block danger`}>
                 <UpArrowIcon />
-                {original.type}
+                {t(`${original.type}`)}
               </div>
           )
     },

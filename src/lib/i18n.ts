@@ -43,6 +43,21 @@ i18n
           'BTC Wallets': 'BTC Wallets',
           'Cabinet': 'Cabinet',
           'This page stands in development': 'This page stands in development',
+          'Top Jackpot': 'Top Jackpot',
+
+          //TODO - English
+          'Games Today': 'Games Today',
+          'Games Total': 'Games Total',
+          'Paid total': 'Paid total',
+          'Won total': 'Won total',
+          'Top Lack': 'Top lack',
+          'Max Bet': 'Max Bet',
+          'Minute':'Minute',
+          'Day': 'Day',
+          'Week': 'Week',
+          'Max 10 Bets':'Max 10 Bets',
+          'Max 20 tickets': 'Max 20 tickets',
+          'Fair Game': 'Fair Game',
 
           //dice page
           'Game': 'Game',
@@ -95,6 +110,20 @@ i18n
           'BTC Wallets': 'BTC Кошельки',
           'Cabinet': 'Кабинет',
           'This page stands in development': 'Эта страница находится в разработке',
+          'Top Jackpot': 'Топ Джекпот',
+
+          //TODO - Russian
+          'Games Today': 'Игры сегодня',
+          'Games Total': 'Всего Игр',
+          'Paid total': 'Всего выплат',
+          'Won total': 'Всего выигрышей',
+          'Top Lack': 'Максимальная удача',
+          'Max Bet': 'Максимальная ставка',
+          'Minute': 'Минуты',
+          'Day': 'День',
+          'Week': 'Неделя',
+          'Max 10 Bets': 'Максимально 10 ставок',
+          'Max 20 tickets': 'Максимально 20 билетов',
 
           //dice page
           'Game': 'Игра',

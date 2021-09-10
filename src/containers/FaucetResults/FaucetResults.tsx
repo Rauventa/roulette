@@ -5,16 +5,18 @@ import {Table} from "../../components/Table/Table";
 import {getFaucetHistory} from "../../store/actions/Faucet/faucetActions";
 import {config} from "../../config/config";
 import DefaultIcon from "../DiceResults/img/default.png";
-import {$t} from "../../lib/i18n";
 import {Card} from "../../components/Card/Card";
 import {currencyValueChanger} from "../../lib/numberRefractor";
 import {getTicker} from "../../lib/tickers";
+import {useTranslation} from "react-i18next";
 
 export const FaucetResults = () => {
 
   const {token} = useContext(AuthContext)
 
   const dispatch = useDispatch()
+
+  const {t} = useTranslation()
 
   const fetchData = async () => {
      await dispatch(getFaucetHistory(token))
@@ -27,8 +29,6 @@ export const FaucetResults = () => {
   const data = useSelector((state: any) => state.faucetReducer.history)
   const currency = useSelector((state: any) => state.balanceReducer.currency)
   const rate = useSelector((state: any) => state.balanceReducer.rate)
-
-  console.log(data)
 
   const columns = [
     {
@@ -44,10 +44,10 @@ export const FaucetResults = () => {
           </div>
           {original.userName === '[Hidden]' ?
             <div className="table-user__name hidden-nickname">
-              {$t('Hidden')}
+              {t('Hidden')}
             </div> :
             <div className="table-user__name">
-              {$t(original.userName)}
+              {t(original.userName)}
             </div>
           }
         </div>
@@ -58,7 +58,7 @@ export const FaucetResults = () => {
       accessor: 'gain',
       Cell: ({row: {original}} : any) => (
         <div>
-          {$t(`${currencyValueChanger(currency, rate, original.gain)} ${getTicker(currency)}`)}
+          {t(`${currencyValueChanger(currency, rate, original.gain)} ${getTicker(currency)}`)}
         </div>
       )
     },

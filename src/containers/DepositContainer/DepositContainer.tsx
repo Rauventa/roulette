@@ -16,9 +16,9 @@ import {getPaymentHistory} from "../../store/actions/Balance/balanceActions";
 import {config} from "../../config/config";
 import {toNormalDate} from "../../lib/dateHelper";
 import { Card } from '../../components/Card/Card';
-import {$t} from "../../lib/i18n";
 import {currencyValueChanger} from "../../lib/numberRefractor";
 import {getTicker} from "../../lib/tickers";
+import {useTranslation} from "react-i18next";
 
 export const DepositContainer = () => {
 
@@ -34,6 +34,8 @@ export const DepositContainer = () => {
       date: toNormalDate(item.createdAt)
     }
   })
+
+  const {t} = useTranslation()
 
   const [page, setPage] = useState<string>('select')
   const [code, setCode] = useState<string>('')
@@ -101,7 +103,7 @@ export const DepositContainer = () => {
       accessor: 'amount',
       Cell: ({row: {original}}: any) => (
           <div>
-            {$t(`${currencyValueChanger(currency, rate, original.amount)} ${getTicker(currency)}`)}
+            {t(`${currencyValueChanger(currency, rate, original.amount)} ${getTicker(currency)}`)}
           </div>
       )
     },

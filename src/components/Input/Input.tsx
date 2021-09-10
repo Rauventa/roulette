@@ -1,5 +1,5 @@
 import React from 'react';
-import { $t } from '../../lib/i18n';
+import { t } from '../../lib/i18n';
 import './Input.scss'
 
 interface InputProps {
@@ -56,7 +56,7 @@ export const Input = ({
     <div className={'input-group'}>
       {title ?
         <div className="input-group__title">
-          {$t(title)}
+          {t(title)}
         </div> : null
       }
       {icon ?
@@ -66,7 +66,7 @@ export const Input = ({
       }
       <input
         className={`${defaultClass} ${className || ''}`}
-        placeholder={$t(placeholder)}
+        placeholder={t(placeholder)}
         type={type}
         name={name}
         disabled={disabled}
@@ -75,7 +75,7 @@ export const Input = ({
       />
       {errors ?
           <div className="input-group__errors">
-            {$t(errors)}
+            {t(errors)}
           </div> : null
       }
     </div>

@@ -5,7 +5,6 @@ import {getReferralLink, getReferrals, getReferralsStatistic} from "../../../../
 import {AuthContext} from "../../../../context/AuthContext";
 import {Card} from "../../../../components/Card/Card";
 import {Input} from "../../../../components/Input/Input";
-import { $t } from '../../../../lib/i18n';
 import {Table} from "../../../../components/Table/Table";
 import {currencyValueChanger} from "../../../../lib/numberRefractor";
 import {getTicker} from "../../../../lib/tickers";
@@ -15,6 +14,7 @@ import {config} from "../../../../config/config";
 import {ReactComponent as ReferralIcon} from "./img/ref_pic.svg";
 import DefaultIcon from "../../../../containers/DiceResults/img/default.png";
 import dateformat from "dateformat";
+import {useTranslation} from "react-i18next";
 
 export const ProfileReferral = () => {
 
@@ -40,6 +40,8 @@ export const ProfileReferral = () => {
             name: item.referalName
         }
     })
+
+    const {t} = useTranslation()
 
     const [loader, setLoader] = useState<boolean>(false)
 
@@ -79,10 +81,10 @@ export const ProfileReferral = () => {
                     </div>
                     {original.name === '[Hidden]' ?
                         <div className="table-user__name hidden-nickname">
-                            {$t('Hidden')}
+                            {t('Hidden')}
                         </div> :
                         <div className="table-user__name">
-                            {$t(original.name)}
+                            {t(original.name)}
                         </div>
                     }
                 </div>
@@ -104,10 +106,10 @@ export const ProfileReferral = () => {
                     </div>
                     {original.name === '[Hidden]' ?
                         <div className="table-user__name hidden-nickname">
-                            {$t('Hidden')}
+                            {t('Hidden')}
                         </div> :
                         <div className="table-user__name">
-                            {$t(original.name)}
+                            {t(original.name)}
                         </div>
                     }
                 </div>
@@ -131,7 +133,7 @@ export const ProfileReferral = () => {
             accessor: 'reward',
             Cell: ({row: {original}} : any) => (
                 <div className={'success'}>
-                    {$t(`+ ${currencyValueChanger(currency, rate, original.reward)} ${getTicker(currency)}`)}
+                    {t(`+ ${currencyValueChanger(currency, rate, original.reward)} ${getTicker(currency)}`)}
                 </div>
             )
         },
@@ -147,7 +149,7 @@ export const ProfileReferral = () => {
             <div className="profile-referral__info">
                 <Card title={`Your Referral Link`} className={'referral-link-card'}>
                     <div className={'referral-link-card__text text-secondary'}>
-                        {$t(' Register a player using your link and get 5% from each win for life')}
+                        {t(' Register a player using your link and get 5% from each win for life')}
                     </div>
                     <Input
                         title={'Referral link'}

@@ -1,10 +1,10 @@
 import React from 'react';
 import {Modal} from "../../Modal/Modal";
 import {IModal} from "../../../interfaces/modal/IModal";
-import { $t } from '../../../lib/i18n';
 import {useSelector} from "react-redux";
 import {currencyValueChanger} from "../../../lib/numberRefractor";
 import {getTicker} from "../../../lib/tickers";
+import {useTranslation} from "react-i18next";
 
 export const GameBetModal = ({
   type,
@@ -18,6 +18,8 @@ export const GameBetModal = ({
 
   const currency = useSelector((state: any) => state.balanceReducer.currency);
   const rate = useSelector((state: any) => state.balanceReducer.rate)
+
+  const {t} = useTranslation()
 
   const proofLine = `${formState.hiddenNumber}${formState.salt}`;
 
@@ -65,66 +67,66 @@ export const GameBetModal = ({
       <>
         <div className="status-modal__item">
           <div className="status-modal__item_title">
-            {$t('Game number')}
+            {t('Game number')}
           </div>
           <div className="status-modal__item_value">
-            {$t(`${formState.game || formState.gameNumber}`)}
+            {t(`${formState.game || formState.gameNumber}`)}
           </div>
         </div>
         <div className="status-modal__item">
           <div className="status-modal__item_title">
-            {$t('Your bet')}
+            {t('Your bet')}
           </div>
           <div className="status-modal__item_value">
-            {$t(`${currencyValueChanger(currency, rate, formState.bet)} ${getTicker(currency)}`)}
+            {t(`${currencyValueChanger(currency, rate, formState.bet)} ${getTicker(currency)}`)}
           </div>
         </div>
         {type === 'dice-game' ?
           <div className="status-modal__item">
             <div className="status-modal__item_title">
-              {$t('Your number')}
+              {t('Your number')}
             </div>
             <div className="status-modal__item_value">
-              {$t(formState.ownNumber || formState.own)}
+              {t(formState.ownNumber || formState.own)}
             </div>
           </div> : null
         }
         <div className="status-modal__item">
           <div className="status-modal__item_title">
-            {$t('Generated number')}
+            {t('Generated number')}
           </div>
           <div className="status-modal__item_value">
-            {$t(formState.hiddenNumber)}
+            {t(formState.hiddenNumber)}
           </div>
         </div>
         <div className="status-modal__item">
           <div className="status-modal__item_title">
             {formState.userWin ?
-              $t('Total win') :
-              $t('Total loss')
+              t('Total win') :
+              t('Total loss')
             }
           </div>
           <div className="status-modal__item_value">
-            {$t(`${currencyValueChanger(currency, rate, formState.gain, {absolute: true})} ${getTicker(currency)}`)}
+            {t(`${currencyValueChanger(currency, rate, formState.gain, {absolute: true})} ${getTicker(currency)}`)}
           </div>
         </div>
         <div className="status-modal__divider" />
         <div className="status-modal__info text-secondary">
-          {$t('Game hash = generated number + salt. You can check it with sha256 decoder.')}
+          {t('Game hash = generated number + salt. You can check it with sha256 decoder.')}
         </div>
         <div className="status-modal__item small">
           <div className="status-modal__item_info">
-            {$t(`Salt - ${formState.salt}`)}
+            {t(`Salt - ${formState.salt}`)}
           </div>
         </div>
         <div className="status-modal__item small">
           <div className="status-modal__item_info">
-            {$t(`Hash - ${formState.lastHash || formState.hash}`)}
+            {t(`Hash - ${formState.lastHash || formState.hash}`)}
           </div>
         </div>
         <div className="status-modal__item small">
           <div className="status-modal__item_info">
-            {$t(`Proof - ${proofLine}`)}
+            {t(`Proof - ${proofLine}`)}
           </div>
         </div>
       </>

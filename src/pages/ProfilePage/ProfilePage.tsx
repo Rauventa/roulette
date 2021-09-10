@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { $t } from '../../lib/i18n';
+import { t } from '../../lib/i18n';
 import './ProfilePage.scss'
 import {Button} from "../../components/Button/Button";
 import {ProfileSettings} from "./components/ProfileSettings/ProfileSettings";
@@ -61,7 +61,7 @@ export const ProfilePage = () => {
                             className={`profile__header_tabs-tab ${item.iterator === page ? 'active' : ''}`}
                             onClick={() => changeTabHandler(item.iterator)}
                         >
-                            {$t(item.title)}
+                            {t(item.title)}
                         </div>
                     )
                 })}

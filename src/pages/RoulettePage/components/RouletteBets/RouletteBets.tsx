@@ -2,11 +2,11 @@ import React from 'react';
 import './RouletteBets.scss';
 import {Card} from "../../../../components/Card/Card";
 import {config} from "../../../../config/config";
-import {$t} from "../../../../lib/i18n";
 import {currencyValueChanger} from "../../../../lib/numberRefractor";
 import {useSelector} from "react-redux";
 import {getTicker} from "../../../../lib/tickers";
 import DefaultIcon from "../../../../containers/DiceResults/img/default.png";
+import {useTranslation} from "react-i18next";
 
 
 interface RouletteBetsProps {
@@ -19,6 +19,8 @@ export const RouletteBets = ({
 
   const currency = useSelector((state: any) => state.balanceReducer.currency)
   const rate = useSelector((state: any) => state.balanceReducer.rate)
+
+  const {t} = useTranslation()
 
   return (
     <Card className={'roulette-bets-card'}>
@@ -43,7 +45,7 @@ export const RouletteBets = ({
               </div>
             </div>
             <div className="roulette-bets-card__item_bet">
-              {$t(currencyValueChanger(currency, rate, item.amount))} {$t(getTicker(currency))}
+              {t(`${currencyValueChanger(currency, rate, item.amount)}`)} {t(`${getTicker(currency)}`)}
             </div>
           </div>
         )

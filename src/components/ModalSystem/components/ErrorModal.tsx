@@ -1,7 +1,7 @@
 import React from 'react';
 import {Modal} from "../../Modal/Modal";
 import {IModal} from "../../../interfaces/modal/IModal";
-import {$t} from "../../../lib/i18n";
+import {useTranslation} from "react-i18next";
 
 export const ErrorModal = ({
   message,
@@ -13,6 +13,8 @@ export const ErrorModal = ({
 
     window.location.reload()
   }
+
+  const {t} = useTranslation()
 
   return (
     <Modal
@@ -27,7 +29,7 @@ export const ErrorModal = ({
       ]}
     >
       <div>
-        {$t(message)}
+        {t(`${message}`)}
       </div>
     </Modal>
   )

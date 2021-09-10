@@ -4,7 +4,6 @@ import { Card } from '../../../../components/Card/Card';
 import {Input} from "../../../../components/Input/Input";
 import {FileInput} from "../../../../components/FileInput/FileInput";
 import { Button } from '../../../../components/Button/Button';
-import { $t } from '../../../../lib/i18n';
 
 import DefaultIcon from './img/default.png';
 
@@ -25,12 +24,15 @@ import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../../../components/Spinner/Spinner";
 import {getTicker} from "../../../../lib/tickers";
 import {Switcher} from "../../../../components/Switcher/Switcher";
+import {useTranslation} from "react-i18next";
 
 export const ProfileSettings = () => {
 
     const dispatch = useDispatch()
 
     const {token} = useContext(AuthContext)
+
+    const {t} = useTranslation()
 
     const nicknameVisibility = useSelector((state: any) => state.profileReducer.nicknameVisibility)
     const profileInfo = useSelector((state: any) => state.profileReducer.profileInfo)
@@ -274,7 +276,7 @@ export const ProfileSettings = () => {
                                 {profileInfo.nickname}
                             </div>
                             <div className="user-card__info_balance">
-                                {$t(`${currency === 'btc' ? btc || 0 : usd.toFixed(1) || 0} `)}
+                                {t(`${currency === 'btc' ? btc || 0 : usd.toFixed(1) || 0} `)}
                                 {getTicker(currency)}
                             </div>
                         </div>
@@ -293,11 +295,11 @@ export const ProfileSettings = () => {
                             checked={nicknameVisibility}
                             onChange={(value) => changeNicknameVisibility(value)}
                         >
-                            {$t('Hide my nickname')}
+                            {t('Hide my nickname')}
                         </Checkbox>
                     </div>
                     <Button primary onClick={() => handleSubmit('main')}>
-                        {$t('Save')}
+                        {t('Save')}
                     </Button>
                 </div>
             </Card>
@@ -322,7 +324,7 @@ export const ProfileSettings = () => {
                     </div>
                     {profileInfo.email !== formState.mainData.email ?
                       <Button primary onClick={() => handleSubmit('email')}>
-                          {$t('Save')}
+                          {t('Save')}
                       </Button> : null
                     }
                 </Card>
@@ -338,7 +340,7 @@ export const ProfileSettings = () => {
                     </div>
                     {profileInfo.phone !== formState.mainData.phone ?
                       <Button primary onClick={() => handleSubmit('phone')}>
-                          {$t('Save')}
+                          {t('Save')}
                       </Button> : null
                     }
                 </Card>
@@ -353,44 +355,6 @@ export const ProfileSettings = () => {
                     </div>
                 </Card>
             </div>
-            {/*<Card title={'Main'}>*/}
-            {/*    <div className={'input-group'}>*/}
-            {/*        <Input*/}
-            {/*            title={'Email'}*/}
-            {/*            placeholder={'Email'}*/}
-            {/*            type={'text'}*/}
-            {/*            value={formState.mainData.email || ''}*/}
-            {/*            onChange={(value) => formChangeHandler(value, 'email')}*/}
-            {/*        />*/}
-            {/*        <Input*/}
-            {/*            title={'Nickname'}*/}
-            {/*            placeholder={'Nickname'}*/}
-            {/*            type={'text'}*/}
-            {/*            value={formState.mainData.nickname || ''}*/}
-            {/*            onChange={(value) => formChangeHandler(value, 'nickname')}*/}
-            {/*        />*/}
-            {/*        <Input*/}
-            {/*            title={'Phone'}*/}
-            {/*            placeholder={'Phone'}*/}
-            {/*            type={'text'}*/}
-            {/*            value={formState.mainData.phone || ''}*/}
-            {/*            onChange={(value) => formChangeHandler(value, 'phone')}*/}
-            {/*        />*/}
-            {/*    </div>*/}
-
-            {/*    <div className={'user-card__fa2'}>*/}
-            {/*        <Switcher*/}
-            {/*            className={'fa2-switcher'}*/}
-            {/*            title={'Enable 2FA'}*/}
-            {/*            checked={formState.enable2Fa}*/}
-            {/*            onChange={(value) => formChangeHandler(value, '2fa')}*/}
-            {/*        />*/}
-            {/*    </div>*/}
-
-            {/*    <Button primary onClick={() => handleSubmit('main')}>*/}
-            {/*        {$t('Save')}*/}
-            {/*    </Button>*/}
-            {/*</Card>*/}
             <Card title={'Change password'}>
                 <div className={'input-group'}>
                     <Input
@@ -416,7 +380,7 @@ export const ProfileSettings = () => {
                     />
                 </div>
                 <Button primary onClick={() => handleSubmit('password')}>
-                    {$t('Save')}
+                    {t('Save')}
                 </Button>
             </Card>
         </>

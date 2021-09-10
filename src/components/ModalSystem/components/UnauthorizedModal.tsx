@@ -1,7 +1,7 @@
 import React from 'react';
 import {Modal} from "../../Modal/Modal";
 import {IModal} from "../../../interfaces/modal/IModal";
-import {$t} from "../../../lib/i18n";
+import {useTranslation} from "react-i18next";
 
 export const UnauthorizedModal = ({
   message,
@@ -11,6 +11,8 @@ export const UnauthorizedModal = ({
   const handleShow = (value: boolean) => {
     onClose(value)
   }
+
+  const {t} = useTranslation()
 
   return (
     <Modal
@@ -26,7 +28,7 @@ export const UnauthorizedModal = ({
         ]}
     >
       <div>
-        {$t(message)}
+        {t(`${message}`)}
       </div>
     </Modal>
 )

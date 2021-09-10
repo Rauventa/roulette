@@ -10,14 +10,16 @@ import {AuthContext} from "../../context/AuthContext";
 import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../components/Spinner/Spinner";
 import DefaultIcon from "./img/default.png";
-import {$t} from "../../lib/i18n";
 import {config} from "../../config/config";
+import {useTranslation} from "react-i18next";
 
 export const RatingPage = () => {
 
   const {token} = useContext(AuthContext)
 
   const dispatch = useDispatch()
+
+  const {t} = useTranslation()
 
   const rating = useSelector((state: any) => state.statsReducer.rating)
 
@@ -59,10 +61,10 @@ export const RatingPage = () => {
             </div>
             {original.nickname === '[Hidden]' ?
                 <div className="table-user__name hidden-nickname">
-                  {$t('Hidden')}
+                  {t('Hidden')}
                 </div> :
                 <div className="table-user__name">
-                  {$t(original.nickname)}
+                  {t(original.nickname)}
                 </div>
             }
           </div>

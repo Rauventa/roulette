@@ -1,7 +1,7 @@
 import React from 'react';
 import { IModal } from '../../../interfaces/modal/IModal';
-import {$t} from "../../../lib/i18n";
 import {Modal} from "../../Modal/Modal";
+import {useTranslation} from "react-i18next";
 
 export const InfoModal = ({
   message,
@@ -13,6 +13,8 @@ export const InfoModal = ({
     onClose(value)
   }
 
+  const {t} = useTranslation()
+
   return (
     <Modal
       title={formState.title}
@@ -20,7 +22,7 @@ export const InfoModal = ({
       buttons={formState.buttons}
     >
       <div>
-        {$t(message)}
+        {t(`${message}`)}
       </div>
     </Modal>
   )

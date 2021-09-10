@@ -1,6 +1,6 @@
 import React from 'react';
 import './DepositPage.scss'
-import { $t } from '../../lib/i18n';
+import { t } from '../../lib/i18n';
 import {DepositContainer} from "../../containers/DepositContainer/DepositContainer";
 
 export const DepositPage = () => {
@@ -8,7 +8,7 @@ export const DepositPage = () => {
   return (
     <div className={'deposit-page'}>
       <div className="page-title">
-        {$t('Deposit')}
+        {t('Deposit')}
       </div>
 
       <DepositContainer />

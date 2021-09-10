@@ -2,7 +2,7 @@ import React from 'react';
 import './Modal.scss'
 import { Button } from '../Button/Button';
 import {useHistory} from "react-router-dom";
-import { $t } from '../../lib/i18n';
+import { t } from '../../lib/i18n';
 
 import {ReactComponent as CloseIcon} from "./img/closePic.svg";
 
@@ -42,10 +42,10 @@ export const Modal = ({
         </div>
         <div className="modal__title">
           <div className="modal__title_main">
-            {title ? $t(title) : null}
+            {title ? t(title) : null}
           </div>
           <div className="modal__title_additional">
-            {subtitle ? $t(subtitle) : null}
+            {subtitle ? t(subtitle) : null}
           </div>
         </div>
         <div className={'modal__content'}>

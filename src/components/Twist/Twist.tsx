@@ -1,5 +1,5 @@
 import React from 'react';
-import { $t } from '../../lib/i18n';
+import { t } from '../../lib/i18n';
 import { Card } from '../Card/Card';
 import './Twist.scss'
 
@@ -20,7 +20,7 @@ export const Twist = ({
       <div className={'twist__container'}>
         {data.map((item: any, index: number) =>
             <div key={index+item} className={'twist__container_item'}>
-              {$t(item)}
+              {t(item)}
             </div>
         )}
       </div>

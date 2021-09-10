@@ -3,7 +3,7 @@ import React from 'react';
 import './Table.scss';
 import { useTable, usePagination } from 'react-table'
 import {Button} from "../Button/Button";
-import {$t} from "../../lib/i18n";
+import {useTranslation} from "react-i18next";
 
 interface TableProps {
     className?: string,
@@ -26,6 +26,8 @@ export const Table = ({
     noContentMessage,
     onPaginationClick
 }: TableProps) => {
+
+    const {t} = useTranslation()
 
     const {
         getTableProps,
@@ -96,7 +98,7 @@ export const Table = ({
               </table>
               :
               <div className={'table-no-data text-secondary'}>
-                  {$t(noContentMessage || 'Empty here')}
+                  {t(noContentMessage || 'Empty here')}
               </div>
             }
 

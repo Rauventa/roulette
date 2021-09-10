@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import './UserWallets.scss'
 import {Card} from "../../../../components/Card/Card";
-import { $t } from '../../../../lib/i18n';
 import { Button } from '../../../../components/Button/Button';
 import {WalletItem} from "./WalletItem/WalletItem";
 import {AuthContext} from "../../../../context/AuthContext";
@@ -11,12 +10,15 @@ import {Input} from "../../../../components/Input/Input";
 import {Select} from "../../../../components/Select/Select";
 import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../../../components/Spinner/Spinner";
+import {useTranslation} from "react-i18next";
 
 export const UserWallets = () => {
 
   const {token} = useContext(AuthContext)
 
   const wallets = useSelector((state: any) => state.balanceReducer.wallets)
+
+  const {t} = useTranslation()
 
   const dispatch = useDispatch()
 
@@ -110,10 +112,10 @@ export const UserWallets = () => {
       <div className="user-wallets__add">
         {addShower ?
           <Button dark onClick={() => setAddShower(!addShower)}>
-            {$t('Close')}
+            {t('Close')}
           </Button> :
           <Button dark onClick={() => setAddShower(!addShower)}>
-            {$t('+ Add')}
+            {t('+ Add')}
           </Button>
         }
       </div>
@@ -126,7 +128,7 @@ export const UserWallets = () => {
               <Select options={currencyOptions} placeholder={'Select currency'} value={formState.currency} onChange={(value) => formChangeHandler(value, 'currency')} />
             </div>
             <Button light onClick={addWalletHandler}>
-              {$t('Add new wallet')}
+              {t('Add new wallet')}
             </Button>
           </div>
         </CSSTransition>
@@ -142,7 +144,7 @@ export const UserWallets = () => {
             )
           }) :
             <div className={'text-secondary'}>
-              {$t('No wallets')}
+              {t('No wallets')}
             </div>
           }
         </div>

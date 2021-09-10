@@ -1,7 +1,7 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { dateFromSeconds } from '../../lib/dateFormater';
-import {$t} from '../../lib/i18n';
 import './TimeLine.scss';
+import {useTranslation} from "react-i18next";
 
 interface TimeLineProps {
   seconds: number,
@@ -15,6 +15,8 @@ export const TimeLine = ({
 
   const [width, setWidth] = useState<any>(1)
   const [time, setTime] = useState<any>(0)
+
+  const {t} = useTranslation()
 
   useEffect(() => {
     setTime(seconds)
@@ -42,13 +44,13 @@ export const TimeLine = ({
     <div className={'timeline'}>
       <div className="timeline__backdrop">
         <div className={'timeline__backdrop_name'}>
-          {$t('Start')}
+          {t('Start')}
         </div>
         <div className="timeline__backdrop_text">
-          {$t(time !== 0 ? text : '')}
+          {t(`${time !== 0 ? text : ''}`)}
         </div>
         <div className="timeline__backdrop_time">
-          {$t(time === 0 ? '' : dateFromSeconds(time))}
+          {t(time === 0 ? '' : dateFromSeconds(time))}
         </div>
       </div>
       <div
@@ -56,7 +58,7 @@ export const TimeLine = ({
         style={{width: `${width}%`}}
       >
         <div className="timeline__bar_overflow">
-          {$t('overflow')}
+          {t('overflow')}
         </div>
       </div>
     </div>

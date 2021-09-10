@@ -1,11 +1,11 @@
 import React from 'react';
 import { Card } from '../Card/Card';
 import './GameCard.scss'
-import {$t} from "../../lib/i18n";
 import {DiceGameCard} from "../../pages/DicePage/components/DIceGameCard/DiceGameCard";
 import {HiloGameCard} from "../../pages/HiloPage/components/HiloGameCard/HiloGameCard";
 import {useSelector} from "react-redux";
 import {RouletteGameCard} from "../../pages/RoulettePage/components/RouletteGameCard/RouletteGameCard";
+import {useTranslation} from "react-i18next";
 
 interface GameCardProps {
   formState: any,
@@ -28,14 +28,16 @@ export const GameCard = ({
   const currency = useSelector((state: any) => state.balanceReducer.currency)
   const rate = useSelector((state: any) => state.balanceReducer.rate)
 
+  const {t} = useTranslation()
+
   return (
     <Card className={'game-card'} title={`Game ${gameNumber ? `${gameNumber}` : ''}`}>
       <div className={'game-card__subtitle'}>
         <div className="card__subtitle_left">
-          {$t('Fair Game')}
+          {t('Fair Game')}
         </div>
         <div className="card__subtitle_right text-secondary">
-          {$t(`${hash}`)}
+          {t(`${hash}`)}
         </div>
       </div>
       {type === 'dice' ?

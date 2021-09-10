@@ -1,12 +1,12 @@
 import React, {useContext} from 'react';
 import './RouletteBetCard.scss';
 import {Button} from "../../../../components/Button/Button";
-import {$t} from "../../../../lib/i18n";
 import {useDispatch, useSelector} from "react-redux";
 import {makeRouletteBet} from "../../../../store/actions/Roulette/rouletteActions";
 import {AuthContext} from "../../../../context/AuthContext";
 import {loaderVisibilityHandler} from "../../../../store/actions/Application/applicationActions";
 import {getBalance} from "../../../../store/actions/Balance/balanceActions";
+import {useTranslation} from "react-i18next";
 
 interface RouletteBetCardProps {
   formState: any,
@@ -26,6 +26,8 @@ export const RouletteBetCard = ({
 
   const currency = useSelector((state: any) => state.balanceReducer.currency)
   const rate = useSelector((state: any) => state.balanceReducer.rate)
+
+  const {t} = useTranslation()
 
   const betValues = [1, 2, 5, 10, 25, 50, 75, 100]
 
@@ -51,7 +53,7 @@ export const RouletteBetCard = ({
           {betValues.map((item: number, index: number) => {
             return (
               <div key={index+item} className={'roulette-bet-card__bets_bet'} onClick={() => handleChange(bet + item*0.00001)}>
-                {$t(item)}
+                {t(`${item}`)}
               </div>
             )
           })}
@@ -60,12 +62,12 @@ export const RouletteBetCard = ({
 
       <div className="bet-card__buttons">
         <Button primary onClick={handleSubmit}>
-          {$t('Make a Bet')}
+          {t('Make a Bet')}
         </Button>
         <div className={'bet-card__buttons_currency'}>
           {currency === 'btc' ?
-            $t('BTC') :
-            $t('USD')
+            t('BTC') :
+            t('USD')
           }
         </div>
       </div>

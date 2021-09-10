@@ -1,5 +1,4 @@
 import React, {useContext, useState} from 'react';
-import {$t} from "../../../../lib/i18n";
 import {Range} from "../../../../components/Range/Range";
 import {Button} from "../../../../components/Button/Button";
 import {getDiceHistory, startDice} from "../../../../store/actions/Dice/diceActions";
@@ -11,6 +10,7 @@ import {getRating, getStats} from "../../../../store/actions/Stats/statsActions"
 import {config} from "../../../../config/config";
 import {getBalance} from "../../../../store/actions/Balance/balanceActions";
 import {modalService} from "../../../../services/modal/modalService";
+import {useTranslation} from "react-i18next";
 
 interface DiceBetCardProps {
   bet: number;
@@ -24,6 +24,8 @@ export const DiceBetCard = ({
 
   const [range, setRange] = useState<number>(50)
   const [loader, setLoader] = useState<boolean>(false)
+
+  const {t} = useTranslation()
 
   const {token, isAuth} = useContext(AuthContext)
 
@@ -99,10 +101,10 @@ export const DiceBetCard = ({
       <div className="bet-card__data">
         <div className="bet-card__data_info">
           <div className="bet-card__data_info-text">
-            {$t('Probability of Winning')}
+            {t('Probability of Winning')}
           </div>
           <div className="bet-card__data_info-percent">
-            {$t(`${range}%`)}
+            {t(`${range}%`)}
           </div>
         </div>
         <div className="bet-card__data_spinner">
@@ -116,12 +118,12 @@ export const DiceBetCard = ({
       </div>
       <div className="bet-card__buttons">
         <Button primary onClick={makeBetHandler}>
-          {$t('Make a Bet')}
+          {t('Make a Bet')}
         </Button>
         <div className={'bet-card__buttons_currency'}>
           {currency === 'btc' ?
-              $t('BTC') :
-              $t('USD')
+              t('BTC') :
+              t('USD')
           }
         </div>
       </div>

@@ -76,8 +76,6 @@ export const DicePage = () => {
 
         <StatsRow />
 
-        {/*<UserCard />*/}
-
         <BetCard
           formState={formState}
           type={'dice'}

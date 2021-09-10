@@ -6,7 +6,6 @@ import {ReactComponent as ETHIcon} from "./img/eth.svg";
 
 import {Card} from "../../components/Card/Card";
 import { Button } from '../../components/Button/Button';
-import { t } from '../../lib/i18n';
 import { Input } from '../../components/Input/Input';
 import {Select} from "../../components/Select/Select";
 import {AuthContext} from "../../context/AuthContext";
@@ -14,8 +13,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {createWithdraw, getWallets} from "../../store/actions/Balance/balanceActions";
 import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../components/Spinner/Spinner";
+import {useTranslation} from "react-i18next";
 
 export const WithdrawPage = () => {
+
+  const {t} = useTranslation()
 
   const {token} = useContext(AuthContext)
 

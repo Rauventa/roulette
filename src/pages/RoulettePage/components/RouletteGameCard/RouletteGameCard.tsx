@@ -16,7 +16,6 @@ export const RouletteGameCard = ({
   gameData,
   rate
 }: RouletteGameCardProps) => {
-
   const {t} = useTranslation()
 
   return (

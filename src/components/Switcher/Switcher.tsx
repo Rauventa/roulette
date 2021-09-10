@@ -1,7 +1,7 @@
 import React from 'react';
 import './Swither.scss';
 import Switch from "react-switch";
-import { t } from '../../lib/i18n';
+import {useTranslation} from "react-i18next";
 
 interface SwitcherProps {
     className?: string,
@@ -16,6 +16,8 @@ export const Switcher = ({
     checked,
     onChange
 }: SwitcherProps) => {
+
+    const {t} = useTranslation()
 
     const defaultSwitchProps = {
         checkedIcon: false,

@@ -77,14 +77,14 @@ export const Table = ({
                     {headerGroups.map(headerGroup => (
                       <tr {...headerGroup.getHeaderGroupProps()}>
                           {headerGroup.headers.map(column => (
-                            <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                            <th {...column.getHeaderProps()}>{t(`${column.render('Header')}`)}</th>
                           ))}
                       </tr>
                     ))}
                     </thead> : null
                   }
                   <tbody {...getTableBodyProps()}>
-                  {page.map((row, i) => {
+                  {page.map((row) => {
                       prepareRow(row)
                       return (
                         <tr {...row.getRowProps()}>
@@ -98,7 +98,7 @@ export const Table = ({
               </table>
               :
               <div className={'table-no-data text-secondary'}>
-                  {t(noContentMessage || 'Empty here')}
+                  {t(`${noContentMessage}` || 'Empty here')}
               </div>
             }
 

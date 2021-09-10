@@ -1,5 +1,5 @@
 import React, {ReactNode, useState} from 'react';
-import { $t } from '../../lib/i18n';
+import { t } from '../../lib/i18n';
 import './FileInput.scss'
 
 interface FileInputProps {
@@ -34,7 +34,7 @@ export const FileInput = ({
                 htmlFor={id}
             >
                 {label ?
-                    $t(label) : null
+                    t(label) : null
                 }
                 <img src={file ? URL.createObjectURL(file) : defaultImage} alt=""/>
             </label>

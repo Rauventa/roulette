@@ -6,7 +6,6 @@ import {AuthContext} from "../../context/AuthContext";
 import { Table } from '../../components/Table/Table';
 import dateformat from "dateformat";
 import DefaultIcon from "../../containers/DiceResults/img/default.png";
-import {$t} from "../../lib/i18n";
 import {Card} from "../../components/Card/Card";
 import {ReactComponent as DownArrowIcon} from "../../containers/DepositContainer/img/down-arrow.svg";
 import {ReactComponent as UpArrowIcon} from "../../containers/DepositContainer/img/up-arrow.svg";
@@ -14,12 +13,15 @@ import {ReactComponent as UpArrowIcon} from "../../containers/DepositContainer/i
 import {ReactComponent as CheckIcon} from "./img/check.svg";
 import {ReactComponent as TimesIcon} from "./img/close.svg";
 import {ReactComponent as TimerIcon} from "./img/chronometer.svg";
+import {useTranslation} from "react-i18next";
 
 export const PaymentProofPage = () => {
 
   const dispatch = useDispatch()
 
   const {token} = useContext(AuthContext)
+
+  const {t} = useTranslation()
 
   const data = useSelector((state: any) => state.balanceReducer.proofData).map((item: any) => {
     return {
@@ -54,10 +56,10 @@ export const PaymentProofPage = () => {
             </div>
             {original.name === '[Hidden]' ?
               <div className="table-user__name hidden-nickname">
-                {$t('Hidden')}
+                {t('Hidden')}
               </div> :
               <div className="table-user__name">
-                {$t(original.name)}
+                {t(original.name)}
               </div>
             }
           </div>
@@ -101,7 +103,7 @@ export const PaymentProofPage = () => {
         Cell: ({row: {original}} : any) => (
           <div>
             <a href={original.blockchainSearchLink} target={'_blank'} className={'default-link'}>
-              {$t('BlockChain Link')}
+              {t('BlockChain Link')}
             </a>
           </div>
         )
@@ -127,7 +129,7 @@ export const PaymentProofPage = () => {
   return (
     <div className={'payment-proof'}>
       <div className="page-title">
-        {$t('Payment proof')}
+        {t('Payment proof')}
       </div>
 
       <div className="payment-proof__content">

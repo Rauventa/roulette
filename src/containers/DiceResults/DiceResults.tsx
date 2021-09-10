@@ -5,7 +5,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {getDiceHistory} from "../../store/actions/Dice/diceActions";
 import {AuthContext} from "../../context/AuthContext";
 import {Table} from "../../components/Table/Table";
-import { $t } from '../../lib/i18n';
 import dateformat from 'dateformat'
 
 import DefaultIcon from './img/default.png'
@@ -19,6 +18,7 @@ import {currencyValueChanger} from "../../lib/numberRefractor";
 import {getTicker} from "../../lib/tickers";
 import { config } from '../../config/config';
 import {gameModalService} from "../../services/modal/gameModalService";
+import {useTranslation} from "react-i18next";
 
 export const DiceResults = ({
   type,
@@ -54,6 +54,8 @@ export const DiceResults = ({
 
   const [historyType, setHistoryType] = useState<string>(type)
   const [loader, setLoader] = useState<boolean>(false)
+
+  const {t} = useTranslation()
 
   const changeHistoryType = async (type: string) => {
 
@@ -94,10 +96,10 @@ export const DiceResults = ({
           </div>
           {original.name === '[Hidden]' ?
               <div className="table-user__name hidden-nickname">
-                {$t('Hidden')}
+                {t('Hidden')}
               </div> :
               <div className="table-user__name">
-                {$t(original.name)}
+                {t(original.name)}
               </div>
           }
         </div>
@@ -112,7 +114,7 @@ export const DiceResults = ({
       accessor: 'bet',
       Cell: ({row: {original}} : any) => (
         <div>
-          {$t(`${currencyValueChanger(currency, rate, original.bet)} ${getTicker(currency)}`)}
+          {t(`${currencyValueChanger(currency, rate, original.bet)} ${getTicker(currency)}`)}
         </div>
       )
     },
@@ -125,7 +127,7 @@ export const DiceResults = ({
       accessor: 'result',
       Cell: ({row: {original}}: any) => (
           <div className={`bold ${original.result ? 'success' : 'danger'}`}>
-            {$t(`${original.result ? '+' : '-'} ${currencyValueChanger(currency, rate, original.profit, {absolute: true})} ${getTicker(currency)}`)}
+            {t(`${original.result ? '+' : '-'} ${currencyValueChanger(currency, rate, original.profit, {absolute: true})} ${getTicker(currency)}`)}
           </div>
       )
     },
@@ -138,10 +140,10 @@ export const DiceResults = ({
       accessor: 'hash',
       Cell: ({row: {original}}: any) => (
           <div className={'table-hidden'}>
-            {$t(`${original.hash.slice(0, 15)}...`)}
+            {t(`${original.hash.slice(0, 15)}...`)}
 
             {/*<span className={'table-hidden__full'}>*/}
-            {/*      {$t(original.hash)}*/}
+            {/*      {t(original.hash)}*/}
             {/*</span>*/}
           </div>
       )
@@ -179,10 +181,10 @@ export const DiceResults = ({
       {type === 'all' ?
         <div className="history-card__extra">
           <Button dark className={historyType === 'me' ? 'default' : ''} onClick={() => changeHistoryType('all')}>
-            {$t('All players')}
+            {t('All players')}
           </Button>
           <Button dark className={historyType === 'all' ? 'default' : ''} onClick={() => changeHistoryType('me')}>
-            {$t('Only me')}
+            {t('Only me')}
           </Button>
         </div> : null
       }

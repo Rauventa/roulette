@@ -1,5 +1,5 @@
 import React from 'react';
-import { $t } from '../../lib/i18n';
+import { t } from '../../lib/i18n';
 import './Card.scss'
 
 interface CardProps {
@@ -24,7 +24,7 @@ export const Card = ({
             {icon}
           </div>
           <div className="card__title_text">
-            {$t(title)}
+            {t(title)}
           </div>
         </div> : null
       }

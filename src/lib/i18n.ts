@@ -155,15 +155,5 @@ i18n
   });
 
 export const t = (text: string) => {
-
-  return text
-}
-
-export const $t = (text: any) => {
-
-  // const {t} = useTranslation();
-  //
-  // const data: string = t(`${text}`)
-
   return text
 }

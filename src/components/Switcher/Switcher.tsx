@@ -1,7 +1,7 @@
 import React from 'react';
 import './Swither.scss';
 import Switch from "react-switch";
-import { $t } from '../../lib/i18n';
+import { t } from '../../lib/i18n';
 
 interface SwitcherProps {
     className?: string,
@@ -37,7 +37,7 @@ export const Switcher = ({
             />
             {title ?
                 <div className={'switcher__title'}>
-                    {$t(title)}
+                    {t(title)}
                 </div> : null
             }
         </div>

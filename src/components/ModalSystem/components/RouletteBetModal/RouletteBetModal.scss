@@ -1,6 +1,6 @@
 .roulette-modal {
   padding: 40px;
-  width: 620px;
+  width: 720px;
 
   .modal__title {
 
@@ -8,7 +8,7 @@
       font-size: 24px;
       line-height: 24px;
       font-weight: 500;
-      width: calc(30% - 10px);
+      width: 20%;
     }
 
     &_additional {
@@ -16,7 +16,7 @@
       color: rgba(255,255,255, 0.6);
       font-size: 20px;
       line-height: 24px;
-      width: calc(70% - 10px);
+      width: 80%;
     }
   }
 
@@ -28,59 +28,45 @@
     &_item {
       width: 100%;
       display: flex;
+      align-items: center;
 
       &:not(:last-child) {
         margin-bottom: 10px;
       }
 
-      &:nth-child(2) {
-        flex-direction: column;
+      &-title, &-value {
+        font-size: 13px;
+      }
 
-        .roulette-modal__info_item-title {
-          width: 100%;
-          margin-bottom: 5px;
-        }
+      &-title {
+        width: 20%;
+      }
 
-        .roulette-modal__info_item-value {
-          width: 100%;
-          display: flex;
-          align-items: center;
-          overflow-x: auto;
+      &-value {
+        width: 80%;
+        color: rgba(255,255,255, 0.6);
+        display: flex;
+        align-items: center;
 
-          svg {
-            margin-left: 5px;
-            width: 20px;
-            height: 20px;
+        svg {
+          margin-left: 5px;
+          width: 20px;
+          height: 20px;
+
+          path {
+            transition: ease-in-out .3s;
+          }
+
+          &:hover {
+            cursor: pointer;
 
             path {
-              transition: ease-in-out .3s;
-            }
-
-            &:hover {
-              cursor: pointer;
-
-              path {
-                &:last-child {
-                  fill: rgba(255,255,255, 0.35);
-                }
+              &:last-child {
+                fill: rgba(255,255,255, 0.35);
               }
             }
           }
         }
-      }
-
-      &-title, &-value {
-        font-size: 14px;
-      }
-
-      &-title {
-        width: calc(30% - 10px);
-      }
-
-      &-value {
-        width: calc(70% - 10px);
-        color: rgba(255,255,255, 0.6);
-        overflow-x: hidden;
       }
     }
   }
@@ -185,10 +171,20 @@
         padding: 5px 7px;
       }
 
+      &-content {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+      }
+
       &-number {
+        display: flex;
+        justify-content: center;
+        align-content: center;
         font-family: 'Averta', sans-serif;
         font-size: 18px;
         font-weight: 600;
+        margin-right: 20px;
       }
 
       &-player {

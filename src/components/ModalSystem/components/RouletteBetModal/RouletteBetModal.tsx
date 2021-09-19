@@ -94,20 +94,28 @@ export const RouletteBetModal = ({
                           </div>
                           <div className="roulette-modal__info_item">
                               <div className="roulette-modal__info_item-title">
+                                  {t('Win Ticket')}
+                              </div>
+                              <div className="roulette-modal__info_item-value">
+                                  {t(`${formState.hiddenNumber} * ${formState.bank} = ${formState.hiddenNumber * formState.bank}`)}
+                              </div>
+                          </div>
+                          <div className="roulette-modal__info_item">
+                              <div className="roulette-modal__info_item-title">
                                   {t('Salt')}
                               </div>
                               <div className="roulette-modal__info_item-value">
                                   {t(formState.salt)}
                               </div>
                           </div>
-                          {/*<div className="roulette-modal__info_item">*/}
-                          {/*    <div className="roulette-modal__info_item-title">*/}
-                          {/*        {t('Win ticket')}*/}
-                          {/*    </div>*/}
-                          {/*    <div className="roulette-modal__info_item-value">*/}
-                          {/*        {t(`${formState.bank} * ${formState.hiddenNumber} = ${formState.bank * formState.hiddenNumber}`)}*/}
-                          {/*    </div>*/}
-                          {/*</div>*/}
+                          <div className="roulette-modal__info_item">
+                              <div className="roulette-modal__info_item-title">
+                                  {t('Proof')}
+                              </div>
+                              <div className="roulette-modal__info_item-value">
+                                  {t(`Number + Salt = ${proofLine}`)}
+                              </div>
+                          </div>
                       </> : null
                     }
                 </div>
@@ -151,22 +159,24 @@ export const RouletteBetModal = ({
                                 </div> : null
                               }
 
-                              <div className="roulette-modal__players_item-number">
-                                  {t(`${index + 1}`)}
-                              </div>
-                              <div className="roulette-modal__players_item-player">
-                                  <div className="roulette-modal__players_item-player--avatar">
-                                      {item.user.avatarUrl ?
-                                        <img src={`${config.apiPhotoPrefixUrl}/${item.user.avatarUrl }`} alt="user icon"/> :
-                                        <img src={DefaultIcon} alt="user icon"/>
-                                      }
+                              <div className="roulette-modal__players_item-content">
+                                  <div className="roulette-modal__players_item-number">
+                                      {t(`${index + 1}`)}
                                   </div>
-                                  <div className="roulette-modal__players_item-player--data">
-                                      <div className="roulette-modal__players_item-player--data_name">
-                                          {t(item.user.name)}
+                                  <div className="roulette-modal__players_item-player">
+                                      <div className="roulette-modal__players_item-player--avatar">
+                                          {item.user.avatarUrl ?
+                                              <img src={`${config.apiPhotoPrefixUrl}/${item.user.avatarUrl }`} alt="user icon"/> :
+                                              <img src={DefaultIcon} alt="user icon"/>
+                                          }
                                       </div>
-                                      <div className="roulette-modal__players_item-player--data_tickets">
-                                          {t(`Tickets ${item.ticketFrom} - ${item.ticketTo}`)}
+                                      <div className="roulette-modal__players_item-player--data">
+                                          <div className="roulette-modal__players_item-player--data_name">
+                                              {t(item.user.name)}
+                                          </div>
+                                          <div className="roulette-modal__players_item-player--data_tickets">
+                                              {t(`Tickets ${item.ticketFrom} - ${item.ticketTo}`)}
+                                          </div>
                                       </div>
                                   </div>
                               </div>

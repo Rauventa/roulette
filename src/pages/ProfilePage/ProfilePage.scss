@@ -10,26 +10,35 @@
       display: flex;
 
       &-tab {
-        background-color: rgba(255,255,255, 0.03);
-        border-radius: 12px;
+        background-color: rgba(255, 255, 255, 0.01);
+        border: 2px solid #2a2a41;
+        color: rgba(255, 255, 255, 0.6);
+        border-radius: 10px;
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 15px 25px;
+        padding: 10px 15px;
         transition: ease-in-out .3s;
+        font-size: 14px;
+        font-weight: 500;
 
         &:hover {
           cursor: pointer;
-          background-color: rgba(255,255,255, 0.15);
+          background-color: #2a2a41;
         }
 
         &:not(:last-child) {
-          margin-right: 30px;
+          margin-right: 15px;
+        }
+
+        svg {
+          margin-left: 10px;
         }
       }
 
       .active {
-        background-color: rgba(255,255,255, 0.15);
+        background-color: #2a2a41;
+        color: #fff;
       }
     }
   }

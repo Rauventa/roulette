@@ -11,22 +11,9 @@
   align-items: center;
 }
 
-.success {
-  .modal__title {
-    color: #00ffaa;
-  }
-}
-
-.danger {
-  .modal__title {
-    color: #ff00aa;
-  }
-}
-
 .modal {
   padding: 40px;
   border-radius: 20px;
-  //box-shadow: 0 8px 8px -4px #202036, 0 2px 4px -1px #202036, 0 0 1px 0 #202036;
   background-color: #2a2a41;
   min-width: 400px;
   position: relative;
@@ -61,13 +48,18 @@
     width: 100%;
 
     &_main {
-      font-size: 36px;
+      font-size: 24px;
+      line-height: 24px;
       font-weight: 500;
-      width: 100%;
+      width: 20%;
     }
 
     &_additional {
-
+      font-family: 'Averta', sans-serif;
+      color: rgba(255,255,255, 0.6);
+      font-size: 20px;
+      line-height: 24px;
+      width: 80%;
     }
   }
 
@@ -84,37 +76,64 @@
       }
     }
   }
+}
 
-  .status-modal {
+.status-modal {
+  width: 720px;
 
-    &__divider {
-      height: 1px;
-      background-color: rgba(255,255,255,0.1);
-      margin: 20px 0;
+  .roulette-modal__info {
+    margin-bottom: 0;
+  }
+
+  &__total {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+
+    &_text {
+      border-radius: 100px;
+      text-transform: uppercase;
+      font-size: 40px;
+      font-weight: bold;
+      padding: 15px 25px;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent;
     }
 
-    &__info {
-      margin-bottom: 20px;
+    .success {
+      background: -webkit-linear-gradient(#ffcf00, #ff8800);
+      text-shadow: 0 7px 10px rgba(255,136,0,0.3);
     }
 
-    &__item {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
+    .danger {
+      background: -webkit-linear-gradient(#e12d81, #c40047);
+      text-shadow: 0 7px 10px rgba(196,0,71,0.3);
+    }
+  }
 
-      &:not(:last-child) {
-        margin-bottom: 10px;
-      }
+  &__info {
+    margin-bottom: 20px;
+  }
 
-      &_title {
-        width: 50%;
-        margin-right: 20px;
-        font-weight: bold;
-      }
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 
-      &_value {
-        width: 50%;
-      }
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+
+    &_title {
+      width: 50%;
+      margin-right: 20px;
+      font-weight: bold;
+    }
+
+    &_value {
+      width: 50%;
     }
   }
 }

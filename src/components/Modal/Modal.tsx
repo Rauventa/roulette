@@ -9,7 +9,7 @@ import {ReactComponent as CloseIcon} from "./img/closePic.svg";
 interface ModalProps {
   className?: string,
   children?: any,
-  title: string,
+  title?: string,
   subtitle?: string,
   buttons: any,
   onResolve: (value: boolean) => void

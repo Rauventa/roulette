@@ -126,14 +126,14 @@ export function changeNickname(token, data) {
 
 export function changeEmail(token, data) {
     return async () => {
-
-        console.log(data)
         try {
             const response = await axiosClient.put('/Profile/ChangeEmail', data, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 }
             });
+
+            console.log(response.data)
 
             if (response.data?.errors?.length) {
                 errorModalService(response.data?.errors[0], response.data.status)
@@ -146,9 +146,6 @@ export function changeEmail(token, data) {
 }
 
 export function confirmEmail(token, data) {
-
-    console.log(data)
-
     return async () => {
         try {
             const response = await axiosClient.patch('/Profile/ConfirmEmail', data, {
@@ -156,8 +153,6 @@ export function confirmEmail(token, data) {
                     'Authorization': `Bearer ${token}`
                 }
             });
-
-            console.log(response.data.payload)
 
             if (response.data?.errors?.length) {
                 errorModalService(response.data?.errors[0], response.data.status)

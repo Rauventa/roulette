@@ -8,6 +8,8 @@ import {UserWallets} from "./components/UserWallets/UserWallets";
 import {UserStats} from "../../containers/UserStats/UserStats";
 import {WithdrawPage} from "../WithdrawPage/WithdrawPage";
 import {useTranslation} from "react-i18next";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faCog, faHistory, faMoneyBill, faMoneyCheckAlt, faUsers, faWallet} from '@fortawesome/free-solid-svg-icons';
 
 export const ProfilePage = () => {
 
@@ -18,27 +20,33 @@ export const ProfilePage = () => {
     const tabs = [
         {
             title: 'Settings',
-            iterator: 'settings'
+            iterator: 'settings',
+            icon: faCog,
         },
         {
             title: 'My game history',
-            iterator: 'history'
+            iterator: 'history',
+            icon: faHistory,
         },
         {
             title: 'Deposit',
-            iterator: 'deposit'
+            iterator: 'deposit',
+            icon: faMoneyBill,
         },
         {
-          title: 'Withdraw',
-          iterator: 'withdraw'
+            title: 'Withdraw',
+            iterator: 'withdraw',
+            icon: faMoneyCheckAlt,
         },
         {
             title: 'Wallets',
-            iterator: 'wallets'
+            iterator: 'wallets',
+            icon: faWallet,
         },
         {
             title: 'Referral',
-            iterator: 'referral'
+            iterator: 'referral',
+            icon: faUsers,
         },
     ]
 
@@ -63,6 +71,7 @@ export const ProfilePage = () => {
                             onClick={() => changeTabHandler(item.iterator)}
                         >
                             {t(`${item.title}`)}
+                            <FontAwesomeIcon icon={item.icon} />
                         </div>
                     )
                 })}
@@ -83,7 +92,7 @@ export const ProfilePage = () => {
             }
 
             {page === 'withdraw' ?
-              <WithdrawPage /> : null
+                <WithdrawPage /> : null
             }
 
             {page === 'wallets' ?

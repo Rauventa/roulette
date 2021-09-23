@@ -54,7 +54,9 @@ export const ProfileSettings = () => {
         },
         enable2Fa: false,
         emailCode: '',
-        phoneCode: ''
+        enableEmailCode: false,
+        phoneCode: '',
+        enablePhoneCode: false,
     }
 
     const [formState, setFormState] = useState<any>(defaultFormState)
@@ -170,6 +172,22 @@ export const ProfileSettings = () => {
                     }
                 })
                 break;
+            case 'changeEnableEmailCode':
+                setFormState((prev: any) => {
+                    return {
+                        ...prev,
+                        enableEmailCode: value
+                    }
+                })
+                break;
+            case 'changeEnablePhoneCode':
+                setFormState((prev: any) => {
+                    return {
+                        ...prev,
+                        enablePhoneCode: value
+                    }
+                })
+                break;
             case 'phoneCode':
                 setFormState((prev: any) => {
                     return {
@@ -190,17 +208,17 @@ export const ProfileSettings = () => {
             //TODO - message of success password change
         }
 
-        // if (type === 'email') {
-        //     if (profileInfo.email !== formState.mainData.email) {
-        //         await dispatch(changeEmail(token, formState.mainData.email))
-        //     }
-        // }
-
-        if (type === 'main') {
-
+        if (type === 'email') {
             if (profileInfo.email !== formState.mainData.email) {
                 await dispatch(changeEmail(token, formState.mainData.email))
             }
+        }
+
+        if (type === 'main') {
+
+            // if (profileInfo.email !== formState.mainData.email) {
+            //     await dispatch(changeEmail(token, formState.mainData.email))
+            // }
 
             if (profileInfo.nickname !== formState.mainData.nickname) {
                 await dispatch(changeNickname(token, {nickname: formState.mainData.nickname, hide: nicknameVisibility}))
@@ -314,15 +332,17 @@ export const ProfileSettings = () => {
                           onChange={(value) => formChangeHandler(value, 'email')}
                         />
                     </div>
-                    <div className={'input-group'}>
-                        <Input
-                          placeholder={'Code'}
-                          type={'text'}
-                          value={formState.emailCode}
-                          onChange={(value) => formChangeHandler(value, 'emailCode')}
-                        />
-                    </div>
-                    {profileInfo.email !== formState.mainData.email ?
+                    {formState.enableEmailCode ?
+                        <div className={'input-group'}>
+                            <Input
+                                placeholder={'Code'}
+                                type={'text'}
+                                value={formState.emailCode}
+                                onChange={(value) => formChangeHandler(value, 'emailCode')}
+                            />
+                        </div> : null
+                    }
+                    {(profileInfo.email !== formState.mainData.email) && !formState.enableEmailCode ?
                       <Button primary onClick={() => handleSubmit('email')}>
                           {t('Save')}
                       </Button> : null
@@ -338,7 +358,17 @@ export const ProfileSettings = () => {
                           onChange={(value) => formChangeHandler(value, 'phone')}
                         />
                     </div>
-                    {profileInfo.phone !== formState.mainData.phone ?
+                    {formState.enablePhoneCode ?
+                        <div className={'input-group'}>
+                            <Input
+                                placeholder={'Code'}
+                                type={'text'}
+                                value={formState.emailCode}
+                                onChange={(value) => formChangeHandler(value, 'phoneCode')}
+                            />
+                        </div> : null
+                    }
+                    {(profileInfo.phone !== formState.mainData.phone) && !formState.enablePhoneCode ?
                       <Button primary onClick={() => handleSubmit('phone')}>
                           {t('Save')}
                       </Button> : null

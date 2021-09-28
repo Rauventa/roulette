@@ -1,6 +1,6 @@
 import {axiosClient} from "../../../utils/axiosClient";
 import {
-    GET_AVATAR,
+    GET_AVATAR, GET_MESSAGES,
     GET_NICKNAME_VISIBILITY, GET_PROFILE_INFO, GET_REFERRAL_LINK,
     GET_REFERRALS,
     GET_REFERRALS_STATISTIC,
@@ -8,6 +8,7 @@ import {
 } from "../actionTypes";
 import {errorModalService} from "../../../services/modal/errorModalService";
 import {modalService} from "../../../services/modal/modalService";
+import {config} from "../../../config/config";
 
 export function getProfileInfo(token) {
     return async dispatch => {
@@ -258,6 +259,29 @@ export function getReferralLink(token) {
     }
 }
 
+export function getMessages (token) {
+    return async dispatch => {
+        try {
+            const response = await axiosClient.get('/Messages/GetMessages', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                params: {
+                    ...config.historyLoadParams,
+                }
+            })
+
+            if (response.data?.errors?.length) {
+                errorModalService(response.data?.errors[0], response.data.status)
+            } else {
+                dispatch(getMessagesSuccess(response.data.payload.data))
+            }
+        } catch (e) {
+            errorModalService('Cannot load support messages', e.response?.status || null)
+        }
+    }
+}
+
 export function getProfileInfoSuccess(profileInfo) {
     return {
         type: GET_PROFILE_INFO,
@@ -305,5 +329,12 @@ export function getReferralLinkSuccess(referralLink) {
     return {
         type: GET_REFERRAL_LINK,
         referralLink
+    }
+}
+
+export function getMessagesSuccess(messages) {
+    return {
+        type: GET_MESSAGES,
+        messages
     }
 }

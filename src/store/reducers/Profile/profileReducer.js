@@ -1,5 +1,5 @@
 import {
-    GET_AVATAR,
+    GET_AVATAR, GET_MESSAGES,
     GET_NICKNAME_VISIBILITY, GET_PROFILE_INFO, GET_REFERRAL_LINK,
     GET_REFERRALS,
     GET_REFERRALS_STATISTIC,
@@ -15,6 +15,7 @@ const initialState = {
     nicknameVisibility: false,
     avatar: null,
     referralLink: null,
+    messages: []
 };
 
 export default function profileReducer(state = initialState, action) {
@@ -54,6 +55,11 @@ export default function profileReducer(state = initialState, action) {
             return {
                 ...state,
                 referralLink: action.referralLink
+            }
+        case GET_MESSAGES:
+            return {
+                ...state,
+                messages: action.messages
             }
         default:
             return state

@@ -179,6 +179,8 @@ export function getPaymentProof(token, data) {
                 }
             })
 
+            console.log(response, data)
+
             if (response.data?.errors?.length) {
                 errorModalService(response.data.errors[0], response.data.status)
             } else {

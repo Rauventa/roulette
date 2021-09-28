@@ -12,7 +12,6 @@ import {inputValidator} from "../../../../lib/validator";
 import '../../AuthPage.scss'
 import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../../../components/Spinner/Spinner";
-import {useDispatch} from "react-redux";
 import {errorModalService} from "../../../../services/modal/errorModalService";
 import {useTranslation} from "react-i18next";
 

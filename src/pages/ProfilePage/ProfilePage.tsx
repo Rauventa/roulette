@@ -9,7 +9,8 @@ import {UserStats} from "../../containers/UserStats/UserStats";
 import {WithdrawPage} from "../WithdrawPage/WithdrawPage";
 import {useTranslation} from "react-i18next";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faCog, faHistory, faMoneyBill, faMoneyCheckAlt, faUsers, faWallet} from '@fortawesome/free-solid-svg-icons';
+import {faCog, faHistory, faMoneyBill, faMoneyCheckAlt, faUsers, faWallet, faEnvelope} from '@fortawesome/free-solid-svg-icons';
+import {ProfileMessages} from "./components/ProfileMessages/ProfileMessages";
 
 export const ProfilePage = () => {
 
@@ -47,6 +48,11 @@ export const ProfilePage = () => {
             title: 'Referral',
             iterator: 'referral',
             icon: faUsers,
+        },
+        {
+            title: 'Messages',
+            iterator: 'messages',
+            icon: faEnvelope,
         },
     ]
 
@@ -101,6 +107,10 @@ export const ProfilePage = () => {
 
             {page === 'referral' ?
                 <ProfileReferral /> : null
+            }
+
+            {page === 'messages' ?
+              <ProfileMessages /> : null
             }
         </div>
     </div>

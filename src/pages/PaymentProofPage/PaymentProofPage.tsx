@@ -11,8 +11,6 @@ import {ReactComponent as DownArrowIcon} from "../../containers/DepositContainer
 import {ReactComponent as UpArrowIcon} from "../../containers/DepositContainer/img/up-arrow.svg";
 
 import {ReactComponent as CheckIcon} from "./img/check.svg";
-import {ReactComponent as TimesIcon} from "./img/close.svg";
-import {ReactComponent as TimerIcon} from "./img/chronometer.svg";
 import {useTranslation} from "react-i18next";
 
 export const PaymentProofPage = () => {
@@ -33,6 +31,8 @@ export const PaymentProofPage = () => {
     }
   })
 
+  console.log(data)
+
   const fetchData = async () => {
     await dispatch(getPaymentProof(token, config.historyLoadParams))
   }
@@ -41,90 +41,88 @@ export const PaymentProofPage = () => {
     fetchData()
   }, []);
 
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: 'Name',
-        accessor: 'name',
-        Cell: ({row: {original}}: any) => (
-          <div className={'table-user'}>
-            <div className={'table-user__icon'}>
-              {original.icon ?
-                <img src={`${config.apiPhotoPrefixUrl}/${original.icon}`} alt="user icon"/> :
-                <img src={DefaultIcon} alt="user icon"/>
-              }
-            </div>
-            {original.name === '[Hidden]' ?
-              <div className="table-user__name hidden-nickname">
-                {t('Hidden')}
-              </div> :
-              <div className="table-user__name">
-                {t(original.name)}
-              </div>
+  const columns = [
+    {
+      Header: 'Name',
+      accessor: 'name',
+      Cell: ({row: {original}}: any) => (
+        <div className={'table-user'}>
+          <div className={'table-user__icon'}>
+            {original.icon ?
+              <img src={`${config.apiPhotoPrefixUrl}/${original.icon}`} alt="user icon"/> :
+              <img src={DefaultIcon} alt="user icon"/>
             }
           </div>
-        )
-      },
-      {
-        Header: 'Address',
-        accessor: 'address'
-      },
-      {
-        Header: 'Amount',
-        accessor: 'amount'
-      },
-      {
-        Header: 'Currency',
-        accessor: 'currency'
-      },
-      {
-        Header: 'Fee',
-        accessor: 'fee'
-      },
-      {
-        Header: 'Type',
-        accessor: 'type',
-        Cell: ({row: {original}}: any) =>
-          original.type === 'deposit' ? (
-            <div className={`table-icon-block success`}>
-              <DownArrowIcon />
-              {original.type}
+          {original.name === '[Hidden]' ?
+            <div className="table-user__name hidden-nickname">
+              {t('Hidden')}
+            </div> :
+            <div className="table-user__name">
+              {t(original.name)}
             </div>
-          ) : (
-            <div className={`table-icon-block danger`}>
-              <UpArrowIcon />
-              {original.type}
-            </div>
-          )
-      },
-      {
-        Header: 'Link',
-        accessor: 'blockchainSearchLink',
-        Cell: ({row: {original}} : any) => (
-          <div>
-            <a href={original.blockchainSearchLink} target={'_blank'} className={'default-link'}>
-              {t('BlockChain Link')}
-            </a>
+          }
+        </div>
+      )
+    },
+    {
+      Header: 'Address',
+      accessor: 'address'
+    },
+    {
+      Header: 'Amount',
+      accessor: 'amount'
+    },
+    {
+      Header: 'Currency',
+      accessor: 'currency'
+    },
+    {
+      Header: 'Fee',
+      accessor: 'fee'
+    },
+    {
+      Header: 'Type',
+      accessor: 'type',
+      Cell: ({row: {original}}: any) =>
+        original.type === 'deposit' ? (
+          <div className={`table-icon-block success`}>
+            <DownArrowIcon />
+            {original.type}
+          </div>
+        ) : (
+          <div className={`table-icon-block danger`}>
+            <UpArrowIcon />
+            {original.type}
           </div>
         )
-      },
-      {
-        Header: 'Date',
-        accessor: 'date'
-      },
-      {
-        Header: 'Status',
-        accessor: 'status',
-        Cell: ({row: {original}} : any) => (
-          <div className={'table-icons'}>
-            {original.status.includes('confirmation') ?
-              <CheckIcon /> : null
-            }
-          </div>
-        )
-      },
-    ], []
-  )
+    },
+    {
+      Header: 'Link',
+      accessor: 'blockchainSearchLink',
+      Cell: ({row: {original}} : any) => (
+        <div>
+          <a href={original.blockchainSearchLink} target={'_blank'} className={'default-link'}>
+            {t('BlockChain Link')}
+          </a>
+        </div>
+      )
+    },
+    {
+      Header: 'Date',
+      accessor: 'date'
+    },
+    {
+      Header: 'Status',
+      accessor: 'status',
+      Cell: ({row: {original}} : any) => (
+        <div className={'table-icons'}>
+          {original.status.includes('confirmation') ?
+            <CheckIcon /> : null
+          }
+        </div>
+      )
+    },
+  ]
 
   return (
     <div className={'payment-proof'}>

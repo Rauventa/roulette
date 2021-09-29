@@ -2,13 +2,15 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import './ProfileMessages.scss';
 
+import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
-import {getMessages} from "../../../../store/actions/Profile/profileActions";
+import {getMessages, sendMessage} from "../../../../store/actions/Profile/profileActions";
 import {AuthContext} from "../../../../context/AuthContext";
 import { Card } from '../../../../components/Card/Card';
 import {Input} from "../../../../components/Input/Input";
 import { Button } from '../../../../components/Button/Button';
 import { t } from '../../../../lib/i18n';
+import {loaderVisibilityHandler} from "../../../../store/actions/Application/applicationActions";
 
 export const ProfileMessages = () => {
 
@@ -32,6 +34,17 @@ export const ProfileMessages = () => {
     setFormMessage(value)
   }
 
+  const sendMessageHandler = async () => {
+    dispatch(loaderVisibilityHandler(true))
+
+    await dispatch(sendMessage(token, {message: formMessage}))
+    await fetchData()
+
+    setFormMessage('')
+
+    dispatch(loaderVisibilityHandler(false))
+  }
+
   return (
     <div className={'profile-messages__overflow'}>
       <Card
@@ -44,8 +57,16 @@ export const ProfileMessages = () => {
                 key={index}
                 className={`profile-messages__content_message ${item.isFromUser ? 'user-message' : 'support-message'}`}
               >
-                <div className={'profile-messages__content_message-text'}>
-                  text
+                <div className="profile-messages__content_container">
+                  <div className="profile-messages__content_container-user">
+                    {item.isFromUser ? 'You' : 'Support'}
+                  </div>
+                  <div className={'profile-messages__content_container-text'}>
+                    {item.text}
+                  </div>
+                  <div className="profile-messages__content_container-date">
+                    {moment(item.date, 'YYYYMMDD').fromNow()}
+                  </div>
                 </div>
               </div>
             )
@@ -59,7 +80,7 @@ export const ProfileMessages = () => {
           value={formMessage}
           onChange={(value) => handleChangeMessage(value)}
         />
-        <Button primary>
+        <Button primary onClick={sendMessageHandler}>
           {t('Send')}
         </Button>
       </Card>

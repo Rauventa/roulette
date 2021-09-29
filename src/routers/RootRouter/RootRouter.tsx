@@ -13,6 +13,7 @@ import {ProfilePage} from "../../pages/ProfilePage/ProfilePage";
 import {PaymentProofPage} from "../../pages/PaymentProofPage/PaymentProofPage";
 import {FaucetPage} from "../../pages/FaucetPage/FaucetPage";
 import {Page404} from "../../pages/Page404/Page404";
+import {FaqPage} from "../../pages/FaqPage/FaqPage";
 
 export const RootRouter = () => {
 
@@ -48,6 +49,9 @@ export const RootRouter = () => {
                 <Route path={'/payment-proof'}>
                   <PaymentProofPage />
                 </Route>
+                <Route path={'/faq'}>
+                  <FaqPage />
+                </Route>
 
                 <Route path='*' exact>
                   <Page404 />
@@ -77,6 +81,9 @@ export const RootRouter = () => {
                 </Route>
                 <Route path={'/rating'}>
                     <RatingPage />
+                </Route>
+                <Route path={'/faq'}>
+                  <FaqPage />
                 </Route>
 
                 <Route path='*' exact>

@@ -259,7 +259,7 @@ export function getReferralLink(token) {
     }
 }
 
-export function getMessages (token) {
+export function getMessages(token) {
     return async dispatch => {
         try {
             const response = await axiosClient.get('/Messages/GetMessages', {
@@ -274,13 +274,32 @@ export function getMessages (token) {
             if (response.data?.errors?.length) {
                 errorModalService(response.data?.errors[0], response.data.status)
             } else {
-                dispatch(getMessagesSuccess(response.data.payload.data))
+                dispatch(getMessagesSuccess(response.data.payload.data.reverse()))
             }
         } catch (e) {
             errorModalService('Cannot load support messages', e.response?.status || null)
         }
     }
 }
+
+export function sendMessage(token, data) {
+    return async () => {
+        try {
+            const response = await axiosClient.post('/Messages/SendMessage', data, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+
+            if (response.data?.errors?.length) {
+                errorModalService(response.data?.errors[0], response.data.status)
+            }
+        } catch (e) {
+            errorModalService('Cannot send message', e.response?.status || null)
+        }
+    }
+}
+
 
 export function getProfileInfoSuccess(profileInfo) {
     return {

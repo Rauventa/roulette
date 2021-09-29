@@ -88,6 +88,7 @@ i18n
           'Bet > 52': 'Bet > 52',
           'Bet < 48': 'Bet < 48',
           'HiLo': 'HiLo',
+          'Ask question': 'Ask question',
           'Use promo code to refill your balance': 'Use promo code to refill your balance',
           'Use one of payment option to refill your balance': 'Use one of payment option to refill your balance'
         }
@@ -208,6 +209,7 @@ i18n
           'All players': 'Все игроки',
           'Only me': 'Только я',
           'Page': 'Страница',
+          'Ask question': 'Задать вопрос'
         }
       },
     },

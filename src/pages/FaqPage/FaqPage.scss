@@ -1,0 +1,20 @@
+.faq-page {
+
+  &__text {
+    font-size: 14px;
+    font-weight: normal;
+    color: rgba(255,255,255,0.7);
+  }
+
+  &__question {
+    .textarea {
+      margin-bottom: 20px;
+    }
+  }
+
+  .card {
+    &:not(:last-child) {
+      margin-bottom: 40px;
+    }
+  }
+}

@@ -116,7 +116,7 @@ export const PaymentProofPage = () => {
       accessor: 'status',
       Cell: ({row: {original}} : any) => (
         <div className={'table-icons'}>
-          {original.status.includes('confirmation') ?
+          {original?.status?.includes('confirmation') ?
             <CheckIcon /> : null
           }
         </div>

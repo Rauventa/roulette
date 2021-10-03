@@ -19,6 +19,7 @@ import {RouletteSpinner} from "./components/RouletteSpinner/RouletteSpinner";
 import {loaderVisibilityHandler} from "../../store/actions/Application/applicationActions";
 import {gameModalService} from "../../services/modal/gameModalService";
 import { getBalance } from '../../store/actions/Balance/balanceActions';
+import {log} from "util";
 
 export const RoulettePage = () => {
 
@@ -77,17 +78,6 @@ export const RoulettePage = () => {
   const result = useSelector((state: any) => state.rouletteReducer.result)
   const rate = useSelector((state: any) => state.balanceReducer.rate)
 
-  // const minOrder = useSelector((state: any) => state.rouletteReducer.minOrder)
-
-  // useEffect(() => {
-  //   setFormState((prevState: any) => {
-  //     return {
-  //       ...prevState,
-  //       betValue: minOrder
-  //     }
-  //   })
-  // }, [minOrder]);
-
   useEffect(() => {
     if (result.hash) {
       setTimeout(async () => {
@@ -133,7 +123,7 @@ export const RoulettePage = () => {
     }
   }
 
-  console.log(result)
+  console.log(gameData)
 
   return (
     <div className={'roulette'}>
@@ -155,7 +145,7 @@ export const RoulettePage = () => {
           />
         </div>
         <div className="roulette__config_timer">
-          <TimeLine seconds={0} text={'Waiting for bets'} />
+          <TimeLine seconds={gameData?.secondsBeforeRoll?.toFixed(0) || 0} text={'Waiting for bets'} />
         </div>
       </div>
 

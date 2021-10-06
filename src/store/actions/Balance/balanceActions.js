@@ -1,5 +1,6 @@
 import {axiosClient} from "../../../utils/axiosClient";
 import {
+    BONUS_BALANCE,
     CHANGE_CURRENCY,
     GET_BTC_BALANCE, GET_CURRENT_RATE,
     GET_PAYMENT_HISTORY,
@@ -31,6 +32,23 @@ export function getBalance(token, rate) {
             const usdValue = response.data.payload * rate
 
             dispatch(getUsdBalance(usdValue))
+
+        } catch (e) {
+            errorModalService('Balance load error', e.response?.status || null)
+        }
+    }
+}
+
+export function getBonusBalance(token) {
+    return async dispatch => {
+        try {
+            const response = await axiosClient.get('/Profile/GetBonusBalanceInBTC', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            dispatch(getBonusBtcBalance(response.data.payload))
 
         } catch (e) {
             errorModalService('Balance load error', e.response?.status || null)
@@ -204,6 +222,13 @@ export function getUsdBalance(balanceUsd) {
     return {
         type: GET_USD_BALANCE,
         balanceUsd
+    }
+}
+
+export function getBonusBtcBalance(bonusBalance) {
+    return {
+        type: BONUS_BALANCE,
+        bonusBalance
     }
 }
 

@@ -11,9 +11,9 @@ import {axiosClient} from "../../../../utils/axiosClient";
 import {inputValidator} from "../../../../lib/validator";
 import {AuthContext} from "../../../../context/AuthContext";
 import '../../AuthPage.scss'
-import {useDispatch} from "react-redux";
 import {errorModalService} from "../../../../services/modal/errorModalService";
 import {useTranslation} from "react-i18next";
+import {RadioGroup} from "../../../../components/RadioGroup/RadioGroup";
 
 export const SignUp = () => {
 
@@ -105,6 +105,10 @@ export const SignUp = () => {
     }
   }
 
+  const handleRadioChange = (type: any) => {
+    console.log(type)
+  }
+
   return (
       <div className={'auth-page'}>
         <Card className={'fit-card'}>
@@ -137,6 +141,13 @@ export const SignUp = () => {
                   value={formState.confirmPassword}
                   errors={errors?.confirmPassword}
                   onChange={(value) => handleStateUpdate(value, 'repeat')}
+              />
+
+              <RadioGroup
+                  title={'Balance type'}
+                  values={['Bonus', 'Default']}
+                  defaultValue={'Default'}
+                  onChange={handleRadioChange}
               />
 
               <Checkbox

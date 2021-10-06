@@ -1,6 +1,9 @@
 import React from 'react';
 import './Input.scss'
 import {useTranslation} from "react-i18next";
+import PhoneInput from "react-phone-number-input";
+
+import 'react-phone-number-input/style.css'
 
 interface InputProps {
   className?: string,
@@ -62,15 +65,26 @@ export const Input = ({
             {icon}
           </div> : null
       }
-      <input
-        className={`${defaultClass} ${className || ''}`}
-        placeholder={t(`${placeholder}`)}
-        type={type}
-        name={name}
-        disabled={disabled}
-        value={value}
-        onChange={(event) => handleChange(event.target.value)}
-      />
+      {type === 'phone' ?
+          <PhoneInput
+              placeholder={t(`${placeholder}`)}
+              type={type}
+              name={name}
+              disabled={disabled}
+              //@ts-ignore
+              value={value}
+              onChange={handleChange}
+          /> :
+          <input
+              className={`${defaultClass} ${className || ''}`}
+              placeholder={t(`${placeholder}`)}
+              type={type}
+              name={name}
+              disabled={disabled}
+              value={value}
+              onChange={(event) => handleChange(event.target.value)}
+          />
+      }
       {errors ?
           <div className="input-group__errors">
             {t(`${errors}`)}

@@ -25,6 +25,8 @@ import {Spinner} from "../../../../components/Spinner/Spinner";
 import {getTicker} from "../../../../lib/tickers";
 import {Switcher} from "../../../../components/Switcher/Switcher";
 import {useTranslation} from "react-i18next";
+import {getBonusBalance} from "../../../../store/actions/Balance/balanceActions";
+import {currencyValueChanger} from "../../../../lib/numberRefractor";
 
 export const ProfileSettings = () => {
 
@@ -39,7 +41,9 @@ export const ProfileSettings = () => {
     const avatar = useSelector((state: any) => state.profileReducer.avatar)
     const btc = useSelector((state: any) => state.balanceReducer.balanceBtc)
     const usd = useSelector((state: any) => state.balanceReducer.balanceUsd)
+    const rate = useSelector((state: any) => state.balanceReducer.rate)
     const currency = useSelector((state: any) => state.balanceReducer.currency)
+    const bonus = useSelector((state: any) => state.balanceReducer.bonusBalance)
 
     const defaultFormState = {
         passwordData: {
@@ -60,7 +64,7 @@ export const ProfileSettings = () => {
     }
 
     const [formState, setFormState] = useState<any>(defaultFormState)
-    const [formErrors, setFormErrors] = useState<any>({})
+    // const [formErrors, setFormErrors] = useState<any>({})
     const [loader, setLoader] = useState<boolean>(false)
 
     useEffect(() => {
@@ -84,6 +88,7 @@ export const ProfileSettings = () => {
         await dispatch(getProfileInfo(token))
         await dispatch(getNicknameVisibility(token))
         await dispatch(getAvatar(token))
+        await dispatch(getBonusBalance(token))
 
         setLoader(false)
     }
@@ -269,6 +274,8 @@ export const ProfileSettings = () => {
         }))
     }
 
+    console.log(formState)
+
     return (
         <>
             <CSSTransition in={loader} timeout={500} unmountOnExit classNames="my-node">
@@ -297,6 +304,12 @@ export const ProfileSettings = () => {
                                 {t(`${currency === 'btc' ? btc || 0 : usd.toFixed(1) || 0} `)}
                                 {getTicker(currency)}
                             </div>
+
+                            {bonus ?
+                                <div className="user-card__info_bonus">
+                                    {currencyValueChanger(currency, rate, bonus)} {getTicker(currency)}
+                                </div> : null
+                            }
                         </div>
                     </div>
                     <div className={'user-card__formRow'}>
@@ -353,7 +366,7 @@ export const ProfileSettings = () => {
                         <Input
                           title={'Phone'}
                           placeholder={'Phone'}
-                          type={'text'}
+                          type={'phone'}
                           value={formState.mainData.phone || ''}
                           onChange={(value) => formChangeHandler(value, 'phone')}
                         />

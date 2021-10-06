@@ -1,4 +1,5 @@
 import {
+    BONUS_BALANCE,
     CHANGE_CURRENCY,
     GET_BTC_BALANCE, GET_CURRENT_RATE,
     GET_PAYMENT_HISTORY, GET_PAYMENT_PROOF,
@@ -10,6 +11,7 @@ const initialState = {
     currency: 'btc',
     balanceBtc: null,
     balanceUsd: null,
+    bonusBalance: null,
     wallets: [],
     history: [],
     rate: null,
@@ -27,6 +29,11 @@ export default function balanceReducer(state = initialState, action) {
             return {
                 ...state,
                 balanceBtc: action.balanceBtc
+            }
+        case BONUS_BALANCE:
+            return {
+                ...state,
+                bonusBalance: action.bonusBalance
             }
         case GET_CURRENT_RATE:
             return {

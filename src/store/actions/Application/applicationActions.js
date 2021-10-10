@@ -1,4 +1,4 @@
-import {FAQ_QUESTIONS, LOADER_VISIBILITY} from "../actionTypes";
+import {FAQ_QUESTIONS, GET_USER_COUNTRY, LOADER_VISIBILITY} from "../actionTypes";
 import {axiosClient} from "../../../utils/axiosClient";
 import {errorModalService} from "../../../services/modal/errorModalService";
 
@@ -18,8 +18,6 @@ export function loadFaqQuestions(token) {
                 }
             })
 
-            console.log(response)
-
             if (response.data?.errors?.length) {
                 errorModalService(response.data?.errors[0], response.data.status)
             } else {
@@ -31,9 +29,32 @@ export function loadFaqQuestions(token) {
     }
 }
 
+export function getUserCountry() {
+    return async dispatch => {
+        try {
+            const response = await axiosClient.get('/Auth/GetUserCountry')
+
+            if (response.data?.errors?.length) {
+                errorModalService(response.data?.errors[0], response.data.status)
+            } else {
+                dispatch(getUserCountrySuccess(response.data))
+            }
+        } catch (e) {
+            errorModalService('Cannot load user country', e.response?.status || null)
+        }
+    }
+}
+
 export const loadFaqQuestionsSuccess = (faqQuestions) => {
     return {
         type: FAQ_QUESTIONS,
         faqQuestions
+    }
+}
+
+export const getUserCountrySuccess = (country) => {
+    return {
+        type: GET_USER_COUNTRY,
+        country
     }
 }

@@ -12,8 +12,8 @@ import {ReactComponent as PenIcon} from "./img/pen.svg";
 import {useDispatch, useSelector} from "react-redux";
 import {
     changeEmail,
-    changeNickname, changePassword, confirmEmail,
-    getAvatar,
+    changeNickname, changePassword, changePhone, confirm2fa, confirmEmail, confirmPhone,
+    getAvatar, getCurrent2fa,
     getNicknameVisibility, getProfileInfo,
     uploadAvatar
 } from "../../../../store/actions/Profile/profileActions";
@@ -27,6 +27,7 @@ import {Switcher} from "../../../../components/Switcher/Switcher";
 import {useTranslation} from "react-i18next";
 import {getBonusBalance} from "../../../../store/actions/Balance/balanceActions";
 import {currencyValueChanger} from "../../../../lib/numberRefractor";
+import {getUserCountry} from "../../../../store/actions/Application/applicationActions";
 
 export const ProfileSettings = () => {
 
@@ -44,6 +45,8 @@ export const ProfileSettings = () => {
     const rate = useSelector((state: any) => state.balanceReducer.rate)
     const currency = useSelector((state: any) => state.balanceReducer.currency)
     const bonus = useSelector((state: any) => state.balanceReducer.bonusBalance)
+    const country = useSelector((state: any) => state.applicationReducer.country)
+    const faCode = useSelector((state: any) => state.profileReducer.faCode)
 
     const defaultFormState = {
         passwordData: {
@@ -56,7 +59,7 @@ export const ProfileSettings = () => {
             nickname: '',
             phone: ''
         },
-        enable2Fa: false,
+        fa2Code: '',
         emailCode: '',
         enableEmailCode: false,
         phoneCode: '',
@@ -64,8 +67,6 @@ export const ProfileSettings = () => {
     }
 
     const [formState, setFormState] = useState<any>(defaultFormState)
-    // const [formErrors, setFormErrors] = useState<any>({})
-    const [loader, setLoader] = useState<boolean>(false)
 
     useEffect(() => {
         fetchData()
@@ -83,17 +84,14 @@ export const ProfileSettings = () => {
     }, [profileInfo])
 
     const fetchData = async () => {
-        setLoader(true)
-
         await dispatch(getProfileInfo(token))
         await dispatch(getNicknameVisibility(token))
         await dispatch(getAvatar(token))
         await dispatch(getBonusBalance(token))
-
-        setLoader(false)
+        await dispatch(getUserCountry())
     }
 
-    const formChangeHandler = (value: any, iterator: string) => {
+    const formChangeHandler = async (value: any, iterator: string) => {
         switch (iterator) {
             case 'old-password':
                 setFormState((prev: any) => {
@@ -161,15 +159,10 @@ export const ProfileSettings = () => {
                     }
                 })
                 break;
-            case '2fa':
-                setFormState((prev: any) => {
-                    return {
-                        ...prev,
-                        enable2Fa: value
-                    }
-                })
-                break;
             case 'emailCode':
+                if (value.length === 6) {
+                    await dispatch(confirmEmail(token, {email: formState.mainData.email, code: value}, 'change'))
+                }
                 setFormState((prev: any) => {
                     return {
                         ...prev,
@@ -194,6 +187,9 @@ export const ProfileSettings = () => {
                 })
                 break;
             case 'phoneCode':
+                if (value.length === 6) {
+                    await dispatch(confirmPhone(token, {phone: formState.mainData.phone, code: value}, 'change'))
+                }
                 setFormState((prev: any) => {
                     return {
                         ...prev,
@@ -201,87 +197,90 @@ export const ProfileSettings = () => {
                     }
                 })
                 break;
+            case 'fa2Code':
+                setFormState((prev: any) => {
+                    return {
+                        ...prev,
+                        fa2Code: value
+                    }
+                })
+                break;
         }
     }
 
     const handleSubmit = async (type: string) => {
-        setLoader(true)
 
-        if (type === 'password') {
-            await dispatch(changePassword(token, {...formState.passwordData, email: profileInfo.email}))
-
-            //TODO - message of success password change
+        switch (type) {
+            case 'password':
+                await dispatch(changePassword(token, {...formState.passwordData, email: profileInfo.email}))
+                setFormState((prev: any) => {
+                    return {
+                        ...prev,
+                        passwordData: defaultFormState.passwordData
+                    }
+                })
+                break;
+            case 'email':
+                if (profileInfo.email !== formState.mainData.email) {
+                    await dispatch(changeEmail(token, {email: formState.mainData.email}))
+                    setFormState((prev: any) => {
+                        return {
+                            ...prev,
+                            enableEmailCode: true
+                        }
+                    })
+                }
+                break;
+            case 'phone':
+                if (profileInfo.phone !== formState.mainData.phone) {
+                    await dispatch(changePhone(token, {phone: formState.mainData.phone}))
+                }
+                setFormState((prev: any) => {
+                    return {
+                        ...prev,
+                        enablePhoneCode: true
+                    }
+                })
+                break;
+            case 'nickname':
+                if (profileInfo.nickname !== formState.mainData.nickname) {
+                    await dispatch(changeNickname(token, {nickname: formState.mainData.nickname, hide: nicknameVisibility}))
+                }
+                break;
         }
-
-        if (type === 'email') {
-            if (profileInfo.email !== formState.mainData.email) {
-                await dispatch(changeEmail(token, formState.mainData.email))
-            }
-        }
-
-        if (type === 'main') {
-
-            // if (profileInfo.email !== formState.mainData.email) {
-            //     await dispatch(changeEmail(token, formState.mainData.email))
-            // }
-
-            if (profileInfo.nickname !== formState.mainData.nickname) {
-                await dispatch(changeNickname(token, {nickname: formState.mainData.nickname, hide: nicknameVisibility}))
-            }
-
-            // if (profileInfo.phone !== formState.mainData.phone) {
-            //     await dispatch(changeEmail(token, formState.mainData.phone))
-            // }
-
-            await dispatch(getProfileInfo(token))
-
-        }
-
-        setLoader(false)
     }
 
     const changeNicknameVisibility = async (hide: boolean) => {
-        setLoader(true)
-
         await dispatch(changeNickname(token, {nickname: formState.mainData.nickname, hide}))
         await dispatch(getNicknameVisibility(token))
-
-        setLoader(false)
     }
 
     const savePicHandler = async (data: any) => {
         const formData = new FormData()
         formData.append('File', data)
 
-        setLoader(true)
-
         await dispatch(uploadAvatar(token, formData))
         await dispatch(getAvatar(token))
-
-        setLoader(false)
     }
 
-    useEffect(() => {
-      if (formState.emailCode.length === 6) {
-          confirmEmailHandler()
-      }
-    }, [formState]);
-
-    const confirmEmailHandler = async () => {
-        await dispatch(confirmEmail(token, {
-            email: formState.mainData.email,
-            code: formState.emailCode
-        }))
+    const get2FaCode = async () => {
+        await dispatch(getCurrent2fa(token))
     }
 
-    console.log(formState)
+    const confirm2FaAuth = async () => {
+        await dispatch(confirm2fa(token, {enable: !profileInfo.is2FaEnabled, googleAuthenticatorCode: formState.fa2Code}))
+        await dispatch(getProfileInfo(token))
+
+        setFormState((prev: any) => {
+            return {
+                ...prev,
+                fa2Code: ''
+            }
+        })
+    }
 
     return (
         <>
-            <CSSTransition in={loader} timeout={500} unmountOnExit classNames="my-node">
-                <Spinner />
-            </CSSTransition>
-
             <Card>
                 <div className={'user-card'}>
                     <div className="user-card__main">
@@ -307,7 +306,7 @@ export const ProfileSettings = () => {
 
                             {bonus ?
                                 <div className="user-card__info_bonus">
-                                    {currencyValueChanger(currency, rate, bonus)} {getTicker(currency)}
+                                    Bonus: {currencyValueChanger(currency, rate, bonus)} {getTicker(currency)}
                                 </div> : null
                             }
                         </div>
@@ -329,7 +328,7 @@ export const ProfileSettings = () => {
                             {t('Hide my nickname')}
                         </Checkbox>
                     </div>
-                    <Button primary onClick={() => handleSubmit('main')}>
+                    <Button primary onClick={() => handleSubmit('nickname')}>
                         {t('Save')}
                     </Button>
                 </div>
@@ -360,6 +359,7 @@ export const ProfileSettings = () => {
                           {t('Save')}
                       </Button> : null
                     }
+                    {}
                 </Card>
                 <Card>
                     <div className={'input-group'}>
@@ -367,6 +367,7 @@ export const ProfileSettings = () => {
                           title={'Phone'}
                           placeholder={'Phone'}
                           type={'phone'}
+                          country={country.toUpperCase()}
                           value={formState.mainData.phone || ''}
                           onChange={(value) => formChangeHandler(value, 'phone')}
                         />
@@ -376,7 +377,7 @@ export const ProfileSettings = () => {
                             <Input
                                 placeholder={'Code'}
                                 type={'text'}
-                                value={formState.emailCode}
+                                value={formState.phoneCode}
                                 onChange={(value) => formChangeHandler(value, 'phoneCode')}
                             />
                         </div> : null
@@ -392,9 +393,31 @@ export const ProfileSettings = () => {
                         <Switcher
                           className={'fa2-switcher'}
                           title={'Enable 2FA'}
-                          checked={formState.enable2Fa}
-                          onChange={(value) => formChangeHandler(value, '2fa')}
+                          checked={profileInfo.is2FaEnabled}
+                          onChange={get2FaCode}
                         />
+                        {faCode && !profileInfo.is2FaEnabled ?
+                            <div className="user-card__fa2_code">
+                                <img src={faCode.qrCodeSetupImageUrl} alt="qr-code"/>
+                            </div> : null
+                        }
+                        {faCode ?
+                            <div className="user-card__fa2_data">
+                                <Input
+                                    title={'Code'}
+                                    placeholder={'123 123'}
+                                    type={'text'}
+                                    value={formState.fa2Code}
+                                    onChange={(value) => formChangeHandler(value, 'fa2Code')}
+                                />
+                                <Button
+                                    light
+                                    onClick={confirm2FaAuth}
+                                >
+                                    {t('Confirm')}
+                                </Button>
+                            </div> : null
+                        }
                     </div>
                 </Card>
             </div>

@@ -1,7 +1,8 @@
-import {FAQ_QUESTIONS, LOADER_VISIBILITY} from "../../actions/actionTypes";
+import {FAQ_QUESTIONS, GET_USER_COUNTRY, LOADER_VISIBILITY} from "../../actions/actionTypes";
 
 const initialState = {
     loader: false,
+    country: 'US',
     faqQuestions: []
 };
 
@@ -11,6 +12,11 @@ export default function applicationReducer(state = initialState, action) {
             return {
                 ...state,
                 loader: action.loader
+            }
+        case GET_USER_COUNTRY:
+            return {
+                ...state,
+                country: action.country
             }
         case FAQ_QUESTIONS:
             return {

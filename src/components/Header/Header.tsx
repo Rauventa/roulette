@@ -112,6 +112,9 @@ export const Header = () => {
           </div>
           {navigation ?
               <div className="header__nav_items-all">
+                <NavLink to={'/'} className={'header__nav_items-all--item'}>
+                  {t('Roulette')}
+                </NavLink>
                 <NavLink to={'/dice'} className={'header__nav_items-all--item'}>
                   {t('Dice')}
                 </NavLink>

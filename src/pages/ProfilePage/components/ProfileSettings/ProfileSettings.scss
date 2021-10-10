@@ -102,11 +102,23 @@
     }
   }
 
-  //&__fa2 {
-  //  .fa2-switcher {
-  //    margin-bottom: 20px;
-  //  }
-  //}
+  &__fa2 {
+    &_code {
+      margin-top: 20px;
+    }
+
+    &_data {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 20px;
+
+      .input-group {
+        margin-bottom: 0 !important;
+        margin-right: 20px;
+      }
+    }
+  }
 }
 
 .main {

@@ -1,6 +1,6 @@
 import {axiosClient} from "../../../utils/axiosClient";
 import {
-    GET_AVATAR, GET_MESSAGES,
+    GET_AVATAR, GET_CONFIRM_STATUS, GET_CURRENT_2FA, GET_MESSAGES,
     GET_NICKNAME_VISIBILITY, GET_PROFILE_INFO, GET_REFERRAL_LINK,
     GET_REFERRALS,
     GET_REFERRALS_STATISTIC,
@@ -108,9 +108,9 @@ export function getNicknameVisibility(token) {
 }
 
 export function changeNickname(token, data) {
-    return async dispatch => {
+    return async () => {
         try {
-            const response = await axiosClient.patch('/Profile/ChangeNickname', data, {
+            const response = await axiosClient.post('/Profile/ChangeNickname', data, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -128,28 +128,28 @@ export function changeNickname(token, data) {
 export function changeEmail(token, data) {
     return async () => {
         try {
-            const response = await axiosClient.put('/Profile/ChangeEmail', data, {
+            const response = await axiosClient.post('/Profile/ChangeEmail', data, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 }
             });
 
-            console.log(response.data)
-
             if (response.data?.errors?.length) {
                 errorModalService(response.data?.errors[0], response.data.status)
+            } else {
+                return response.data.success
             }
 
         } catch (e) {
-            errorModalService('Cannot change email', e.response?.status || null)
+            errorModalService('Can not change email', e.response?.status || null)
         }
     }
 }
 
-export function confirmEmail(token, data) {
+export function confirmEmail(token, data, type) {
     return async () => {
         try {
-            const response = await axiosClient.patch('/Profile/ConfirmEmail', data, {
+            const response = await axiosClient.post('/Profile/СonfirmEmail', data, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -158,7 +158,7 @@ export function confirmEmail(token, data) {
             if (response.data?.errors?.length) {
                 errorModalService(response.data?.errors[0], response.data.status)
             } else {
-                modalService('info', 'Email changed successfully', {
+                modalService('info', type === 'confirm' ? `Email confirmed successfully` : `Email changed successfully`, {
                     title: 'Success',
                     buttons: [
                         {
@@ -176,8 +176,59 @@ export function confirmEmail(token, data) {
     }
 }
 
+export function changePhone(token, data) {
+    return async () => {
+        try {
+            const response = await axiosClient.post('/Profile/ChangePhone', data, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+
+            if (response.data?.errors?.length) {
+                errorModalService(response.data?.errors[0], response.data.status)
+            } else {
+                return response.data.success
+            }
+
+        } catch (e) {
+            errorModalService('Can not change phone', e.response?.status || null)
+        }
+    }
+}
+
+export function confirmPhone(token, data, type) {
+    return async () => {
+        try {
+            const response = await axiosClient.post('/Profile/СonfirmPhone', data, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.data?.errors?.length) {
+                errorModalService(response.data?.errors[0], response.data.status)
+            } else {
+                modalService('info', type === 'confirm' ? `Phone confirmed successfully` : `Phone changed successfully`, {
+                    title: 'Success',
+                    buttons: [
+                        {
+                            value: false,
+                            text: 'Close',
+                            light: true
+                        }
+                    ]
+                })
+            }
+
+        } catch (e) {
+            errorModalService('Cannot change phone', e.response?.status || null)
+        }
+    }
+}
+
 export function changePassword(token, data) {
-    return async dispatch => {
+    return async () => {
         try {
             const response = await axiosClient.post('/Auth/ChangePassword', data, {
                 headers: {
@@ -187,6 +238,17 @@ export function changePassword(token, data) {
 
             if (response.data?.errors?.length) {
                 errorModalService(response.data?.errors[0], response.data.status)
+            } else {
+                modalService('info', 'You have successfully changed your password', {
+                    title: 'Success',
+                    buttons: [
+                        {
+                            value: false,
+                            text: 'Close',
+                            light: true
+                        }
+                    ]
+                })
             }
         } catch (e) {
             errorModalService('Cannot change email', e.response?.status || null)
@@ -195,7 +257,7 @@ export function changePassword(token, data) {
 }
 
 export function getReferrals(token) {
-    return async dispatch => {
+    return async () => {
         try {
             const response = await axiosClient.get('/Profile/GetReferals', {
                 headers: {
@@ -300,6 +362,46 @@ export function sendMessage(token, data) {
     }
 }
 
+export function getCurrent2fa(token) {
+    return async dispatch => {
+        try {
+            const response = await axiosClient.get('/Profile/Get2FaQrAndCode', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+
+            if (response.data?.errors?.length) {
+                errorModalService(response.data?.errors[0], response.data.status)
+            } else {
+                dispatch(getCurrent2faSuccess(response.data.payload))
+            }
+        } catch (e) {
+            errorModalService('Cannot get your 2FA code', e.response?.status || null)
+        }
+    }
+}
+
+export function confirm2fa(token, data) {
+    return async dispatch => {
+        try {
+            const response = await axiosClient.patch('/Profile/Enable2Fa', data, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+
+            if (response.data?.errors?.length) {
+                errorModalService(response.data?.errors[0], response.data.status)
+            } else {
+                dispatch(getCurrent2faSuccess(null))
+            }
+        } catch (e) {
+            errorModalService('Cannot confirm your 2FA code', e.response?.status || null)
+        }
+    }
+}
+
 
 export function getProfileInfoSuccess(profileInfo) {
     return {
@@ -355,5 +457,12 @@ export function getMessagesSuccess(messages) {
     return {
         type: GET_MESSAGES,
         messages
+    }
+}
+
+export function getCurrent2faSuccess(faCode) {
+    return {
+        type: GET_CURRENT_2FA,
+        faCode
     }
 }

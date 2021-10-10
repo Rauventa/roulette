@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Input} from "../../../../components/Input/Input";
 import {Checkbox} from "../../../../components/Checkbox/Checkbox";
 import {NavLink, useHistory} from "react-router-dom";
@@ -14,10 +14,14 @@ import '../../AuthPage.scss'
 import {errorModalService} from "../../../../services/modal/errorModalService";
 import {useTranslation} from "react-i18next";
 import {RadioGroup} from "../../../../components/RadioGroup/RadioGroup";
+import {Switcher} from "../../../../components/Switcher/Switcher";
+import {useDispatch, useSelector} from "react-redux";
+import {getUserCountry, loaderVisibilityHandler} from "../../../../store/actions/Application/applicationActions";
 
 export const SignUp = () => {
 
   const defaultFormState = {
+    phone: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -26,12 +30,24 @@ export const SignUp = () => {
   }
 
   const [formState, setFormState] = useState(defaultFormState)
+  const [signType, setSignType] = useState<boolean>(false)
   const [errors, setErrors] = useState<any>({})
 
   const history = useHistory()
+  const dispatch = useDispatch()
   const {login} = useContext(AuthContext)
 
   const {t} = useTranslation()
+
+  const country = useSelector((state: any) => state.applicationReducer.country)
+
+  const fetchData = async () => {
+    await dispatch(getUserCountry())
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   const handleStateUpdate = (value: any, iterator: string) => {
     switch (iterator) {
@@ -40,6 +56,14 @@ export const SignUp = () => {
           return {
             ...prev,
             email: value
+          }
+        })
+        break;
+      case 'phone':
+        setFormState(prev => {
+          return {
+            ...prev,
+            phone: value
           }
         })
         break;
@@ -72,11 +96,23 @@ export const SignUp = () => {
 
   const handleSubmit = async () => {
 
+    dispatch(loaderVisibilityHandler(true))
+
+    if (!signType) {
+      delete
+          //@ts-ignore
+          formState.phone
+    } else {
+      delete
+          //@ts-ignore
+          formState.email
+    }
+
     const {errors} = inputValidator(formState)
 
     if (!Object.keys(errors).length) {
       try {
-        const response = await axiosClient.post('/Auth/SignUp', formState)
+        const response = await axiosClient.post(!signType ? '/Auth/SignUpByEmail' : '/Auth/SignUpByPhone', formState)
 
         const data = response.data.payload;
 
@@ -91,6 +127,8 @@ export const SignUp = () => {
         } else {
           if (response.data.errors[0] === 'Email Already Taken Error') {
             setErrors({registration: 'This email is already taken'})
+          } else if (response.data.errors[0] === 'Phone Already Taken Error') {
+            setErrors({registration: 'This phone is already taken'})
           } else {
             setErrors({registration: 'Registration failed,  password must have at least one non alphanumeric character, one lowercase (\'a\'-\'z\'), one uppercase (\'A\'-\'Z\')'})
           }
@@ -103,6 +141,8 @@ export const SignUp = () => {
     } else {
       setErrors(errors)
     }
+
+    dispatch(loaderVisibilityHandler(false))
   }
 
   const handleRadioChange = (type: any) => {
@@ -117,13 +157,29 @@ export const SignUp = () => {
               {t('Sign Up')}
             </div>
             <div className="form-group">
-              <Input
-                  className={errors?.email ? 'input-error' : ''}
-                  placeholder={'Email or Phone'}
-                  type={'text'}
-                  value={formState.email}
-                  errors={errors?.email}
-                  onChange={(value) => handleStateUpdate(value, 'email')}
+              {!signType ?
+                  <Input
+                      className={errors?.email ? 'input-error' : ''}
+                      placeholder={'Email'}
+                      type={'text'}
+                      value={formState.email}
+                      errors={errors?.email}
+                      onChange={(value) => handleStateUpdate(value, 'email')}
+                  /> :
+                  <Input
+                      className={errors?.phone ? 'input-error' : ''}
+                      placeholder={'Phone'}
+                      type={'phone'}
+                      country={country.toUpperCase()}
+                      value={formState.phone}
+                      errors={errors?.phone}
+                      onChange={(value) => handleStateUpdate(value, 'phone')}
+                  />
+              }
+              <Switcher
+                  checked={signType}
+                  onChange={() => setSignType(!signType)}
+                  title={'Sign up with phone'}
               />
               <Input
                   className={errors?.password ? 'input-error' : ''}

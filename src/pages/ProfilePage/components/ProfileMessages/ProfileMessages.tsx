@@ -20,6 +20,8 @@ export const ProfileMessages = () => {
 
   const messages = useSelector((state: any) => state.profileReducer.messages)
 
+  console.log(messages)
+
   const fetchData = async () => {
     dispatch(getMessages(token))
   }
@@ -71,6 +73,12 @@ export const ProfileMessages = () => {
               </div>
             )
           })}
+
+          {!messages.length ?
+              <div className={'text-secondary'}>
+                {t('No messages yet')}
+              </div> : null
+          }
         </div>
       </Card>
       <Card className={'profile-messages_send'}>

@@ -1,5 +1,5 @@
 import {
-    GET_AVATAR, GET_MESSAGES,
+    GET_AVATAR, GET_CONFIRM_STATUS, GET_CURRENT_2FA, GET_MESSAGES,
     GET_NICKNAME_VISIBILITY, GET_PROFILE_INFO, GET_REFERRAL_LINK,
     GET_REFERRALS,
     GET_REFERRALS_STATISTIC,
@@ -15,7 +15,8 @@ const initialState = {
     nicknameVisibility: false,
     avatar: null,
     referralLink: null,
-    messages: []
+    messages: [],
+    faCode: null
 };
 
 export default function profileReducer(state = initialState, action) {
@@ -60,6 +61,11 @@ export default function profileReducer(state = initialState, action) {
             return {
                 ...state,
                 messages: action.messages
+            }
+        case GET_CURRENT_2FA:
+            return {
+                ...state,
+                faCode: action.faCode
             }
         default:
             return state

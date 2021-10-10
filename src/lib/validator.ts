@@ -2,6 +2,8 @@ import validator from "validator";
 
 export const inputValidator = (data: any) => {
 
+  console.log(data)
+
   let errors: any = {}
 
   if (data.hasOwnProperty('license')) {
@@ -14,8 +16,11 @@ export const inputValidator = (data: any) => {
     if (!validator.isEmail(data.email)) {
       errors.email = 'Email is invalid';
     }
-    if (validator.isEmpty(data.email)) {
-      errors.email = 'This field is required';
+  }
+
+  if (data.hasOwnProperty('phone')) {
+    if (!validator.isLength(data.phone, {max: 14})) {
+      errors.phone = 'Phone is invalid';
     }
   }
 

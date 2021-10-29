@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AuthContext} from "../../context/AuthContext";
 import {getFaucetTimeout} from "../../store/actions/Faucet/faucetActions";
 import {Twist} from "../../components/Twist/Twist";
+import { Card } from '../../components/Card/Card';
 
 export const FaucetPage = () => {
 
@@ -16,7 +17,7 @@ export const FaucetPage = () => {
   const dispatch = useDispatch()
 
   const timeout = useSelector((state: any) => state.faucetReducer.timeout)
-  const number = useSelector((state: any) => state.faucetReducer.winNumber)
+  const winData = useSelector((state: any) => state.faucetReducer.winData)
 
   const [animation, setAnimation] = useState<string>('')
 
@@ -24,7 +25,7 @@ export const FaucetPage = () => {
     await dispatch(getFaucetTimeout(token))
   }
 
-  console.log(timeout, number)
+  console.log('winData ', winData)
 
   useEffect(() => {
     fetchData()
@@ -42,8 +43,18 @@ export const FaucetPage = () => {
         <div className="faucet-page__content_left">
           <Twist
             className={animation}
-            value={number}
+            value={winData?.number}
           />
+
+          {winData?.gain!==0?
+            <Card className="faucet-gain-card" title={`You rolled ${winData?.number}`}>
+              Your gain {winData?.gain}
+            </Card>
+            :
+            null
+          }
+          
+
           <FaucetWins
             onRoll={(value: string) => setAnimation(value)}
           />

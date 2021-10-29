@@ -12,7 +12,7 @@ interface InputProps {
   type: string,
   value: string | number,
   name?: string,
-  country?: string,
+  country?: string ,
   disabled?: boolean,
   errors?: any,
   icon?: any,
@@ -73,7 +73,7 @@ export const Input = ({
               type={type}
               name={name}
               max={10}
-              defaultCountry={country}
+              // defaultCountry={country}
               disabled={disabled}
               //@ts-ignore
               value={value}

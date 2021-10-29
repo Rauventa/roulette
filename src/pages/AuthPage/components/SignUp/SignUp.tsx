@@ -134,9 +134,10 @@ export const SignUp = () => {
           }
         }
 
-      } catch (e) {
+      } catch (e:any) {
         setErrors({registration: 'Registration failed'})
-        errorModalService('Registration error', e.response?.status || null)
+        errorModalService('Registration error', e?.response?.status || null)
+        console.log(e)
       }
     } else {
       setErrors(errors)

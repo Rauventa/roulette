@@ -98,7 +98,7 @@ export const Table = ({
               </table>
               :
               <div className={'table-no-data text-secondary'}>
-                  {t(`${noContentMessage}` || 'Empty here')}
+                  {t(noContentMessage || 'Empty here')}
               </div>
             }
 

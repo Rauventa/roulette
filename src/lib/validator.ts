@@ -2,7 +2,7 @@ import validator from "validator";
 
 export const inputValidator = (data: any) => {
 
-  console.log(data)
+  console.log('data ', data)
 
   let errors: any = {}
 
@@ -19,7 +19,7 @@ export const inputValidator = (data: any) => {
   }
 
   if (data.hasOwnProperty('phone')) {
-    if (!validator.isLength(data.phone, {max: 14})) {
+    if (validator.isLength(data.phone) && data.phone=="") {
       errors.phone = 'Phone is invalid';
     }
   }

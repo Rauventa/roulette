@@ -167,6 +167,8 @@ export const SignUp = () => {
                       errors={errors?.email}
                       onChange={(value) => handleStateUpdate(value, 'email')}
                   /> :
+                  <>
+                  {console.log("errors", errors)}
                   <Input
                       className={errors?.phone ? 'input-error' : ''}
                       placeholder={'Phone'}
@@ -176,6 +178,7 @@ export const SignUp = () => {
                       errors={errors?.phone}
                       onChange={(value) => handleStateUpdate(value, 'phone')}
                   />
+                  </>
               }
               <Switcher
                   checked={signType}

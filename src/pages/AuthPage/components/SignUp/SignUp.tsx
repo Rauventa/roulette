@@ -136,7 +136,7 @@ export const SignUp = () => {
 
       } catch (e:any) {
         setErrors({registration: 'Registration failed'})
-        errorModalService('Registration error', e?.response?.status || null)
+        // errorModalService('Registration error', e?.response?.status || null)
         console.log(e)
       }
     } else {
@@ -208,6 +208,7 @@ export const SignUp = () => {
               />
 
               <Checkbox
+                  errors={errors?.license}
                   checked={formState.license}
                   onChange={(value) => handleStateUpdate(value, 'license')}
               >

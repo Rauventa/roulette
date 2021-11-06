@@ -28,7 +28,7 @@
   &__errors {
     color: #ff00aa;
     font-size: 12px;
-    margin: 10px 0 20px 0;
+    margin: 0 0 25px 0;
   }
 
   #file-upload-button {
@@ -61,4 +61,20 @@
   .input-error {
     border: solid 2px #ff00aa;
   }
+}
+
+.PhoneInputCountrySelect  {
+  color: white;
+  background-color: #2A2A41;
+  display: block;
+  padding: 8px;
+};
+
+.PhoneInputCountrySelect:focus + .PhoneInputCountryIcon--border {
+  box-shadow: none; 
+}
+
+.PhoneInputCountryIcon--border {
+  box-shadow: none;
+  background-color: none;
 }

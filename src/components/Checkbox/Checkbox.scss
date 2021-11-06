@@ -17,6 +17,12 @@
     }
   }
 
+  &__error {
+    color: #ff00aa;
+    font-size: 12px;
+    margin: 0 0 20px 0;
+  }
+
   &__label {
     position: relative;
     min-height: 18px;

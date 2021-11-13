@@ -127,3 +127,7 @@
   border: solid 2px #ff00aa;
   border-radius: 12px;
 }
+
+.country-list::-webkit-scrollbar {
+  display: none;
+}

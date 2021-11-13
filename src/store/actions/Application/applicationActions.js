@@ -1,4 +1,4 @@
-import {FAQ_QUESTIONS, GET_USER_COUNTRY, LOADER_VISIBILITY} from "../actionTypes";
+import {FAQ_QUESTIONS, GET_USER_COUNTRY, LOADER_VISIBILITY, GET_AVIABLE_BONUSES} from "../actionTypes";
 import {axiosClient} from "../../../utils/axiosClient";
 import {errorModalService} from "../../../services/modal/errorModalService";
 
@@ -45,6 +45,22 @@ export function getUserCountry() {
     }
 }
 
+export function getAvialableBonuses() {
+    return async dispatch => {
+        try {
+            const response = await axiosClient.get('/Auth/GetAvailableBonuses')
+
+            if (response.data?.errors?.length) {
+                errorModalService(response.data?.errors[0], response.data.status)
+            } else {
+                dispatch(getAvialableBonusesSuccess(response.data))
+            }
+        } catch (e) {
+            errorModalService('No aviable bonuses', e.response?.status || null)
+        }
+    }
+}
+
 export const loadFaqQuestionsSuccess = (faqQuestions) => {
     return {
         type: FAQ_QUESTIONS,
@@ -57,4 +73,11 @@ export const getUserCountrySuccess = (country) => {
         type: GET_USER_COUNTRY,
         country
     }
-}
+};
+
+export const getAvialableBonusesSuccess = (bonuses) => {
+    return{
+        type: GET_AVIABLE_BONUSES,
+        bonuses
+    }
+};

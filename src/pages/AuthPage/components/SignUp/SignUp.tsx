@@ -10,13 +10,15 @@ import {Card} from "../../../../components/Card/Card";
 import {axiosClient} from "../../../../utils/axiosClient";
 import {inputValidator} from "../../../../lib/validator";
 import {AuthContext} from "../../../../context/AuthContext";
+import {Select} from "../../../../components/Select/Select";
 import '../../AuthPage.scss'
 import {errorModalService} from "../../../../services/modal/errorModalService";
 import {useTranslation} from "react-i18next";
 import {RadioGroup} from "../../../../components/RadioGroup/RadioGroup";
 import {Switcher} from "../../../../components/Switcher/Switcher";
 import {useDispatch, useSelector} from "react-redux";
-import {getUserCountry, loaderVisibilityHandler} from "../../../../store/actions/Application/applicationActions";
+import {getUserCountry, loaderVisibilityHandler, getAvialableBonuses} from "../../../../store/actions/Application/applicationActions";
+
 
 export const SignUp = () => {
 
@@ -40,9 +42,11 @@ export const SignUp = () => {
   const {t} = useTranslation()
 
   const country = useSelector((state: any) => state.applicationReducer.country)
+  const bonuses = useSelector((state: any) => state.applicationReducer.bonuses)
 
   const fetchData = async () => {
-    await dispatch(getUserCountry())
+    await dispatch(getUserCountry());
+    await dispatch(getAvialableBonuses());
   }
 
   useEffect(() => {
@@ -202,12 +206,20 @@ export const SignUp = () => {
                   errors={errors?.confirmPassword}
                   onChange={(value) => handleStateUpdate(value, 'repeat')}
               />
-
+{/* 
               <RadioGroup
                   title={'Balance type'}
                   values={['Bonus', 'Default']}
                   defaultValue={'Default'}
                   onChange={handleRadioChange}
+              /> */}
+
+              <Select 
+                options={bonuses?.map((option:any)=>{
+                  return `${option?.amount}`
+                })}
+                value={bonuses.map((value:any)=>value.amount)}
+                onChange={handleRadioChange}
               />
 
               <Checkbox

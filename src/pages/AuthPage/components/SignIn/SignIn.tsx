@@ -36,7 +36,6 @@ export const SignIn = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const {login} = useContext(AuthContext)
-
   const {t} = useTranslation()
 
   const country = useSelector((state: any) => state.applicationReducer.country)
@@ -115,12 +114,12 @@ export const SignIn = () => {
               data.userId,
               data.nickname
           )
-
+          
           history.push('/')
         } else {
           setErrors({login: 'Authorization failed'})
         }
-      } catch (e) {
+      } catch (e:any) {
 
         if (e.response.data.errors[0] === 'Requires Two Factor') {
           setFormState((prev: any) => {
@@ -132,6 +131,7 @@ export const SignIn = () => {
 
           setLoader(false)
         } else {
+          console.log(e)
           setErrors({login: 'Authorization failed'})
           //@ts-ignore
           dispatch(updateInformer({message: errorCodes[Number(e.response.data.errors[0])], active: true, type: 'error', timeout: 5}))

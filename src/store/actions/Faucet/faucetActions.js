@@ -82,32 +82,16 @@ export function rollFaucet(token, currency, rate) {
                     'Authorization': `Bearer ${token}`
                 }
             })
-
-            if (response?.data?.errors?.length) {
-                errorModalService('You cannot play yet. Wait please', null)
-            } else {
-
-                dispatch(rollFaucetSuccess(response.data.payload.winNumber))
-
-                await modalService('info', `Gain is ${currencyValueChanger(currency, rate, response.data.payload?.gain)} ${getTicker(currency)}`, {
-                    title: `You rolled ${response.data.payload?.winNumber}`,
-                    buttons: [
-                        {
-                            value: true,
-                            text: 'Close',
-                            light: true
-                        }
-                    ]
-                }).then(() => {
-                    dispatch(getFaucetTimeout(token))
-                    dispatch(getFaucetHistory(token))
-                    dispatch(getBalance(token, rate))
-                })
-            }
+            
+            dispatch(rollFaucetSuccess({number: response.data.payload.winNumber, gain: response.data.payload.gain }))
+            dispatch(getFaucetTimeout(token))
+            dispatch(getFaucetHistory(token))
+            dispatch(getBalance(token, rate))
 
         } catch (e) {
-            errorModalService('Faucet timeout load error', e.response.status)
+            errorModalService('You cannot play yet. Wait please', e.response.status)
         }
+        
     }
 }
 
@@ -132,9 +116,9 @@ export function getFaucetTimeoutSuccess(timeout) {
     }
 }
 
-export function rollFaucetSuccess(winNumber) {
+export function rollFaucetSuccess(winData) {
     return {
         type: ROLL_FAUCET,
-        winNumber
+        winData
     }
 }

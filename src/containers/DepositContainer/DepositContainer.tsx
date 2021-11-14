@@ -129,15 +129,19 @@ export const DepositContainer = () => {
           code={code}
         />
       }
-
-      <div className="deposit-container__history">
-        <Card>
-          <Table
-              data={data}
-              columns={columns}
-          />
-        </Card>
-      </div>
+      {data.length?
+        <div className="deposit-container__history">
+          <Card>
+            <Table
+                data={data}
+                columns={columns}
+            />
+          </Card>
+        </div>
+      : 
+      null
+      }
+      
     </div>
   )
 }

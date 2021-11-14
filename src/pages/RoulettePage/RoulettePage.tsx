@@ -64,6 +64,7 @@ export const RoulettePage = () => {
   const animationRouletteDuration = 10000
 
   useEffect(() => {
+    console.log(gameData?.players?.length >=2?"время: " + gameData?.secondsBeforeRoll :'');
     fetchData()
   }, []);
 
@@ -143,7 +144,7 @@ export const RoulettePage = () => {
           />
         </div>
         <div className="roulette__config_timer">
-          <TimeLine seconds={gameData?.secondsBeforeRoll?.toFixed(0) || 0} text={'Waiting for bets'} />
+          <TimeLine seconds={gameData && gameData?.players?.length >=2? gameData?.secondsBeforeRoll?.toFixed(0) : 0} text={gameData && gameData?.players?.length === 0?'Waiting for players':gameData?.players?.length ===1?'Waiting at least one player':''} />
         </div>
       </div>
 

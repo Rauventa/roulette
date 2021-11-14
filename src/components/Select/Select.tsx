@@ -1,6 +1,6 @@
 import React from 'react';
 import './Select.scss';
-import ReactSelect from 'react-select';
+import ReactSelect, {components, PlaceholderProps} from 'react-select';
 import {useTranslation} from "react-i18next";
 
 interface SelectProps {
@@ -9,9 +9,14 @@ interface SelectProps {
   options: any,
   value: any,
   placeholder?: any,
+  isClearable?:boolean, 
   onChange: (value: any) => void;
   noMessage?: string
 }
+
+const Placeholder = (props: any) => {
+  return <components.Placeholder {...props} />;
+};
 
 export const Select = ({
   className,
@@ -20,7 +25,8 @@ export const Select = ({
   value,
   placeholder,
   onChange,
-  noMessage
+  noMessage,
+  isClearable,
 }: SelectProps) => {
 
   const handleChange = (newValue: any) => {
@@ -40,9 +46,11 @@ export const Select = ({
       }
 
       <ReactSelect
+        components={{ Placeholder }}
         className={`select-container ${className || ''}`}
         classNamePrefix="select"
         options={options}
+        isClearable={isClearable || false}
         placeholder={placeholder ? placeholder : ''}
         value={value}
         onChange={handleChange}

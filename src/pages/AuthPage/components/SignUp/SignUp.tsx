@@ -10,11 +10,14 @@ import {Card} from "../../../../components/Card/Card";
 import {axiosClient} from "../../../../utils/axiosClient";
 import {inputValidator} from "../../../../lib/validator";
 import {AuthContext} from "../../../../context/AuthContext";
+import {Select} from "../../../../components/Select/Select";
 import '../../AuthPage.scss'
 import {useTranslation} from "react-i18next";
 import {RadioGroup} from "../../../../components/RadioGroup/RadioGroup";
 import {Switcher} from "../../../../components/Switcher/Switcher";
 import {useDispatch, useSelector} from "react-redux";
+import {getUserCountry, loaderVisibilityHandler, getAvialableBonuses} from "../../../../store/actions/Application/applicationActions";
+
 import {
   getUserCountry,
   loaderVisibilityHandler,
@@ -30,12 +33,18 @@ export const SignUp = () => {
     password: '',
     confirmPassword: '',
     license: true,
-    registerWithBonus: false
+    bonus: null
+  }
+  const defautBonus = {
+    id: 0,
+    amount: 0,
+    wager: 0
   }
 
   const [formState, setFormState] = useState(defaultFormState)
   const [signType, setSignType] = useState<boolean>(false)
   const [errors, setErrors] = useState<any>({})
+  const [bonus, setBonus] = useState(defautBonus)
 
   const history = useHistory()
   const dispatch = useDispatch()
@@ -44,9 +53,11 @@ export const SignUp = () => {
   const {t} = useTranslation()
 
   const country = useSelector((state: any) => state.applicationReducer.country)
+  const bonuses = useSelector((state: any) => state.applicationReducer.bonuses)
 
   const fetchData = async () => {
-    await dispatch(getUserCountry())
+    await dispatch(getUserCountry());
+    await dispatch(getAvialableBonuses());
   }
 
   useEffect(() => {
@@ -138,9 +149,8 @@ export const SignUp = () => {
           }
         }
 
-      } catch (e) {
+      } catch (e:any) {
         setErrors({registration: 'Registration failed'})
-
         //@ts-ignore
         dispatch(updateInformer({message: errorCodes[Number(e.response.data.errors[0])], active: true, type: 'error', timeout: 5}))
       }
@@ -151,8 +161,26 @@ export const SignUp = () => {
     dispatch(loaderVisibilityHandler(false))
   }
 
-  const handleRadioChange = (type: any) => {
-    console.log(type)
+  const handleRadioChange = (bonus: any) => {
+    if (bonus) {
+      setFormState(prev => {
+        return {
+          ...prev,
+          bonus: bonus.value
+        }
+      });
+      setBonus(bonuses.filter((el:any) => el.id === bonus.value)[0])
+      
+      console.log('formState ', formState)
+    } else {
+      setFormState(prev => {
+        return {
+          ...prev,
+          bonus: null
+        }
+      });
+      setBonus(defautBonus)
+    }
   }
 
   return (
@@ -172,6 +200,8 @@ export const SignUp = () => {
                       errors={errors?.email}
                       onChange={(value) => handleStateUpdate(value, 'email')}
                   /> :
+                  <>
+                  {console.log("errors", errors)}
                   <Input
                       className={errors?.phone ? 'input-error' : ''}
                       placeholder={'Phone'}
@@ -181,6 +211,7 @@ export const SignUp = () => {
                       errors={errors?.phone}
                       onChange={(value) => handleStateUpdate(value, 'phone')}
                   />
+                  </>
               }
               <Switcher
                   checked={signType}
@@ -204,15 +235,35 @@ export const SignUp = () => {
                   errors={errors?.confirmPassword}
                   onChange={(value) => handleStateUpdate(value, 'repeat')}
               />
-
+{/* 
               <RadioGroup
                   title={'Balance type'}
                   values={['Bonus', 'Default']}
                   defaultValue={'Default'}
                   onChange={handleRadioChange}
-              />
+              /> */}
+
+            <Select
+              className={'auth-page__bonus-select'}
+              options={bonuses?.map((option:any)=>{
+                return {
+                    label:`${option.amount} BTC`,
+                    value:option.id
+                  }
+              })}
+              value={bonus.id!==0?{label:`${bonus.amount} BTC`, value: bonus.id}:null}
+              onChange={handleRadioChange}
+              placeholder={'Select Bonus'}
+              isClearable={formState.bonus||false}
+            />
+            {bonus?.amount!==0?
+              <div className={'auth-page__bonus-text'}>You choosed bonus {bonus.amount } BTC.<br/> With a bonus of {bonus.amount} BTC, for withdrawal,<br/> you need to make bets in the amount {bonus.amount * bonus.wager}</div> :
+              null
+            }
+            
 
               <Checkbox
+                  errors={errors?.license}
                   checked={formState.license}
                   onChange={(value) => handleStateUpdate(value, 'license')}
               >

@@ -4,12 +4,14 @@ import './Checkbox.scss'
 interface CheckboxProps {
   children: React.ReactNode,
   checked: boolean,
+  errors?:any,
   onChange: (value: boolean) => void
 }
 
 export const Checkbox = ({
   children,
   checked,
+  errors,
   onChange
 }: CheckboxProps) => {
 
@@ -18,15 +20,24 @@ export const Checkbox = ({
   }
 
   return (
-    <div className={'checkbox'}>
-      <input
-        className={'checkbox__input'}
-        type="checkbox"
-        checked={checked}
-        onChange={(event) => handleChange(event.target.checked)} />
-      <label className={'checkbox__label'}>
-        {children}
-      </label>
-    </div>
+    <>
+      <div className={`checkbox`}>
+        <input
+          className={'checkbox__input'}
+          type="checkbox"
+          checked={checked}
+          onChange={(event) => handleChange(event.target.checked)} />
+        <label className={'checkbox__label'}>
+          {children}
+        </label>
+      </div>
+      {errors?
+        <div className={`checkbox__error`}>
+          {errors}
+        </div>
+      :
+      null
+      }
+    </>
   )
 }

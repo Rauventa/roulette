@@ -7,6 +7,7 @@ import {ApiLoader} from "../../HOC/ApiLoader/ApiLoader";
 import {Spinner} from "../../components/Spinner/Spinner";
 import {CSSTransition} from "react-transition-group";
 import {useSelector} from "react-redux";
+import {Informer} from "../../components/Informer/Informer";
 
 interface AppLayoutProps {
   children: React.ReactNode
@@ -26,6 +27,8 @@ export const AppLayout = ({
           <CSSTransition in={loader} timeout={300} unmountOnExit classNames="my-node">
             <Spinner />
           </CSSTransition>
+
+          <Informer />
 
           <Header />
           <div className="layout__modal">

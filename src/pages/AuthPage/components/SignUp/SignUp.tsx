@@ -11,12 +11,16 @@ import {axiosClient} from "../../../../utils/axiosClient";
 import {inputValidator} from "../../../../lib/validator";
 import {AuthContext} from "../../../../context/AuthContext";
 import '../../AuthPage.scss'
-import {errorModalService} from "../../../../services/modal/errorModalService";
 import {useTranslation} from "react-i18next";
 import {RadioGroup} from "../../../../components/RadioGroup/RadioGroup";
 import {Switcher} from "../../../../components/Switcher/Switcher";
 import {useDispatch, useSelector} from "react-redux";
-import {getUserCountry, loaderVisibilityHandler} from "../../../../store/actions/Application/applicationActions";
+import {
+  getUserCountry,
+  loaderVisibilityHandler,
+  updateInformer
+} from "../../../../store/actions/Application/applicationActions";
+import {errorCodes} from "../../../../lib/errorCodes";
 
 export const SignUp = () => {
 
@@ -136,7 +140,9 @@ export const SignUp = () => {
 
       } catch (e) {
         setErrors({registration: 'Registration failed'})
-        errorModalService('Registration error', e.response?.status || null)
+
+        //@ts-ignore
+        dispatch(updateInformer({message: errorCodes[Number(e.response.data.errors[0])], active: true, type: 'error', timeout: 5}))
       }
     } else {
       setErrors(errors)

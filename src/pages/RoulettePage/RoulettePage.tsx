@@ -16,7 +16,7 @@ import {AuthContext} from "../../context/AuthContext";
 import {RouletteBets} from "./components/RouletteBets/RouletteBets";
 import {RoulettePlayers} from "./components/RoulettePlayers/RoulettePlayers";
 import {RouletteSpinner} from "./components/RouletteSpinner/RouletteSpinner";
-import {loaderVisibilityHandler} from "../../store/actions/Application/applicationActions";
+import {loaderVisibilityHandler, updateInformer} from "../../store/actions/Application/applicationActions";
 import {gameModalService} from "../../services/modal/gameModalService";
 import { getBalance } from '../../store/actions/Balance/balanceActions';
 import {log} from "util";
@@ -122,8 +122,6 @@ export const RoulettePage = () => {
         break;
     }
   }
-
-  console.log(gameData)
 
   return (
     <div className={'roulette'}>

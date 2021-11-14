@@ -1,10 +1,9 @@
 import React from 'react';
-import './Input.scss'
 import {useTranslation} from "react-i18next";
-import PhoneInput from "react-phone-number-input";
+import PhoneInput from "react-phone-input-2";
 
-import 'react-phone-number-input/style.css'
-
+import 'react-phone-input-2/lib/style.css'
+import './Input.scss';
 interface InputProps {
   className?: string,
   title?: string,
@@ -12,7 +11,7 @@ interface InputProps {
   type: string,
   value: string | number,
   name?: string,
-  country?: string,
+  country?: string ,
   disabled?: boolean,
   errors?: any,
   icon?: any,
@@ -69,11 +68,12 @@ export const Input = ({
       }
       {type === 'phone' ?
           <PhoneInput
+              containerClass={errors?'react-tel-input-error':''}
               placeholder={t(`${placeholder}`)}
               type={type}
               name={name}
               max={10}
-              defaultCountry={country}
+              // defaultCountry={country}
               disabled={disabled}
               //@ts-ignore
               value={value}

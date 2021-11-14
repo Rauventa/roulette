@@ -4,7 +4,7 @@ const initialState = {
     history: [],
     wins: [],
     timeout: 0,
-    winNumber: 9999
+    winData: {number:9999, gain: 0}
 }
 
 export default function faucetReducer(state = initialState, action) {
@@ -27,7 +27,7 @@ export default function faucetReducer(state = initialState, action) {
         case ROLL_FAUCET:
             return {
                 ...state,
-                winNumber: action.winNumber
+                winData: action.winData
             }
         default:
             return state

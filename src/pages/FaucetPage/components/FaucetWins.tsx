@@ -61,6 +61,7 @@ export const FaucetWins = ({
       accessor: 'payout',
       Cell: ({row: {original}} : any) => (
         <div>
+          {console.log('original ', original)}
           {t(`${currencyValueChanger(currency, rate, original.payout)} ${getTicker(currency)}`)}
         </div>
       )

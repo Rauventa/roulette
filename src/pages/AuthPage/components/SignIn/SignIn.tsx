@@ -12,11 +12,11 @@ import {inputValidator} from "../../../../lib/validator";
 import '../../AuthPage.scss'
 import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../../../components/Spinner/Spinner";
-import {errorModalService} from "../../../../services/modal/errorModalService";
 import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
-import {getUserCountry} from "../../../../store/actions/Application/applicationActions";
+import {getUserCountry, updateInformer} from "../../../../store/actions/Application/applicationActions";
 import {Switcher} from "../../../../components/Switcher/Switcher";
+import {errorCodes} from "../../../../lib/errorCodes";
 
 export const SignIn = () => {
 
@@ -133,7 +133,8 @@ export const SignIn = () => {
         } else {
           console.log(e)
           setErrors({login: 'Authorization failed'})
-          errorModalService('Login error', e?.response?.status || null)
+          //@ts-ignore
+          dispatch(updateInformer({message: errorCodes[Number(e.response.data.errors[0])], active: true, type: 'error', timeout: 5}))
         }
       }
     } else {

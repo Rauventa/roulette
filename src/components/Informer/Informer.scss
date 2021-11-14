@@ -1,0 +1,15 @@
+.informer {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  display: flex;
+  border-radius: 10px;
+  padding: 15px 20px;
+  font-size: 14px;
+  background-color: #2a2a41;
+  box-shadow: 0 8px 8px -4px #202036, 0 2px 4px -1px #202036, 0 0 1px 0 #202036;
+}
+
+.error {
+  background-color: #e12d81;
+}

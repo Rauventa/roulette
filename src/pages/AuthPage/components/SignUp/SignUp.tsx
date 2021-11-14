@@ -28,12 +28,18 @@ export const SignUp = () => {
     password: '',
     confirmPassword: '',
     license: true,
-    registerWithBonus: false
+    bonus: null
+  }
+  const defautBonus = {
+    id: 0,
+    amount: 0,
+    wager: 0
   }
 
   const [formState, setFormState] = useState(defaultFormState)
   const [signType, setSignType] = useState<boolean>(false)
   const [errors, setErrors] = useState<any>({})
+  const [bonus, setBonus] = useState(defautBonus)
 
   const history = useHistory()
   const dispatch = useDispatch()
@@ -150,8 +156,26 @@ export const SignUp = () => {
     dispatch(loaderVisibilityHandler(false))
   }
 
-  const handleRadioChange = (type: any) => {
-    console.log(type)
+  const handleRadioChange = (bonus: any) => {
+    if (bonus) {
+      setFormState(prev => {
+        return {
+          ...prev,
+          bonus: bonus.value
+        }
+      });
+      setBonus(bonuses.filter((el:any) => el.id === bonus.value)[0])
+      
+      console.log('formState ', formState)
+    } else {
+      setFormState(prev => {
+        return {
+          ...prev,
+          bonus: null
+        }
+      });
+      setBonus(defautBonus)
+    }
   }
 
   return (
@@ -214,13 +238,24 @@ export const SignUp = () => {
                   onChange={handleRadioChange}
               /> */}
 
-              <Select 
-                options={bonuses?.map((option:any)=>{
-                  return `${option?.amount}`
-                })}
-                value={bonuses.map((value:any)=>value.amount)}
-                onChange={handleRadioChange}
-              />
+            <Select
+              className={'auth-page__bonus-select'}
+              options={bonuses?.map((option:any)=>{
+                return {
+                    label:`${option.amount} BTC`,
+                    value:option.id
+                  }
+              })}
+              value={bonus.id!==0?{label:`${bonus.amount} BTC`, value: bonus.id}:null}
+              onChange={handleRadioChange}
+              placeholder={'Select Bonus'}
+              isClearable={formState.bonus||false}
+            />
+            {bonus?.amount!==0?
+              <div className={'auth-page__bonus-text'}>You choosed bonus {bonus.amount } BTC.<br/> With a bonus of {bonus.amount} BTC, for withdrawal,<br/> you need to make bets in the amount {bonus.amount * bonus.wager}</div> :
+              null
+            }
+            
 
               <Checkbox
                   errors={errors?.license}

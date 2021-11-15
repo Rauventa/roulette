@@ -4,7 +4,7 @@ const initialState = {
     loader: false,
     country: 'US',
     faqQuestions: [],
-    bonuses: []
+    bonuses: [],
     informerData: {
         active: false
     }
@@ -31,6 +31,7 @@ export default function applicationReducer(state = initialState, action) {
             return {
                 ...state,
                 bonuses: action.bonuses
+            }
         case UPDATE_INFORMER:
             return {
                 ...state,

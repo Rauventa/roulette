@@ -13,6 +13,30 @@
     margin-bottom: 20px;
     width: 100%;
 
+    &_min, &_max {
+      background-color: rgba(255, 255, 255, 0.02);
+      font-size: 13px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 40px;
+      width: 60px;
+      cursor: pointer;
+      transition: all .3s;
+
+      &:hover {
+        background-color: rgba(224, 224, 255, 0.04);
+      }
+    }
+
+    &_min {
+      border-radius: 12px 0 0 12px;
+    }
+
+    &_max {
+      border-radius: 0 12px 12px 0;
+    }
+
     &_minus, &_plus {
       background-color: rgba(255, 255, 255, 0.02);
       height: 40px;
@@ -28,14 +52,6 @@
       &:hover {
         background-color: rgba(224, 224, 255, 0.04);
       }
-    }
-
-    &_minus {
-      border-radius: 12px 0 0 12px;
-    }
-
-    &_plus {
-      border-radius: 0 12px 12px 0;
     }
 
     &_value {

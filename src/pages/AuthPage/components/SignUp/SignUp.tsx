@@ -16,13 +16,7 @@ import {useTranslation} from "react-i18next";
 import {RadioGroup} from "../../../../components/RadioGroup/RadioGroup";
 import {Switcher} from "../../../../components/Switcher/Switcher";
 import {useDispatch, useSelector} from "react-redux";
-import {getUserCountry, loaderVisibilityHandler, getAvialableBonuses} from "../../../../store/actions/Application/applicationActions";
-
-import {
-  getUserCountry,
-  loaderVisibilityHandler,
-  updateInformer
-} from "../../../../store/actions/Application/applicationActions";
+import {getUserCountry, loaderVisibilityHandler, getAvialableBonuses, updateInformer} from "../../../../store/actions/Application/applicationActions";
 import {errorCodes} from "../../../../lib/errorCodes";
 
 export const SignUp = () => {

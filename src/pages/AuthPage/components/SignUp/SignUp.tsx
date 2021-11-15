@@ -27,7 +27,6 @@ export const SignUp = () => {
     password: '',
     confirmPassword: '',
     license: true,
-    bonus: null
   }
   const defautBonus = {
     id: 0,
@@ -104,8 +103,6 @@ export const SignUp = () => {
   }
 
   const handleSubmit = async () => {
-    
-
     dispatch(loaderVisibilityHandler(true))
 
     if (!signType) {
@@ -122,7 +119,7 @@ export const SignUp = () => {
 
     if (!Object.keys(errors).length) {
       try {
-        const response = await axiosClient.post(!signType ? '/Auth/SignUpByEmail' : '/Auth/SignUpByPhone', formState)
+        const response = await axiosClient.post(!signType ? '/Auth/SignUpByEmail' : '/Auth/SignUpByPhone', bonus?{...formState, bonus: bonus.id}:formState)
 
         const data = response.data.payload;
 
@@ -249,7 +246,7 @@ export const SignUp = () => {
               value={bonus.id!==0?{label:`${bonus.amount} BTC`, value: bonus.id}:null}
               onChange={handleRadioChange}
               placeholder={'Select Bonus'}
-              isClearable={formState.bonus||false}
+              isClearable={!!bonus||false}
             />
             {bonus?.amount!==0?
               <div className={'auth-page__bonus-text'}>You choosed bonus {bonus.amount } BTC.<br/> With a bonus of {bonus.amount} BTC, for withdrawal,<br/> you need to make bets in the amount {bonus.amount * bonus.wager}</div> :

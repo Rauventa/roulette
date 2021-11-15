@@ -332,7 +332,6 @@ export function getMessages(token) {
                     ...config.historyLoadParams,
                 }
             })
-
             if (response.data?.errors?.length) {
                 errorModalService(response.data?.errors[0], response.data.status)
             } else {
@@ -352,7 +351,7 @@ export function sendMessage(token, data) {
                     'Authorization': `Bearer ${token}`
                 }
             })
-
+            console.log('response ',response)
             if (response.data?.errors?.length) {
                 errorModalService(response.data?.errors[0], response.data.status)
             }

@@ -37,7 +37,9 @@ export default function applicationReducer(state = initialState, action) {
                 ...state,
                 informerData: action.informerData
             }
-        default:
+        default: {
             return state
+
+        }
     }
 }

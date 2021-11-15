@@ -19,7 +19,8 @@ import {
   getUserCountry,
   loaderVisibilityHandler,
   updateInformer,
-  getAvialableBonuses
+  getAvialableBonuses,
+  updateInformer
 } from "../../../../store/actions/Application/applicationActions";
 
 export const SignUp = () => {
@@ -30,7 +31,6 @@ export const SignUp = () => {
     password: '',
     confirmPassword: '',
     license: true,
-    bonus: null
   }
   const defaultBonus = {
     id: 0,
@@ -107,7 +107,6 @@ export const SignUp = () => {
   }
 
   const handleSubmit = async () => {
-
     dispatch(loaderVisibilityHandler(true))
 
     if (!signType) {
@@ -124,7 +123,7 @@ export const SignUp = () => {
 
     if (!Object.keys(errors).length) {
       try {
-        const response = await axiosClient.post(!signType ? '/Auth/SignUpByEmail' : '/Auth/SignUpByPhone', formState)
+        const response = await axiosClient.post(!signType ? '/Auth/SignUpByEmail' : '/Auth/SignUpByPhone', bonus?{...formState, bonus: bonus.id}:formState)
 
         const data = response.data.payload;
 
@@ -243,7 +242,7 @@ export const SignUp = () => {
               value={bonus.id!==0?{label:`${bonus.amount} BTC`, value: bonus.id}:null}
               onChange={handleRadioChange}
               placeholder={'Select Bonus'}
-              isClearable={formState.bonus||false}
+              isClearable={!!bonus||false}
             />
 
             {bonus?.amount!==0?

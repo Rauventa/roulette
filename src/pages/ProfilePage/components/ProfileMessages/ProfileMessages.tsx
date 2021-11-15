@@ -20,8 +20,6 @@ export const ProfileMessages = () => {
 
   const messages = useSelector((state: any) => state.profileReducer.messages)
 
-  console.log(messages)
-
   const fetchData = async () => {
     dispatch(getMessages(token))
   }
@@ -29,7 +27,8 @@ export const ProfileMessages = () => {
   const [formMessage, setFormMessage] = useState<string>('')
 
   useEffect(() => {
-    fetchData()
+    const interval = setInterval(fetchData, 30000);
+    return () => clearInterval(interval);
   }, []);
 
   const handleChangeMessage = (value: string) => {
@@ -40,7 +39,7 @@ export const ProfileMessages = () => {
     dispatch(loaderVisibilityHandler(true))
 
     await dispatch(sendMessage(token, {message: formMessage}))
-    await fetchData()
+    fetchData()
 
     setFormMessage('')
 

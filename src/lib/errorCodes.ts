@@ -1,4 +1,4 @@
-export const errorCodes = {
+export const errorCodes: any = {
   0: 'Email is already taken',
   1: 'Incorrect email',
   2: 'Can not create user',

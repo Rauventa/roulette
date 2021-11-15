@@ -21,6 +21,8 @@ export const BetCard = ({
 }: BetCardProps) => {
 
   const currency = useSelector((state: any) => state.balanceReducer.currency)
+  const btc = useSelector((state: any) => state.balanceReducer.balanceBtc)
+  const usd = useSelector((state: any) => state.balanceReducer.balanceUsd)
 
   const [bet, setBet] = useState<number>(0.00001)
 
@@ -55,6 +57,16 @@ export const BetCard = ({
 
         handleChange(bet + defaultStepValue, 'bet')
         break;
+      case 'min':
+        setBet(defaultStepValue)
+
+        handleChange(bet + defaultStepValue, 'bet')
+        break;
+      case 'max':
+        setBet(currency === 'btc' ? btc : usd)
+
+        handleChange(bet + defaultStepValue, 'bet')
+        break;
     }
   }
 
@@ -73,6 +85,9 @@ export const BetCard = ({
   return (
     <Card className={'bet-card'}>
       <div className="bet-card__counter">
+        <div className="bet-card__counter_min" onClick={() => changeBetHandler('min')}>
+          Min
+        </div>
         <div className="bet-card__counter_minus" onClick={() => changeBetHandler('minus')}>
           <MinusIcon />
         </div>
@@ -84,6 +99,9 @@ export const BetCard = ({
         />
         <div className="bet-card__counter_plus" onClick={() => changeBetHandler('plus')}>
           <PlusIcon />
+        </div>
+        <div className="bet-card__counter_max" onClick={() => changeBetHandler('max')}>
+          Max
         </div>
       </div>
       {type === 'roulette' ?

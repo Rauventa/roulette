@@ -13,11 +13,15 @@ import {AuthContext} from "../../../../context/AuthContext";
 import {Select} from "../../../../components/Select/Select";
 import '../../AuthPage.scss'
 import {useTranslation} from "react-i18next";
-import {RadioGroup} from "../../../../components/RadioGroup/RadioGroup";
 import {Switcher} from "../../../../components/Switcher/Switcher";
 import {useDispatch, useSelector} from "react-redux";
-import {getUserCountry, loaderVisibilityHandler, getAvialableBonuses, updateInformer} from "../../../../store/actions/Application/applicationActions";
-import {errorCodes} from "../../../../lib/errorCodes";
+import {
+  getUserCountry,
+  loaderVisibilityHandler,
+  updateInformer,
+  getAvialableBonuses,
+  updateInformer
+} from "../../../../store/actions/Application/applicationActions";
 
 export const SignUp = () => {
 
@@ -28,7 +32,7 @@ export const SignUp = () => {
     confirmPassword: '',
     license: true,
   }
-  const defautBonus = {
+  const defaultBonus = {
     id: 0,
     amount: 0,
     wager: 0
@@ -37,7 +41,7 @@ export const SignUp = () => {
   const [formState, setFormState] = useState(defaultFormState)
   const [signType, setSignType] = useState<boolean>(false)
   const [errors, setErrors] = useState<any>({})
-  const [bonus, setBonus] = useState(defautBonus)
+  const [bonus, setBonus] = useState(defaultBonus)
 
   const history = useHistory()
   const dispatch = useDispatch()
@@ -144,7 +148,7 @@ export const SignUp = () => {
       } catch (e:any) {
         setErrors({registration: 'Registration failed'})
         //@ts-ignore
-        dispatch(updateInformer({message: errorCodes[Number(e.response.data.errors[0])], active: true, type: 'error', timeout: 5}))
+        dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error', timeout: 5}))
       }
     } else {
       setErrors(errors)
@@ -171,7 +175,7 @@ export const SignUp = () => {
           bonus: null
         }
       });
-      setBonus(defautBonus)
+      setBonus(defaultBonus)
     }
   }
 
@@ -193,16 +197,15 @@ export const SignUp = () => {
                       onChange={(value) => handleStateUpdate(value, 'email')}
                   /> :
                   <>
-                  {console.log("errors", errors)}
-                  <Input
-                      className={errors?.phone ? 'input-error' : ''}
-                      placeholder={'Phone'}
-                      type={'phone'}
-                      country={country.toUpperCase()}
-                      value={formState.phone}
-                      errors={errors?.phone}
-                      onChange={(value) => handleStateUpdate(value, 'phone')}
-                  />
+                    <Input
+                        className={errors?.phone ? 'input-error' : ''}
+                        placeholder={'Phone'}
+                        type={'phone'}
+                        country={country.toUpperCase()}
+                        value={formState.phone}
+                        errors={errors?.phone}
+                        onChange={(value) => handleStateUpdate(value, 'phone')}
+                    />
                   </>
               }
               <Switcher
@@ -227,13 +230,6 @@ export const SignUp = () => {
                   errors={errors?.confirmPassword}
                   onChange={(value) => handleStateUpdate(value, 'repeat')}
               />
-{/* 
-              <RadioGroup
-                  title={'Balance type'}
-                  values={['Bonus', 'Default']}
-                  defaultValue={'Default'}
-                  onChange={handleRadioChange}
-              /> */}
 
             <Select
               className={'auth-page__bonus-select'}
@@ -248,11 +244,11 @@ export const SignUp = () => {
               placeholder={'Select Bonus'}
               isClearable={!!bonus||false}
             />
+
             {bonus?.amount!==0?
-              <div className={'auth-page__bonus-text'}>You choosed bonus {bonus.amount } BTC.<br/> With a bonus of {bonus.amount} BTC, for withdrawal,<br/> you need to make bets in the amount {bonus.amount * bonus.wager}</div> :
+              <div className={'auth-page__bonus-text text-secondary'}>You choosed bonus {bonus.amount } BTC.<br/> With a bonus of {bonus.amount} BTC, for withdrawal,<br/> you need to make bets in the amount {bonus.amount * bonus.wager}</div> :
               null
             }
-            
 
               <Checkbox
                   errors={errors?.license}

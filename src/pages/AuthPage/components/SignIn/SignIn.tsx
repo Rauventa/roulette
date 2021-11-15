@@ -16,7 +16,6 @@ import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
 import {getUserCountry, updateInformer} from "../../../../store/actions/Application/applicationActions";
 import {Switcher} from "../../../../components/Switcher/Switcher";
-import {errorCodes} from "../../../../lib/errorCodes";
 
 export const SignIn = () => {
 
@@ -121,7 +120,7 @@ export const SignIn = () => {
         }
       } catch (e:any) {
 
-        if (e.response.data.errors[0] === 'Requires Two Factor') {
+        if (e.response.data.errors[0] === 'Requires 2FA code.') {
           setFormState((prev: any) => {
             return {
               ...prev,
@@ -134,7 +133,7 @@ export const SignIn = () => {
           console.log(e)
           setErrors({login: 'Authorization failed'})
           //@ts-ignore
-          dispatch(updateInformer({message: errorCodes[Number(e.response.data.errors[0])], active: true, type: 'error', timeout: 5}))
+          dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error', timeout: 5}))
         }
       }
     } else {

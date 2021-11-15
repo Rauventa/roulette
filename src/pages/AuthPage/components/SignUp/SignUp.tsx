@@ -105,6 +105,7 @@ export const SignUp = () => {
   }
 
   const handleSubmit = async () => {
+    
 
     dispatch(loaderVisibilityHandler(true))
 

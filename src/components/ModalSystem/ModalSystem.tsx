@@ -5,6 +5,7 @@ import {UnauthorizedModal} from "./components/UnauthorizedModal";
 import {GameBetModal} from "./components/GameBetModal";
 import { InfoModal } from './components/InfoModal';
 import {RouletteBetModal} from "./components/RouletteBetModal/RouletteBetModal";
+import {AuthModal} from "./components/AuthModal/AuthModal";
 
 interface ModalSystemProps {
   type: string,
@@ -80,6 +81,9 @@ const ModalSystem: any = ({
                 formState={formState}
                 onClose={handleClose}
             /> : null
+        }
+        {type === 'auth' ?
+          <AuthModal /> : null
         }
       </div>
     )

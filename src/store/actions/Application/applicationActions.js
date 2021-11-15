@@ -1,4 +1,4 @@
-import {FAQ_QUESTIONS, GET_USER_COUNTRY, LOADER_VISIBILITY, GET_AVIABLE_BONUSES} from "../actionTypes";
+import {FAQ_QUESTIONS, GET_USER_COUNTRY, LOADER_VISIBILITY, UPDATE_INFORMER, GET_AVIABLE_BONUSES} from "../actionTypes";
 import {axiosClient} from "../../../utils/axiosClient";
 import {errorModalService} from "../../../services/modal/errorModalService";
 
@@ -61,14 +61,21 @@ export function getAvialableBonuses() {
     }
 }
 
-export const loadFaqQuestionsSuccess = (faqQuestions) => {
+export const updateInformer = informerData => {
+    return {
+        type: UPDATE_INFORMER,
+        informerData
+    }
+}
+
+export const loadFaqQuestionsSuccess = faqQuestions => {
     return {
         type: FAQ_QUESTIONS,
         faqQuestions
     }
 }
 
-export const getUserCountrySuccess = (country) => {
+export const getUserCountrySuccess = country => {
     return {
         type: GET_USER_COUNTRY,
         country

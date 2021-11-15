@@ -1,10 +1,13 @@
-import {FAQ_QUESTIONS, GET_USER_COUNTRY, LOADER_VISIBILITY, GET_AVIABLE_BONUSES} from "../../actions/actionTypes";
+import {FAQ_QUESTIONS, GET_USER_COUNTRY, LOADER_VISIBILITY, UPDATE_INFORMER, GET_AVIABLE_BONUSES} from "../../actions/actionTypes";
 
 const initialState = {
     loader: false,
     country: 'US',
     faqQuestions: [],
     bonuses: []
+    informerData: {
+        active: false
+    }
 };
 
 export default function applicationReducer(state = initialState, action) {
@@ -28,6 +31,10 @@ export default function applicationReducer(state = initialState, action) {
             return {
                 ...state,
                 bonuses: action.bonuses
+        case UPDATE_INFORMER:
+            return {
+                ...state,
+                informerData: action.informerData
             }
         default:
             return state

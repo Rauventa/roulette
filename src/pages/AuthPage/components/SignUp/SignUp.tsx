@@ -18,7 +18,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {
   getUserCountry,
   loaderVisibilityHandler,
-  updateInformer,
   getAvialableBonuses,
   updateInformer
 } from "../../../../store/actions/Application/applicationActions";

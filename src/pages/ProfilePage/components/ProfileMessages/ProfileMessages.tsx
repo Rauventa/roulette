@@ -20,11 +20,15 @@ export const ProfileMessages = () => {
 
   const messages = useSelector((state: any) => state.profileReducer.messages)
 
+  const [formMessage, setFormMessage] = useState<string>('')
+
   const fetchData = async () => {
     dispatch(getMessages(token))
   }
 
-  const [formMessage, setFormMessage] = useState<string>('')
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   useEffect(() => {
     const interval = setInterval(fetchData, 30000);

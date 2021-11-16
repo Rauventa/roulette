@@ -64,12 +64,12 @@ export const RootRouter = () => {
                 <Route path={'/'} exact>
                     <RoulettePage />
                 </Route>
-                <Route path={'/login'}>
-                    <SignIn />
-                </Route>
-                <Route path={'/registration'}>
-                    <SignUp />
-                </Route>
+                {/*<Route path={'/login'}>*/}
+                {/*    <SignIn />*/}
+                {/*</Route>*/}
+                {/*<Route path={'/registration'}>*/}
+                {/*    <SignUp />*/}
+                {/*</Route>*/}
                 <Route path={'/dice'}>
                     <DicePage />
                 </Route>

@@ -8,8 +8,8 @@ import {
     GET_USD_BALANCE,
     GET_WALLETS
 } from "../actionTypes";
-import {errorModalService} from "../../../services/modal/errorModalService";
 import axios from "axios";
+import {updateInformer} from "../Application/applicationActions";
 
 export function changeCurrency(ticker) {
     return {
@@ -34,7 +34,7 @@ export function getBalance(token, rate) {
             dispatch(getUsdBalance(usdValue))
 
         } catch (e) {
-            errorModalService('Balance load error', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -51,7 +51,7 @@ export function getBonusBalance(token) {
             dispatch(getBonusBtcBalance(response.data.payload))
 
         } catch (e) {
-            errorModalService('Balance load error', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -72,7 +72,7 @@ export function getCurrentRate(currency) {
 
             dispatch(getCurrentRateSuccess(data.payload.rate_float))
         } catch (e) {
-            errorModalService('Rate load error', e.response?.status || 500)
+            dispatch(updateInformer({message: 'Can`t load current bitcoin rate', active: true, type: 'error'}))
         }
     }
 }
@@ -87,13 +87,13 @@ export function createWallet(token, data) {
             })
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data?.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 return response.data.success
             }
 
         } catch (e) {
-            errorModalService('Wallet create error', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -111,13 +111,13 @@ export function getWallets(token) {
             })
 
             if (response.data?.errors?.length) {
-                errorModalService('Wallets load error', response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 dispatch(getWalletsSuccess(response.data.payload))
             }
 
         } catch (e) {
-            errorModalService('Wallets load error', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -135,13 +135,13 @@ export function deleteWallet(token, data) {
             })
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data?.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 return response.data.success
             }
 
         } catch (e) {
-            errorModalService('Delete wallet error', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -149,14 +149,14 @@ export function deleteWallet(token, data) {
 export function createWithdraw(token, data) {
     return async dispatch => {
         try {
-            const response = await axiosClient.post('/Payments/WithdrawalRequest', data,{
+            await axiosClient.post('/Payments/WithdrawalRequest', data,{
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             })
 
         } catch (e) {
-            errorModalService('Create withdraw error', e.response.status)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -174,13 +174,13 @@ export function getPaymentHistory(token, data) {
             })
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 dispatch(getPaymentHistorySuccess(response.data.payload.data))
             }
 
         } catch (e) {
-            errorModalService('Payment history load error', e.response.status)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -200,13 +200,13 @@ export function getPaymentProof(token, data) {
             console.log(response, data)
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 dispatch(getPaymentProofSuccess(response.data.payload.data))
             }
 
         } catch (e) {
-            errorModalService('Payment proof load error', e.response.status)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { createModal } from "react-modal-promise";
-import {ErrorModal} from "./components/ErrorModal";
 import {UnauthorizedModal} from "./components/UnauthorizedModal";
 import {GameBetModal} from "./components/GameBetModal";
 import { InfoModal } from './components/InfoModal';
@@ -50,12 +49,6 @@ const ModalSystem: any = ({
 
     return (
       <div>
-        {type === 'error' ?
-          <ErrorModal
-            message={message}
-            onClose={handleClose}
-          /> : null
-        }
         {type === 'info' ?
           <InfoModal
             message={message}
@@ -83,7 +76,10 @@ const ModalSystem: any = ({
             /> : null
         }
         {type === 'auth' ?
-          <AuthModal /> : null
+          <AuthModal
+            formState={formState}
+            onClose={handleClose}
+          /> : null
         }
       </div>
     )

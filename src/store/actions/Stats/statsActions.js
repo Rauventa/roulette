@@ -1,6 +1,6 @@
 import {axiosClient} from "../../../utils/axiosClient";
 import {GET_RATING, GET_STATS, UPDATE_STATS} from "../actionTypes";
-import {errorModalService} from "../../../services/modal/errorModalService";
+import {updateInformer} from "../Application/applicationActions";
 
 export function getStats(token) {
     return async dispatch => {
@@ -12,12 +12,32 @@ export function getStats(token) {
             })
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 dispatch(getStatsSuccess(response.data.payload))
             }
         } catch (e) {
-            errorModalService('Stats load error', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
+        }
+    }
+}
+
+export function getRating(token) {
+    return async dispatch => {
+        try {
+            const response = await axiosClient.get('/Statistics/GetRating', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+
+            if (response.data?.errors?.length) {
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
+            } else {
+                dispatch(getRatingSuccess(response.data.payload))
+            }
+        } catch (e) {
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -33,26 +53,6 @@ export function updateStats(stats) {
     return {
         type: UPDATE_STATS,
         stats
-    }
-}
-
-export function getRating(token) {
-    return async dispatch => {
-        try {
-            const response = await axiosClient.get('/Statistics/GetRating', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-
-            if (response.data?.errors?.length) {
-                errorModalService(response.data.errors[0], response.data.status)
-            } else {
-                dispatch(getRatingSuccess(response.data.payload))
-            }
-        } catch (e) {
-            errorModalService('Rating load error', e.response?.status || null)
-        }
     }
 }
 

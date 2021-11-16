@@ -5,13 +5,15 @@ import {useHistory} from "react-router-dom";
 import { t } from '../../lib/i18n';
 
 import {ReactComponent as CloseIcon} from "./img/closePic.svg";
+import {useDispatch} from "react-redux";
+import {loaderVisibilityHandler} from "../../store/actions/Application/applicationActions";
 
 interface ModalProps {
   className?: string,
   children?: any,
   title?: string,
   subtitle?: string,
-  buttons: any,
+  buttons?: any,
   onResolve: (value: boolean) => void
 }
 
@@ -24,14 +26,20 @@ export const Modal = ({
   onResolve
 }: ModalProps) => {
 
+  const dispatch = useDispatch()
+
   const history = useHistory()
 
-  const handleResolve = (value: boolean, to?: string) => {
+  const handleResolve = async (value: boolean, to?: string) => {
+    dispatch(loaderVisibilityHandler(true))
+
     onResolve(value)
 
     if (to) {
       history.push(to)
     }
+
+    dispatch(loaderVisibilityHandler(false))
   }
 
   return (
@@ -52,7 +60,7 @@ export const Modal = ({
           {children}
         </div>
         <div className="modal__buttons">
-          {buttons.map((button: any, index: number) => (
+          {buttons?.map((button: any, index: number) => (
             <Button
               key={index}
               onClick={() => handleResolve(button.value, button.to)}

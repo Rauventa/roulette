@@ -1,14 +1,13 @@
 import {axiosClient} from "../../../utils/axiosClient";
 import {
-    GET_AVATAR, GET_CONFIRM_STATUS, GET_CURRENT_2FA, GET_MESSAGES,
+    GET_AVATAR, GET_CURRENT_2FA, GET_MESSAGES,
     GET_NICKNAME_VISIBILITY, GET_PROFILE_INFO, GET_REFERRAL_LINK,
     GET_REFERRALS,
     GET_REFERRALS_STATISTIC,
     GET_USER_STATS
 } from "../actionTypes";
-import {errorModalService} from "../../../services/modal/errorModalService";
 import {modalService} from "../../../services/modal/modalService";
-import {config} from "../../../config/config";
+import {updateInformer} from "../Application/applicationActions";
 
 export function getProfileInfo(token) {
     return async dispatch => {
@@ -20,12 +19,12 @@ export function getProfileInfo(token) {
             });
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data?.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 dispatch(getProfileInfoSuccess(response.data.payload))
             }
         } catch (e) {
-            errorModalService('Cannot load profile info', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -40,12 +39,12 @@ export function getAvatar(token) {
             });
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data?.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 dispatch(getAvatarSuccess(response.data.payload))
             }
         } catch (e) {
-            errorModalService('Cannot load avatar', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -60,10 +59,10 @@ export function uploadAvatar(token, data) {
             });
 
             if (!response) {
-                errorModalService('Upload avatar error', response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             }
         } catch (e) {
-            errorModalService('Cannot upload avatar', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -78,12 +77,12 @@ export function getUserStats(token) {
             });
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data?.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 dispatch(getUserStatsSuccess(response.data.payload))
             }
         } catch (e) {
-            errorModalService('Cannot load user statistics', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -97,18 +96,18 @@ export function getNicknameVisibility(token) {
             });
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data?.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 dispatch(getNicknameVisibilitySuccess(response.data.payload))
             }
         } catch (e) {
-            errorModalService('Cannot load nickname params', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
 
 export function changeNickname(token, data) {
-    return async () => {
+    return async dispatch => {
         try {
             const response = await axiosClient.post('/Profile/ChangeNickname', data, {
                 headers: {
@@ -117,16 +116,16 @@ export function changeNickname(token, data) {
             });
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data?.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             }
         } catch (e) {
-            errorModalService('Cannot change nickname', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
 
 export function changeEmail(token, data) {
-    return async () => {
+    return async dispatch => {
         try {
             const response = await axiosClient.post('/Profile/ChangeEmail', data, {
                 headers: {
@@ -135,19 +134,19 @@ export function changeEmail(token, data) {
             });
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data?.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 return response.data.success
             }
 
         } catch (e) {
-            errorModalService('Can not change email', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
 
 export function confirmEmail(token, data, type) {
-    return async () => {
+    return async dispatch => {
         try {
             const response = await axiosClient.post('/Profile/СonfirmEmail', data, {
                 headers: {
@@ -156,7 +155,7 @@ export function confirmEmail(token, data, type) {
             });
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data?.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 modalService('info', type === 'confirm' ? `Email confirmed successfully` : `Email changed successfully`, {
                     title: 'Success',
@@ -171,13 +170,13 @@ export function confirmEmail(token, data, type) {
             }
 
         } catch (e) {
-            errorModalService('Cannot change email', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
 
 export function changePhone(token, data) {
-    return async () => {
+    return async dispatch => {
         try {
             const response = await axiosClient.post('/Profile/ChangePhone', data, {
                 headers: {
@@ -186,19 +185,19 @@ export function changePhone(token, data) {
             });
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data?.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 return response.data.success
             }
 
         } catch (e) {
-            errorModalService('Can not change phone', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
 
 export function confirmPhone(token, data, type) {
-    return async () => {
+    return async dispatch => {
         try {
             const response = await axiosClient.post('/Profile/СonfirmPhone', data, {
                 headers: {
@@ -207,7 +206,7 @@ export function confirmPhone(token, data, type) {
             });
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data?.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 modalService('info', type === 'confirm' ? `Phone confirmed successfully` : `Phone changed successfully`, {
                     title: 'Success',
@@ -222,13 +221,13 @@ export function confirmPhone(token, data, type) {
             }
 
         } catch (e) {
-            errorModalService('Cannot change phone', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
 
 export function changePassword(token, data) {
-    return async () => {
+    return async dispatch => {
         try {
             const response = await axiosClient.post('/Auth/ChangePassword', data, {
                 headers: {
@@ -237,7 +236,7 @@ export function changePassword(token, data) {
             });
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data?.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 modalService('info', 'You have successfully changed your password', {
                     title: 'Success',
@@ -251,13 +250,13 @@ export function changePassword(token, data) {
                 })
             }
         } catch (e) {
-            errorModalService('Cannot change email', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
 
 export function getReferrals(token) {
-    return async () => {
+    return async dispatch => {
         try {
             const response = await axiosClient.get('/Profile/GetReferals', {
                 headers: {
@@ -266,13 +265,13 @@ export function getReferrals(token) {
             })
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data?.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 getReferralsSuccess(response.data.payload.data, response.data.payload.count)
             }
 
         } catch (e) {
-            errorModalService('Cannot load referrals', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -290,13 +289,13 @@ export function getReferralsStatistic(token, owner) {
             })
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data?.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 dispatch(getReferralsStatisticSuccess(response.data.payload))
             }
 
         } catch (e) {
-            errorModalService('Cannot load referrals statistics', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -311,12 +310,12 @@ export function getReferralLink(token) {
             })
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data?.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 dispatch(getReferralLinkSuccess(response.data.payload))
             }
         } catch (e) {
-            errorModalService('Cannot load referral link', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -329,22 +328,23 @@ export function getMessages(token) {
                     'Authorization': `Bearer ${token}`
                 },
                 params: {
-                    ...config.historyLoadParams,
+                    pageSize: 10,
+                    pageNumber: 0
                 }
             })
             if (response.data?.errors?.length) {
-                errorModalService(response.data?.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 dispatch(getMessagesSuccess(response.data.payload.data.reverse()))
             }
         } catch (e) {
-            errorModalService('Cannot load support messages', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
 
 export function sendMessage(token, data) {
-    return async () => {
+    return async dispatch => {
         try {
             const response = await axiosClient.post('/Messages/SendMessage', data, {
                 headers: {
@@ -353,10 +353,10 @@ export function sendMessage(token, data) {
             })
             console.log('response ',response)
             if (response.data?.errors?.length) {
-                errorModalService(response.data?.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             }
         } catch (e) {
-            errorModalService('Cannot send message', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -371,12 +371,12 @@ export function getCurrent2fa(token) {
             })
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data?.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 dispatch(getCurrent2faSuccess(response.data.payload))
             }
         } catch (e) {
-            errorModalService('Cannot get your 2FA code', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -391,12 +391,12 @@ export function confirm2fa(token, data) {
             })
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data?.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 dispatch(getCurrent2faSuccess(null))
             }
         } catch (e) {
-            errorModalService('Cannot confirm your 2FA code', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }

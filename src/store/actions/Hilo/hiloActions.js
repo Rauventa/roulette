@@ -1,8 +1,8 @@
 import {axiosClient} from "../../../utils/axiosClient";
 import {GET_HILO_HASH, GET_HILO_HISTORY, START_HILO_SUCCESS} from "../actionTypes";
 import {config} from "../../../config/config";
-import {errorModalService} from "../../../services/modal/errorModalService";
 import {gameModalService} from "../../../services/modal/gameModalService";
+import {updateInformer} from "../Application/applicationActions";
 
 export function getHiloHash(token) {
     return async dispatch => {
@@ -14,13 +14,12 @@ export function getHiloHash(token) {
             });
 
             if (!response) {
-                errorModalService('Cannot load hash', response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 dispatch(getHiloHashSuccess(response.data.payload.hash, response.data.payload.gameNumber))
             }
         } catch (e) {
-            console.log(e)
-            errorModalService('Cannot load hash', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -35,13 +34,13 @@ export function startHilo(token, data, hash) {
             })
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 dispatch(startHiloSuccess({...response.data.payload, lastHash: hash}))
                 gameModalService('hilo-game', {...response.data.payload, lastHash: hash})
             }
         } catch (e) {
-            errorModalService('Hilo game load error', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -61,7 +60,7 @@ export function getHiloHistory(token, data) {
 
             dispatch(getHiloHistorySuccess(response.data.payload.data.reverse()))
         } catch (e) {
-            errorModalService('Dice game load error', 500)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }

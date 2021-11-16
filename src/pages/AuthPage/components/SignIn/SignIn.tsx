@@ -14,10 +14,17 @@ import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../../../components/Spinner/Spinner";
 import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
-import {getUserCountry, updateInformer} from "../../../../store/actions/Application/applicationActions";
+import {
+  getUserCountry,
+  loaderVisibilityHandler,
+  updateInformer
+} from "../../../../store/actions/Application/applicationActions";
 import {Switcher} from "../../../../components/Switcher/Switcher";
+import {IAuth} from "../../../../interfaces/auth/IAuth";
 
-export const SignIn = () => {
+export const SignIn = ({
+  onCloseModal
+}: IAuth) => {
 
   const defaultFormState = {
     email: '',
@@ -30,7 +37,6 @@ export const SignIn = () => {
   const [formState, setFormState] = useState<any>(defaultFormState)
   const [errors, setErrors] = useState<any>({})
   const [signType, setSignType] = useState<boolean>(false)
-  const [loader, setLoader] = useState<boolean>(false)
 
   const history = useHistory()
   const dispatch = useDispatch()
@@ -86,7 +92,7 @@ export const SignIn = () => {
   }
 
   const handleSubmit = async () => {
-    setLoader(true)
+    dispatch(loaderVisibilityHandler(false))
 
     if (!signType) {
       delete
@@ -113,8 +119,9 @@ export const SignIn = () => {
               data.userId,
               data.nickname
           )
-          
-          history.push('/')
+
+          onCloseModal(true)
+          dispatch(updateInformer({message: 'Login success', active: true, type: 'info'}))
         } else {
           setErrors({login: 'Authorization failed'})
         }
@@ -128,7 +135,7 @@ export const SignIn = () => {
             }
           })
 
-          setLoader(false)
+          dispatch(loaderVisibilityHandler(false))
         } else {
           console.log(e)
           setErrors({login: 'Authorization failed'})
@@ -140,95 +147,86 @@ export const SignIn = () => {
       setErrors(errors)
     }
 
-    setLoader(false)
+    dispatch(loaderVisibilityHandler(false))
   }
-
-  console.log(formState)
 
   return (
       <div className={'auth-page'}>
-
-        <CSSTransition in={loader} timeout={500} unmountOnExit classNames="my-node">
-          <Spinner />
-        </CSSTransition>
-
-        <Card className={'fit-card'}>
-          <div className="auth-page__signin">
-            <div className="auth-page__title">
-              {t('Sign In')}
-            </div>
-            <div className="form-group">
-              {!signType ?
-                  <Input
-                      className={errors?.email ? 'input-error' : ''}
-                      placeholder={'Email'}
-                      type={'text'}
-                      value={formState.email}
-                      errors={errors?.email}
-                      onChange={(value) => handleStateUpdate(value, 'email')}
-                  /> :
-                  <Input
-                      className={errors?.phone ? 'input-error' : ''}
-                      placeholder={'Phone'}
-                      type={'phone'}
-                      country={country.toUpperCase()}
-                      value={formState.phone}
-                      errors={errors?.phone}
-                      onChange={(value) => handleStateUpdate(value, 'phone')}
-                  />
-              }
-              <Switcher
-                  checked={signType}
-                  onChange={() => setSignType(!signType)}
-                  title={'Sign in with phone'}
-              />
+        <div className="auth-page__signin">
+          <div className="auth-page__title">
+            {t('Sign In')}
+          </div>
+          <div className="form-group">
+            {!signType ?
               <Input
-                  className={errors?.password ? 'input-error' : ''}
-                  placeholder={'Password'}
-                  type={'password'}
-                  value={formState.password}
-                  errors={errors?.password}
-                  onChange={(value) => handleStateUpdate(value, 'password')}
+                className={errors?.email ? 'input-error' : ''}
+                placeholder={'Email'}
+                type={'text'}
+                value={formState.email}
+                errors={errors?.email}
+                onChange={(value) => handleStateUpdate(value, 'email')}
+              /> :
+              <Input
+                className={errors?.phone ? 'input-error' : ''}
+                placeholder={'Phone'}
+                type={'phone'}
+                country={country.toUpperCase()}
+                value={formState.phone}
+                errors={errors?.phone}
+                onChange={(value) => handleStateUpdate(value, 'phone')}
               />
+            }
+            <Switcher
+              checked={signType}
+              onChange={() => setSignType(!signType)}
+              title={'Sign in with phone'}
+            />
+            <Input
+              className={errors?.password ? 'input-error' : ''}
+              placeholder={'Password'}
+              type={'password'}
+              value={formState.password}
+              errors={errors?.password}
+              onChange={(value) => handleStateUpdate(value, 'password')}
+            />
 
-              {formState.enable2Fa ?
-                  <Input
-                      placeholder={'2FA code'}
-                      type={'text'}
-                      value={formState.googleAuthenticatorCode}
-                      onChange={(value) => handleStateUpdate(value, 'googleAuthenticatorCode')}
-                  /> : null
-              }
+            {formState.enable2Fa ?
+              <Input
+                placeholder={'2FA code'}
+                type={'text'}
+                value={formState.googleAuthenticatorCode}
+                onChange={(value) => handleStateUpdate(value, 'googleAuthenticatorCode')}
+              /> : null
+            }
 
-              {errors.length ?
-                  <div className={'errors-shower'}>
-                    {t(errors?.login)}
-                  </div> : null
-              }
+            {errors.length ?
+              <div className={'errors-shower'}>
+                {t(errors?.login)}
+              </div> : null
+            }
 
-              <div className="auth-page__additional">
-                {t('Forgot your password?')}
-              </div>
+            <div className="auth-page__additional">
+              {t('Forgot your password?')}
+            </div>
 
-              <div className="auth-page__buttons">
-                <Button primary onClick={handleSubmit}>
-                  {t('Log In')}
-                </Button>
-                <div className="auth-page__buttons_socials">
-                  <div className="auth-page__buttons_socials-item">
-                    <InstagramIcon />
-                  </div>
-                  <div className="auth-page__buttons_socials-item">
-                    <FacebookIcon />
-                  </div>
-                  <div className="auth-page__buttons_socials-item">
-                    <VkIcon />
-                  </div>
+            <div className="auth-page__buttons">
+              <Button primary onClick={handleSubmit}>
+                {t('Log In')}
+              </Button>
+              <div className="auth-page__buttons_socials">
+                <div className="auth-page__buttons_socials-item">
+                  <InstagramIcon />
+                </div>
+                <div className="auth-page__buttons_socials-item">
+                  <FacebookIcon />
+                </div>
+                <div className="auth-page__buttons_socials-item">
+                  <VkIcon />
                 </div>
               </div>
             </div>
           </div>
-        </Card>
+        </div>
       </div>
   )
 }

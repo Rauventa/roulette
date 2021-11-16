@@ -1,11 +1,13 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Card} from "../../../../components/Card/Card";
 import {Input} from "../../../../components/Input/Input";
 import {Button} from "../../../../components/Button/Button";
 import {ReactComponent as BitcoinIcon} from "../../img/btc-ico-white.svg";
 import {useTranslation} from "react-i18next";
 import { axiosClient } from "../../../../utils/axiosClient";
-import {modalService} from "../../../../services/modal/modalService";
+import {AuthContext} from "../../../../context/AuthContext";
+import {loaderVisibilityHandler, updateInformer} from "../../../../store/actions/Application/applicationActions";
+import {useDispatch} from "react-redux";
 interface SelectDepositProps {
   onChangePage: (value: string) => void;
 }
@@ -14,7 +16,10 @@ export const SelectDeposit = ({
   onChangePage,
 }: SelectDepositProps) => {
 
-  const [promocode, setPromocode] = useState<string>('')
+  const {token} = useContext(AuthContext)
+  const dispatch = useDispatch()
+
+  const [code, setCode] = useState<string>('')
 
   const {t} = useTranslation()
 
@@ -22,29 +27,28 @@ export const SelectDeposit = ({
     onChangePage('currency')
   }
 
-  const handlePromocodeSubmit = async () => {
-    try {
-      let answer = await axiosClient.post('/Profile/ActivatePromocode', { code: promocode })
-      console.log('answer ', answer);
-    } catch (e:any) {
-      console.log(e.data)
-    }
-    
-    
+  const promoHandler = async () => {
+    await axiosClient.post('/Profile/ActivatePromocode', {value: code}, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+
+    dispatch(updateInformer({message: 'Promo code applied', active: true, type: 'info'}))
   }
 
   return (
     <div className="deposit-container__content">
       <Card>
         <Input
-          onChange={(value) => setPromocode(value)}
+          onChange={(value) => setCode(value)}
           placeholder={''}
           type={'text'}
-          value={promocode}
+          value={code}
           title={'Use promo code to refill your balance'}
         />
 
-        <Button primary disabled={!Boolean(promocode)} onClick={handlePromocodeSubmit}>
+        <Button primary disabled={!code} onClick={promoHandler}>
           {t('Apply')}
         </Button>
       </Card>

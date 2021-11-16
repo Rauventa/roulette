@@ -1,8 +1,8 @@
 import {axiosClient} from "../../../utils/axiosClient";
 import {GET_DICE_HASH, GET_DICE_HISTORY, START_DICE_SUCCESS} from "../actionTypes";
-import {errorModalService} from "../../../services/modal/errorModalService";
 import {config} from "../../../config/config";
 import {gameModalService} from "../../../services/modal/gameModalService";
+import {updateInformer} from "../Application/applicationActions";
 
 export function getDiceHash(token) {
     return async dispatch => {
@@ -14,12 +14,12 @@ export function getDiceHash(token) {
             });
 
             if (!response) {
-                errorModalService('Cannot load hash', response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 dispatch(getDiceHashSuccess(response.data.payload.hash, response.data.payload.gameNumber))
             }
         } catch (e) {
-            errorModalService('Cannot load hash', e.response?.status || 404)
+           dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -34,14 +34,14 @@ export function startDice(token, data, ownNumber, hash) {
             })
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 dispatch(startDiceSuccess({...response.data.payload, ownNumber, lastHash: hash}))
                 gameModalService('dice-game', {...response.data.payload, ownNumber, lastHash: hash})
             }
 
         } catch (e) {
-            errorModalService('Dice game load error', e.response.status)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -60,12 +60,12 @@ export function getDiceHistory(token, data) {
             })
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 dispatch(getDiceHistorySuccess(response.data.payload.data.reverse()))
             }
         } catch (e) {
-            errorModalService('Dice game load error', 500)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }

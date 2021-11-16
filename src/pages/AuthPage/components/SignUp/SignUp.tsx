@@ -21,8 +21,11 @@ import {
   getAvialableBonuses,
   updateInformer
 } from "../../../../store/actions/Application/applicationActions";
+import {IAuth} from "../../../../interfaces/auth/IAuth";
 
-export const SignUp = () => {
+export const SignUp = ({
+  onCloseModal
+}: IAuth) => {
 
   const defaultFormState = {
     phone: '',
@@ -133,7 +136,8 @@ export const SignUp = () => {
               data.userId,
               data.nickname
           )
-          history.push('/')
+
+          onCloseModal(true)
         } else {
           if (response.data.errors[0] === 'Email Already Taken Error') {
             setErrors({registration: 'This email is already taken'})
@@ -180,63 +184,62 @@ export const SignUp = () => {
 
   return (
       <div className={'auth-page'}>
-        <Card className={'fit-card'}>
-          <div className="auth-page__signup">
-            <div className="auth-page__title">
-              {t('Sign Up')}
-            </div>
-            <div className="form-group">
-              {!signType ?
-                  <Input
-                      className={errors?.email ? 'input-error' : ''}
-                      placeholder={'Email'}
-                      type={'text'}
-                      value={formState.email}
-                      errors={errors?.email}
-                      onChange={(value) => handleStateUpdate(value, 'email')}
-                  /> :
-                  <>
-                    <Input
-                        className={errors?.phone ? 'input-error' : ''}
-                        placeholder={'Phone'}
-                        type={'phone'}
-                        country={country.toUpperCase()}
-                        value={formState.phone}
-                        errors={errors?.phone}
-                        onChange={(value) => handleStateUpdate(value, 'phone')}
-                    />
-                  </>
-              }
-              <Switcher
-                  checked={signType}
-                  onChange={() => setSignType(!signType)}
-                  title={'Sign up with phone'}
-              />
+        <div className="auth-page__signup">
+          <div className="auth-page__title">
+            {t('Sign Up')}
+          </div>
+          <div className="form-group">
+            {!signType ?
               <Input
-                  className={errors?.password ? 'input-error' : ''}
-                  placeholder={'Password'}
-                  type={'password'}
-                  value={formState.password}
-                  errors={errors?.password}
-                  onChange={(value) => handleStateUpdate(value, 'password')}
-              />
+                className={errors?.email ? 'input-error' : ''}
+                placeholder={'Email'}
+                type={'text'}
+                value={formState.email}
+                errors={errors?.email}
+                onChange={(value) => handleStateUpdate(value, 'email')}
+              /> :
+              <>
+                <Input
+                  className={errors?.phone ? 'input-error' : ''}
+                  placeholder={'Phone'}
+                  type={'phone'}
+                  country={country.toUpperCase()}
+                  value={formState.phone}
+                  errors={errors?.phone}
+                  onChange={(value) => handleStateUpdate(value, 'phone')}
+                />
+              </>
+            }
+            <Switcher
+              checked={signType}
+              onChange={() => setSignType(!signType)}
+              title={'Sign up with phone'}
+            />
+            <Input
+              className={errors?.password ? 'input-error' : ''}
+              placeholder={'Password'}
+              type={'password'}
+              value={formState.password}
+              errors={errors?.password}
+              onChange={(value) => handleStateUpdate(value, 'password')}
+            />
 
-              <Input
-                  className={errors?.confirmPassword ? 'input-error' : ''}
-                  placeholder={'Confirm Password'}
-                  type={'password'}
-                  value={formState.confirmPassword}
-                  errors={errors?.confirmPassword}
-                  onChange={(value) => handleStateUpdate(value, 'repeat')}
-              />
+            <Input
+              className={errors?.confirmPassword ? 'input-error' : ''}
+              placeholder={'Confirm Password'}
+              type={'password'}
+              value={formState.confirmPassword}
+              errors={errors?.confirmPassword}
+              onChange={(value) => handleStateUpdate(value, 'repeat')}
+            />
 
             <Select
               className={'auth-page__bonus-select'}
               options={bonuses?.map((option:any)=>{
                 return {
-                    label:`${option.amount} BTC`,
-                    value:option.id
-                  }
+                  label:`${option.amount} BTC`,
+                  value:option.id
+                }
               })}
               value={bonus.id!==0?{label:`${bonus.amount} BTC`, value: bonus.id}:null}
               onChange={handleRadioChange}
@@ -249,43 +252,42 @@ export const SignUp = () => {
               null
             }
 
-              <Checkbox
-                  errors={errors?.license}
-                  checked={formState.license}
-                  onChange={(value) => handleStateUpdate(value, 'license')}
-              >
-                <div>
-                  {t('I confirm that I agree to the')}
-                  <NavLink to={'/'} className={'danger-link'}>
-                    {t('License agreement')}
-                  </NavLink>
-                </div>
-              </Checkbox>
+            <Checkbox
+              errors={errors?.license}
+              checked={formState.license}
+              onChange={(value) => handleStateUpdate(value, 'license')}
+            >
+              <div>
+                {t('I confirm that I agree to the')}
+                <NavLink to={'/'} className={'danger-link'}>
+                  {t('License agreement')}
+                </NavLink>
+              </div>
+            </Checkbox>
 
-              {errors.length ?
-                  <div className={'errors-shower'}>
-                    {t(errors?.registration)}
-                  </div> : null
-              }
-              <div className="auth-page__buttons">
-                <Button primary onClick={handleSubmit}>
-                  {t('Sign Up')}
-                </Button>
-                <div className="auth-page__buttons_socials">
-                  <div className="auth-page__buttons_socials-item">
-                    <InstagramIcon />
-                  </div>
-                  <div className="auth-page__buttons_socials-item">
-                    <FacebookIcon />
-                  </div>
-                  <div className="auth-page__buttons_socials-item">
-                    <VkIcon />
-                  </div>
+            {errors.length ?
+              <div className={'errors-shower'}>
+                {t(errors?.registration)}
+              </div> : null
+            }
+            <div className="auth-page__buttons">
+              <Button primary onClick={handleSubmit}>
+                {t('Sign Up')}
+              </Button>
+              <div className="auth-page__buttons_socials">
+                <div className="auth-page__buttons_socials-item">
+                  <InstagramIcon />
+                </div>
+                <div className="auth-page__buttons_socials-item">
+                  <FacebookIcon />
+                </div>
+                <div className="auth-page__buttons_socials-item">
+                  <VkIcon />
                 </div>
               </div>
             </div>
           </div>
-        </Card>
+        </div>
       </div>
   )
 }

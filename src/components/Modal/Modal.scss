@@ -137,3 +137,11 @@
     }
   }
 }
+
+.auth-modal {
+  .modal {
+    &__content {
+      padding: 0;
+    }
+  }
+}

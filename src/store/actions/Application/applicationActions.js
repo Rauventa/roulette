@@ -1,6 +1,5 @@
 import {FAQ_QUESTIONS, GET_USER_COUNTRY, LOADER_VISIBILITY, UPDATE_INFORMER, GET_AVIABLE_BONUSES} from "../actionTypes";
 import {axiosClient} from "../../../utils/axiosClient";
-import {errorModalService} from "../../../services/modal/errorModalService";
 
 export const loaderVisibilityHandler = (state) => {
     return {
@@ -19,12 +18,12 @@ export function loadFaqQuestions(token) {
             })
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data?.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 dispatch(loadFaqQuestionsSuccess(response.data.payload))
             }
         } catch (e) {
-            errorModalService('Cannot load questions', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -35,12 +34,12 @@ export function getUserCountry() {
             const response = await axiosClient.get('/Auth/GetUserCountry')
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data?.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 dispatch(getUserCountrySuccess(response.data))
             }
         } catch (e) {
-            errorModalService('Cannot load user country', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -51,12 +50,12 @@ export function getAvialableBonuses() {
             const response = await axiosClient.get('/Auth/GetAvailableBonuses')
 
             if (response.data?.errors?.length) {
-                errorModalService(response.data?.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 dispatch(getAvialableBonusesSuccess(response.data))
             }
         } catch (e) {
-            errorModalService('No aviable bonuses', e.response?.status || null)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }

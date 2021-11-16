@@ -17,6 +17,8 @@ import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../Spinner/Spinner";
 import {config} from "../../config/config";
 import {getAvatar} from "../../store/actions/Profile/profileActions";
+import {authModalService} from "../../services/modal/authModalService";
+import {updateInformer} from "../../store/actions/Application/applicationActions";
 
 export const Header = () => {
 
@@ -89,7 +91,12 @@ export const Header = () => {
 
   const logoutHandler = () => {
     logout()
-    history.push('/login')
+    history.push('/')
+    dispatch(updateInformer({message: 'You have successfully signed out', active: true, type: 'info'}))
+  }
+
+  const authModalHandler = (type: string) => {
+    authModalService({type})
   }
 
   return (
@@ -195,10 +202,10 @@ export const Header = () => {
         </div>
         {!isAuth ?
             <div className="header__additional_auth">
-              <Button dark href={'/login'}>
+              <Button dark onClick={() => authModalHandler('SignIn')}>
                 {t('Sign In')}
               </Button>
-              <Button dark href={'/registration'}>
+              <Button dark onClick={() => authModalHandler('SignUp')}>
                 {t('Sign Up')}
               </Button>
             </div> :

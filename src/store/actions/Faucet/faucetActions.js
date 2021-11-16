@@ -1,10 +1,7 @@
-import {errorModalService} from "../../../services/modal/errorModalService";
 import {axiosClient} from "../../../utils/axiosClient";
 import {GET_FAUCET_HISTORY, GET_FAUCET_TIMEOUT, GET_FAUCET_WINS, ROLL_FAUCET} from "../actionTypes";
-import {modalService} from "../../../services/modal/modalService";
-import {currencyValueChanger} from "../../../lib/numberRefractor";
-import {getTicker} from "../../../lib/tickers";
 import {getBalance} from "../Balance/balanceActions";
+import {updateInformer} from "../Application/applicationActions";
 
 export function getFaucetHistory(token) {
     return async dispatch => {
@@ -16,13 +13,13 @@ export function getFaucetHistory(token) {
             })
 
             if (response?.data?.errors?.length) {
-                errorModalService(response.data.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 dispatch(getFaucetHistorySuccess(response.data.payload))
             }
 
         } catch (e) {
-            errorModalService('Faucet history load error', e.response.status)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -37,13 +34,13 @@ export function getFaucetWins(token) {
             })
 
             if (response?.data?.errors?.length) {
-                errorModalService(response.data.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
                 dispatch(getFaucetWinsSuccess(response.data.payload))
             }
 
         } catch (e) {
-            errorModalService('Faucet params load error', e.response.status)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -60,7 +57,7 @@ export function getFaucetTimeout(token) {
             console.log(response.data.payload)
 
             if (response?.data?.errors?.length) {
-                errorModalService(response.data.errors[0], response.data.status)
+                dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
 
                 const timeout = response.data.payload?.minutes * 60 + response.data.payload?.seconds
@@ -69,7 +66,7 @@ export function getFaucetTimeout(token) {
             }
 
         } catch (e) {
-            errorModalService('Faucet timeout load error', e.response.status)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
     }
 }
@@ -89,7 +86,7 @@ export function rollFaucet(token, currency, rate) {
             dispatch(getBalance(token, rate))
 
         } catch (e) {
-            errorModalService('You cannot play yet. Wait please', e.response.status)
+            dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
         }
         
     }

@@ -28,13 +28,16 @@ export const SelectDeposit = ({
   }
 
   const promoHandler = async () => {
-    await axiosClient.post('/Profile/ActivatePromocode', {value: code}, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    })
-
-    dispatch(updateInformer({message: 'Promo code applied', active: true, type: 'info'}))
+    try {
+      await axiosClient.post('/Profile/ActivatePromocode', {value: code}, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      dispatch(updateInformer({message: 'Promo code applied', active: true, type: 'info'}))
+    } catch (e:any) {
+      dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))
+    }
   }
 
   return (

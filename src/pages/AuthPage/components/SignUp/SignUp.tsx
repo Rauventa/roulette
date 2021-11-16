@@ -45,7 +45,6 @@ export const SignUp = ({
   const [errors, setErrors] = useState<any>({})
   const [bonus, setBonus] = useState(defaultBonus)
 
-  const history = useHistory()
   const dispatch = useDispatch()
   const {login} = useContext(AuthContext)
 
@@ -235,7 +234,7 @@ export const SignUp = ({
 
             <Select
               className={'auth-page__bonus-select'}
-              options={bonuses?.map((option:any)=>{
+              options={bonuses?.map((option:any) => {
                 return {
                   label:`${option.amount} BTC`,
                   value:option.id

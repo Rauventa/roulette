@@ -52,7 +52,7 @@ export function getAvialableBonuses() {
             if (response.data?.errors?.length) {
                 dispatch(updateInformer({message: response.data.errors[0], active: true, type: 'error'}))
             } else {
-                dispatch(getAvialableBonusesSuccess(response.data))
+                dispatch(getAvialableBonusesSuccess(response.data.payload))
             }
         } catch (e) {
             dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))

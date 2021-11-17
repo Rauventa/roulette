@@ -48,12 +48,12 @@ export const DepositContainer = () => {
   const fetchData = async () => {
     setLoader(true)
 
-    await dispatch(getPaymentHistory(token, {type: 'Unknown', ...config.historyLoadParams}))
+    await dispatch(getPaymentHistory(token, {type: 'Deposit', ...config.historyLoadParams}))
 
     setLoader(false)
   }
 
-  const handleChangePage = async (value: string) => {
+  const handleChangePage = async (value: string, currency?: string) => {
 
     setLoader(true)
 
@@ -61,7 +61,8 @@ export const DepositContainer = () => {
       const response = await axiosClient.get('/Profile/GetDepositWalletAddress', {
         headers: {
           'Authorization': `Bearer ${token}`
-        }
+        },
+        params: {currency}
       })
 
       setCode(response.data.payload)

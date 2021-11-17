@@ -10,10 +10,17 @@ import { Input } from '../../components/Input/Input';
 import {Select} from "../../components/Select/Select";
 import {AuthContext} from "../../context/AuthContext";
 import {useDispatch, useSelector} from "react-redux";
-import {createWithdraw, getWallets} from "../../store/actions/Balance/balanceActions";
+import {createWithdraw, getPaymentHistory, getWallets} from "../../store/actions/Balance/balanceActions";
 import {CSSTransition} from "react-transition-group";
 import {Spinner} from "../../components/Spinner/Spinner";
 import {useTranslation} from "react-i18next";
+import {Table} from "../../components/Table/Table";
+import {toNormalDate} from "../../lib/dateHelper";
+import {config} from "../../config/config";
+import {ReactComponent as DownArrowIcon} from "../../containers/DepositContainer/img/down-arrow.svg";
+import {ReactComponent as UpArrowIcon} from "../../containers/DepositContainer/img/up-arrow.svg";
+import {currencyValueChanger} from "../../lib/numberRefractor";
+import {getTicker} from "../../lib/tickers";
 
 export const WithdrawPage = () => {
 
@@ -22,6 +29,14 @@ export const WithdrawPage = () => {
   const {token} = useContext(AuthContext)
 
   const wallets = useSelector((state: any) => state.balanceReducer.wallets)
+  const currency = useSelector((state: any) => state.balanceReducer.currency)
+  const rate = useSelector((state: any) => state.balanceReducer.rate)
+  const data = useSelector((state: any) => state.balanceReducer.history).map((item: any, index: number) => {
+    return {
+      ...item,
+      date: toNormalDate(item.createdAt)
+    }
+  })
 
   const walletsOptions = wallets?.map((item: any) => {
     return {
@@ -41,6 +56,7 @@ export const WithdrawPage = () => {
 
     if (token) {
       await dispatch(getWallets(token))
+      await dispatch(getPaymentHistory(token, {type: 'Withdrawal', ...config.historyLoadParams}))
       setLoader(false)
     }
   }
@@ -50,7 +66,6 @@ export const WithdrawPage = () => {
   }, []);
 
   const withDrawHandler = () => {
-
     const currentWallet = wallets?.find((item: any) => item.id === wallet.id)
 
     dispatch(createWithdraw(token, {
@@ -59,8 +74,48 @@ export const WithdrawPage = () => {
       address: currentWallet.address,
       ownerId: currentWallet.ownerId,
       amount
-    }))
+    }, rate))
   }
+
+  const columns = [
+    {
+      Header: 'Date/Time',
+      accessor: 'date'
+    },
+    {
+      Header: 'Currency',
+      accessor: 'currency'
+    },
+    {
+      Header: 'Type',
+      accessor: 'type',
+      Cell: ({row: {original}}: any) =>
+        original.type === 'deposit' ? (
+          <div className={`table-icon-block success`}>
+            <DownArrowIcon />
+            {t(`${original.type}`)}
+          </div>
+        ) : (
+          <div className={`table-icon-block danger`}>
+            <UpArrowIcon />
+            {t(`${original.type}`)}
+          </div>
+        )
+    },
+    {
+      Header: 'Amount',
+      accessor: 'amount',
+      Cell: ({row: {original}}: any) => (
+        <div>
+          {t(`${currencyValueChanger(currency, rate, original.amount)} ${getTicker(currency)}`)}
+        </div>
+      )
+    },
+    {
+      Header: 'Status',
+      accessor: 'status'
+    },
+  ]
 
   return (
     <div className={'withdraw-page'}>
@@ -106,6 +161,13 @@ export const WithdrawPage = () => {
         <Button primary onClick={withDrawHandler} disabled={!wallet}>
           {t('Withdraw Funds')}
         </Button>
+      </Card>
+
+      <Card>
+        <Table
+          data={data}
+          columns={columns}
+        />
       </Card>
     </div>
   )

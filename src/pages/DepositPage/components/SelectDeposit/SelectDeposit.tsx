@@ -2,14 +2,19 @@ import React, {useContext, useState} from 'react';
 import {Card} from "../../../../components/Card/Card";
 import {Input} from "../../../../components/Input/Input";
 import {Button} from "../../../../components/Button/Button";
-import {ReactComponent as BitcoinIcon} from "../../img/btc-ico-white.svg";
+import {ReactComponent as BtcIcon} from "../../img/btc-ico-white.svg";
+import {ReactComponent as EthIcon} from "../../img/eth.svg";
+import {ReactComponent as LtcIcon} from "../../img/ltc.svg";
+import BchIcon from '../../img/bch.png';
+import XrpIcon from '../../img/xrp.png';
 import {useTranslation} from "react-i18next";
 import { axiosClient } from "../../../../utils/axiosClient";
 import {AuthContext} from "../../../../context/AuthContext";
-import {loaderVisibilityHandler, updateInformer} from "../../../../store/actions/Application/applicationActions";
+import {updateInformer} from "../../../../store/actions/Application/applicationActions";
 import {useDispatch} from "react-redux";
+
 interface SelectDepositProps {
-  onChangePage: (value: string) => void;
+  onChangePage: (value: string, currency?: string) => void;
 }
 
 export const SelectDeposit = ({
@@ -23,8 +28,8 @@ export const SelectDeposit = ({
 
   const {t} = useTranslation()
 
-  const handleSubmit = () => {
-    onChangePage('currency')
+  const handleSubmit = (currency: string) => {
+    onChangePage('currency', currency)
   }
 
   const promoHandler = async () => {
@@ -61,8 +66,20 @@ export const SelectDeposit = ({
         </div>
 
         <div className={'payment-options'}>
-          <div className="payment-options__item" onClick={handleSubmit}>
-            <BitcoinIcon />
+          <div className="payment-options__item" onClick={() => handleSubmit('BTC')}>
+            <BtcIcon />
+          </div>
+          <div className="payment-options__item" onClick={() => handleSubmit('ETH')}>
+            <EthIcon />
+          </div>
+          <div className="payment-options__item" onClick={() => handleSubmit('LTC')}>
+            <LtcIcon />
+          </div>
+          <div className="payment-options__item" onClick={() => handleSubmit('BCH')}>
+            <img src={BchIcon} />
+          </div>
+          <div className="payment-options__item" onClick={() => handleSubmit('XRP')}>
+            <img src={XrpIcon} />
           </div>
         </div>
       </Card>

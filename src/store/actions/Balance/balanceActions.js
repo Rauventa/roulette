@@ -146,7 +146,7 @@ export function deleteWallet(token, data) {
     }
 }
 
-export function createWithdraw(token, data) {
+export function createWithdraw(token, data, rate) {
     return async dispatch => {
         try {
             await axiosClient.post('/Payments/WithdrawalRequest', data,{
@@ -154,6 +154,10 @@ export function createWithdraw(token, data) {
                     'Authorization': `Bearer ${token}`
                 }
             })
+
+            await dispatch(getBalance(token, rate))
+
+            dispatch(updateInformer({message: 'Withdrawal request was created successfully', active: true, type: 'info'}))
 
         } catch (e) {
             dispatch(updateInformer({message: e.response.data.errors[0], active: true, type: 'error'}))

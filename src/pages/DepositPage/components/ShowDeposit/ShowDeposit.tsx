@@ -7,7 +7,7 @@ import {useTranslation} from "react-i18next";
 
 interface ShowDepositProps {
   code: string,
-  onChangePage: (value: string) => void
+  onChangePage: (value: string, currency?: string) => void
 }
 
 export const ShowDeposit = ({
